@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+			<!-- Decimal Precision -->
+
+		<record forcecreate="True" id="decimal_commision_paie" model="decimal.precision">
+			<field name="name">Montant Paie</field>
+			<field name="digits">3</field>
+		</record>
+
+		<record forcecreate="True" id="decimal_commision_taux_paie"
+			model="decimal.precision">
+			<field name="name">Taux Paie</field>
+			<field name="digits">2</field>
+		</record>
+		<!-- Cotisation CNSS -->
+		
+		<record model="hr.payroll.cotisation" id="cotisation_data">
+			<field name="code">CNSS</field>
+			<field name="name">CNSS</field>
+			<field name="tauxsalarial">9.18</field>
+			<field name="tauxpatronal">16.75</field>
+		</record>
+		
+		<!-- Rubriques  -->
+		
+		
+		<record model="hr.payroll.rubrique" id="rubrique_data1">
+			<field name="name">Prime de Présence</field>
+			<field name="code">IND-PRE</field>
+			<field name="categorie">majoration</field>
+			<field name="type">prime</field>
+			<field name="regime">mensuel</field>
+			<field name="imposable">1</field>
+			<field name="cotisable">1</field>
+			<field name="afficher">1</field>
+		</record>
+
+		<record model="hr.payroll.rubrique" id="rubrique_data2">
+			<field name="name">Prime de Transport</field>
+			<field name="code">IND-TRA</field>
+			<field name="categorie">majoration</field>
+			<field name="type">prime</field>
+			<field name="regime">mensuel</field>
+			<field name="imposable">1</field>
+			<field name="cotisable">1</field>
+			<field name="afficher">1</field>
+		</record>
+
+<!-- 		<record model="hr.payroll.rubrique" id="rubrique_data3">
+			<field name="name">Indémnité de Panier</field>
+			<field name="code">IND-PAN</field>
+			<field name="categorie">majoration</field>
+			<field name="type">indemnite</field>
+			<field name="regime">journalier</field>
+			<field name="imposable">1</field>
+			<field name="cotisable">1</field>
+			<field name="afficher">1</field>
+		</record> -->
+
+<!-- 		<record model="hr.payroll.rubrique" id="rubrique_data4">
+			<field name="name">Prime de Motivation</field>
+			<field name="code">PRI-DEP</field>
+			<field name="categorie">majoration</field>
+			<field name="type">prime</field>
+			<field name="regime">mensuel</field>
+			<field name="imposable">1</field>
+			<field name="cotisable">1</field>
+			<field name="afficher">1</field>
+		</record> -->
+		<record model="hr.payroll.rubrique" id="rubrique_data3">
+			<field name="name">Prime de Motivation</field>
+			<field name="code">PRI-MOT</field>
+			<field name="categorie">majoration</field>
+			<field name="type">prime</field>
+			<field name="regime">mensuel</field>
+			<field name="imposable">1</field>
+			<field name="cotisable">1</field>
+			<field name="afficher">1</field>
+		</record>
+		
+
+		
+		
+		<!-- IRPP -->		
+
+		<record model="hr.payroll.ir" id="ir_data1">
+			<field name="debuttranche">0</field>
+			<field name="fintranche">5000</field>
+			<field name="taux">0</field>
+		</record>
+		<record model="hr.payroll.ir" id="ir_data2">
+			<field name="debuttranche">5001</field>
+			<field name="fintranche">20000</field>
+			<field name="taux">26</field>
+		</record>
+		<record model="hr.payroll.ir" id="ir_data3">
+			<field name="debuttranche">20001</field>
+			<field name="fintranche">30000</field>
+			<field name="taux">28</field>
+		</record>
+		<record model="hr.payroll.ir" id="ir_data4">
+			<field name="debuttranche">30001</field>
+			<field name="fintranche">50000</field>
+			<field name="taux">32</field>
+		</record>
+		<record model="hr.payroll.ir" id="ir_data5">
+			<field name="debuttranche">50001</field>
+			<field name="fintranche">9999999999</field>
+			<field name="taux">35</field>
+		</record>
+
+		<!-- Type des contrats -->
+		
+		<record model="hr.contract.type" id="contract_type_svip">
+			<field name="name">SIVP</field>
+		</record>
+		<record model="hr.contract.type" id="contract_type_cdd">
+			<field name="name">CDD</field>
+		</record>
+		<record model="hr.contract.type" id="contract_type_cdi">
+			<field name="name">CDI</field>
+		</record>
+
+
+		<record model="hr.payroll.cotisation.type" id="cotisation_type_data">
+			<field name="name">Cotisation CNSS</field>
+			<field name="cotisation_ids" eval="[(6, 0,[ref('cotisation_data')])]" />
+		</record>
+
+		<!-- Les séquences -->
+
+		<record id="hr_autorisation_sequence_type" model="ir.sequence.type">
+			<field name="name">Autorisation</field>
+			<field name="code">hr.autorisation</field>
+			<field name="prefix">AT-</field>
+			<field name="padding">4</field>
+			<field name="company_id" eval="False" />
+		</record>
+         
+         <!--  Séquence pour le contract  -->
+          
+		<record id="hr_contract_sequence_type" model="ir.sequence.type">
+			<field name="name">Contrats des employées</field>
+			<field name="code">hr.contract</field>
+		</record>
+
+		<record id="hr_contract_sequence" model="ir.sequence">
+			<field name="name">Contrats des employées</field>
+			<field name="code">hr.contract</field>
+			<field name="prefix">C</field>
+			<field name="padding">3</field>
+		</record>
+		 
+		<!-- Séquence pour Avance  -->
+		<record id="hr_avance_sequence_type" model="ir.sequence.type">
+			<field name="name">Avance</field>
+			<field name="code">hr.avance</field>
+		</record>
+		
+		<record id="hr_avance_sequence" model="ir.sequence">
+			<field name="name">Avance</field>
+			<field name="code">hr.avance</field>
+			<field name="padding">3</field>
+		</record>
+		
+
+
+        
+<!--         <record model="ir.cron" id="ir_cron_scheduler_hr_holidays">
+           <field name="name">Generate Recurring Invoices from Contracts</field>
+           <field name="interval_number">1</field>
+           <field name="interval_type">minutes</field>
+           <field name="numbercall">-1</field>
+           <field name="model" eval="'hr.employee'"/>
+           <field name="function" eval="'_action_confirmed'"/>
+           <field name="args" eval="'()'"/>
+        </record>  --> 
+        <record forcecreate="True" id="ir_cron_sync_all_cals111" model="ir.cron">
+            <field name="name">Calendar synchronization</field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">12</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.employee'" name="model" />
+            <field eval="'action_confirmed'" name="function" />
+        </record>
+		
+
+
+	</data>
+</openerp>

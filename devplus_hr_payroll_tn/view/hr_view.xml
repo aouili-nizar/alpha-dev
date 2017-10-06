@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- <record model="ir.ui.view" id="hr_contract_type_form"> <field name="name">hhr.contract.type.form</field> 
+			<field name="model">hr.contract.type</field> <field name="type">form</field> 
+			<field name="arch" type="xml"> <form string="Types de contrat"> <group> <field 
+			name="name" /> <field name="irpp" /> <field name="cotisation" /> </group> 
+			</form> </field> </record> -->
+			
+			<!-- hériter ce vieuw form pour ajouter le solde de congé de l'annéé précedent -->
+			
+		<record model="ir.ui.view" id="view_eployee_leave_form">
+			<field name="name">hr.employee.leave.form.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			
+
+
+				<xpath expr="//group[@string='Leaves']/label[@for='remaining_leaves']" 
+					position="attributes"> 
+					<attribute name="string">Solde congé</attribute>
+					</xpath>
+
+
+				<xpath expr="//group[@name='active_group']" position="before">
+                    <group string=".">
+                        <label for="last_remaining_leaves"/> 
+                        <div>
+                            <field name="last_remaining_leaves"  class="oe_inline"/> days
+                       
+                        </div>
+                     <!--   <field name="right_leaves"  on_change="onchange_right_leave( last_remaining_leaves,right_leaves)" />  -->
+                    	 <field name="right_leaves"  />   
+                       
+                    </group>
+<!--                     						<group class="oe_subtotal_footer oe_right" colspan="2">
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<button name="action_confirmed" string="(Calculer)" type="object"
+									class="oe_edit_only oe_link" />
+							</div>
+						</group> -->
+                </xpath>
+                
+<!--                 <field name="remaining_leaves" position="attributes">
+					<attribute name="on_change">onchange_last_remaining_leaves(last_remaining_leaves, remaining_leaves)
+					</attribute>
+				</field> -->
+			<!-- 	 <field name="right_leaves"  position="attributes" >
+                           <attribute name="on_change">onchange_right_leave(right_leaves, remaining_leaves)</attribute>
+                        </field> -->
+			
+			</field>
+		</record>
+
+		<!-- Status holidays -->
+
+		<record model="ir.ui.view" id="view_holiday_status_form2">
+			<field name="name">hr.holidays.status.inherit</field>
+			<field name="model">hr.holidays.status</field>
+			<field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="active" position="after">
+					<field name="payed" />
+				</field>
+				<field name="categ_id" position="replace">
+				</field>
+			</field>
+		</record>
+
+		<!-- holidays -->
+
+		<record model="ir.ui.view" id="view_holiday_tree2">
+			<field name="name">hr.holidays.tree.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.view_holiday" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="employee_id" position="before">
+					<field name="matricule" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_holiday_form2">
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.edit_holiday_new" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="employee_id" position="after">
+					<field name="matricule" />
+				</field>
+			</field>
+		</record>
+
+		<!-- employee -->
+
+		<record model="ir.ui.view" id="view_hr_employee_tree2">
+			<field name="name">hr.employee.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_tree" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<field name="work_email" position="attributes">
+					<attribute name='invisible'>1</attribute>
+				</field>
+				<field name="name" position="before">
+					<field name="matricule" />
+				</field>
+			</field>
+		</record>
+
+		<!-- autorisation -->
+
+		<record model="ir.actions.act_window" id="action_employee_2_autorisation">
+			<field name="name">Autorisations</field>
+			<field name="res_model">hr.autorisation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain"> [('employee_id','=',active_id)]</field>
+		</record>
+
+
+
+		<record model="ir.ui.view" id="view_hr_employee_form3">
+			<field name="name">hr.employee.inherit</field>
+			<field name="model">hr.employee</field>
+			<field eval="80" name="priority" />
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<!-- <div class="oe_right oe_button_box"> <button name="%(action_employee_2_autorisation)d" 
+					class="oe_stat_button" icon="fa-book" type="action"> <field name="action_count_autorisation" 
+					widget="statinfo" string="Nombre d'Autorisation" /> </button> </div> -->
+
+				<field name="job_id" position="attributes">
+					<attribute name='required'>1</attribute>
+				</field>
+
+				<field name="department_id" position="attributes">
+					<attribute name='required'>1</attribute>
+				</field>
+
+				<field name="work_location" position="replace" />
+				<field name="address_home_id" position="replace" />
+
+				<div class="oe_title" position="replace">
+					<div class="oe_title">
+						<field name="id" invisible="1" />
+						<label for="name" class="oe_edit_only" />
+						<h1>
+							<field name="name" />
+						</h1>
+						<label for="matricule" />
+						<field name="matricule" /> <!-- attrs="{'readonly':[('id','!=',False)]}" -->
+
+						<label for="category_ids" class="oe_edit_only" groups="base.group_hr_user" />
+						<field name="category_ids" widget="many2many_tags"
+							placeholder="e.g. Part Time" groups="base.group_hr_user" />
+					</div>
+				</div>
+
+				<field name="identification_id" position="replace">
+					<field name="cin" />
+					<field name="cnss" />
+					<!-- <field name="cnrps" /> -->
+				</field>
+
+				<xpath
+					expr="//notebook/page[@string='Personal Information']/group/group[@string='Contact Information']"
+					position="replace">
+				</xpath>
+
+				<xpath
+					expr="//notebook/page[@string='HR Settings']/group/group/field[@name='active']"
+					position="after">
+					<field name="avance"/>
+				</xpath>
+
+				<field name="parent_id" position="after">
+					<field name="date_entree" />
+					<field name="date_avancement" />
+				</field>
+
+				<field name="address_id" position="replace">
+					<field name="address" />
+				</field>
+
+				<field name="children" position="attributes">
+					<attribute name="attrs">{'invisible':[('marital','=','c')]}
+					</attribute>
+				</field>
+
+				 <notebook position="inside"> 
+				 <page string="Autres"> 
+				 	<group> 
+							<!-- <field name="specific" /> 
+							<field name="salaire_brute_imposable" />
+					 		<field name="amount_logement" /> --> 
+					 			<field name="create_move" /> 
+					 			<field name="cnss5"> </field>
+ 					 			<field name="assurance" /> 
+			        			<field name="amount_assurance"  attrs="{'invisible':[('assurance','==',False)]}" >
+								</field> 
+					 			
+					 </group> 
+				</page> 
+					</notebook>
+
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_hr_employee_view_form2_inherit">
+			<field name="name">hr.hr.employee.view.form2.inherit.paie</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="children" position="before">
+					<!-- <field name="irpp" /> -->
+					<field name="chef_famille" />
+					<field name="nb_parents" />
+					<field name="nb_enfant_etudiant" attrs="{'invisible':[('marital','=','c')]}" />
+					<field name="nb_enfant_handicape" attrs="{'invisible':[('marital','=','c')]}" />
+				</field>
+
+				<field name="bank_account_id" position="replace">
+					<field name="res_bank_id" />
+					<field name="numero_compte" />
+					<field name="mode_reglement" />
+				</field>
+
+
+				<field name="coach_id" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+
+				<field name="manager" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				
+				<xpath
+					expr="//notebook/page[@string='Personal Information']/group/group[@string='Birth']"
+					position="after">
+					<br/>
+					<group >
+					<field name="address_personnel" />
+					</group>
+				</xpath>
+
+
+			</field>
+		</record>
+
+  				<!-- les filtres avec CIN et Matricule -->
+  
+		<record id="view_employee_filter2" model="ir.ui.view">
+			<field name="name">Employees</field>
+			<field name="model">hr.employee</field>
+			<field name="type">search</field>
+			<field name="inherit_id" ref="hr.view_employee_filter" />
+			<field name="arch" type="xml">
+				<search string="Employees">
+					<field name="matricule" />
+					<field name="cin" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Les contracts -->
+
+		<record model="ir.ui.view" id="view_order_form2">
+			<field name="name">Contract</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<field name="type_id" position="replace">
+					<field name="type_id" options="{'no_create': 1,'no_open':1,'create_edit':1}" />
+					<field name="regime_id" />
+				</field>
+
+				<field name="wage" position="replace">
+					<label for="salaire_net" />
+					<div class="oe_inline">
+						<field name="salaire_net" class="oe_inline" />
+					 	<button name="net_to_brute" class="oe_edit_only" type="object"
+							icon="gtk-jump-to" help="Net vers Brut" />  
+					</div>
+					<field name="wage" string="Salaire de base" />
+				</field>
+
+
+				<page name="information" position="after">
+					<page string="Rubriques">
+						<field name="rubrique_ids" />
+					</page>
+				</page>
+				<field name="advantages" position="replace">
+				</field>
+
+				<group name="salary_and_advantages" position="attributes">
+					<attribute name="string">Salaire et cotisations</attribute>
+				</group>
+				
+				<label string="Duration" position="attributes">
+					<attribute name="string">Durée du contrat</attribute>
+				</label>
+
+			</field>
+		</record>
+
+		<record id="view_contract_tree_inherit_hr_contract" model="ir.ui.view">
+			<field name="name">contract.view.inherit.hr.contract</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_tree" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='name']" position="before">
+						<field name="num" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Les Types de contrats -->
+
+
+
+		<record model="ir.ui.view" id="hr_contract_type_form">
+			<field name="name">hhr.contract.type.form</field>
+			<field name="model">hr.contract.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Types de contrat">
+					<group>
+						<field name="name" />
+						<field name="irpp" />
+						<field name="cotisation" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+
+
+		<!-- le regime de contrats -->
+
+		<record model="ir.ui.view" id="hr_contract_regime_tree">
+			<field name="name">hr.contract.regime.tree</field>
+			<field name="model">hr.contract.regime</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Regimes">
+					<field name="name" />
+					<field name="type_regime" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_contract_regime_form">
+			<field name="name">hr.contract.regime.form</field>
+			<field name="model">hr.contract.regime</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Regimes">
+					<sheet>
+						<group col="4">
+
+							<field name="name" />
+							<field name="type_regime" />
+
+							<field name="hours_horaire"
+								attrs="{'required':[('type_regime','=','mensuel')], 'invisible':[('type_regime','!=','mensuel')]}" />
+							<field name="hours_mensuel"
+								attrs="{'required':[('type_regime','=','mensuel')], 'invisible':[('type_regime','!=','mensuel')]}" />
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_hr_contract_regime_form">
+			<field name="name">Régimes</field>
+			<field name="res_model">hr.contract.regime</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="hr_contract_regime_menu" name="Régimes"
+			action="action_hr_contract_regime_form" sequence="50"
+			parent="hr_contract.next_id_56" />
+
+
+
+
+
+
+
+
+
+
+
+	</data>
+</openerp>	

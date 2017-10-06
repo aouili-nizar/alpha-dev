@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	<menuitem id="menu_hr_pointage" parent="hr.menu_hr_root" name="Recap présence" 
+			groups="base.group_hr_manager,base.group_hr_user" sequence="12" />
+	
+	<menuitem id="menu_hr_root_payroll" parent="hr.menu_hr_root" name="Calcul de la Paie"
+	groups="base.group_hr_manager,base.group_hr_user"		 sequence="14"  />
+			 
+<!--  	<menuitem id="menu_hr_payroll_autorisation" parent="hr.menu_hr_root"  name="Autorisations"
+		 groups="autorisation_managment"	 sequence="15" />  -->
+		 
+	<menuitem id="menu_hr_payroll_avance_salaire" parent="hr.menu_hr_root"    name="Avances sur Salaire" 
+		groups="avance_managment"	  sequence="17" />
+		
+		<menuitem id="menu_hr_reporting_paie" name="Rapports" parent="hr.menu_hr_root"
+			groups="base.group_hr_user" sequence="45" />
+			 
+	<menuitem id="payroll_configuration" parent="hr.menu_hr_configuration"
+		groups="base.group_hr_manager,base.group_hr_user"	 name="Paie" />
+		
+<!--     <menuitem id="menu_hr_payroll_discipline" parent="hr.menu_hr_root" name="Disciplines"
+		groups="infration_managment" 	 sequence="19"  /> -->
+	
+	
+	</data>
+	</openerp>

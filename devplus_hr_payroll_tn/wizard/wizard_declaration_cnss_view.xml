@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="hr_payroll_tn_wizard_declaration_cnss_form" model="ir.ui.view">
+			<field name="name">hr_payroll_tn.wizard_declaration_cnss.form</field>
+			<field name="model">wizard_declaration_cnss</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Déclaration CNSS">
+					<field invisible="1" name="state" />
+					<group string="Rapport Déclaration CNSS" col="4" states="choose">
+						<field name="company_id" options="{'no_create': 1,'no_open': 1,'create_edit':0}" />
+						<field name="fiscalyear_id" options="{'no_create': 1,'no_open': 1,'create_edit':0}" />
+						<field name="trimester" />
+						<field name="data" readonly="1" filename="name" />
+					</group>
+
+					<div states="get">
+						<h4>Fichier de la déclaration de salaires sur support magnétique
+						</h4>
+						<br />
+						<br />
+						<p>
+							Le fichier générée :
+							<field name="data" readonly="1" filename="name" />
+						</p>
+					</div>
+
+					<footer states="choose">
+						<button name="print_report" string="Imprimer Déclaration CNSS"
+							type="object" colspan="1" class="oe_highlight" />
+						or
+
+						<button name="print_report_recapitulatif" string="Imprimer Récapitulatif"
+							type="object" colspan="1" class="oe_highlight" />
+						or
+						<button name="generate_file" string="Générer le fichier du Déclaration CNSS "
+							type="object" colspan="1" class="oe_highlight" />
+						or
+
+						<button string="Annuler" class="oe_link" special="cancel" />
+					</footer>
+					<footer states="get">
+						<button special="cancel" string="Fermer" type="object" />
+					</footer>
+
+
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hr_payroll_tn_wizard_declaration_cnss"
+			model="ir.actions.act_window">
+			<field name="name">Déclaration CNSS</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard_declaration_cnss</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_wizard_print_declaration_cnss" icon="STOCK_PRINT"
+			action="action_hr_payroll_tn_wizard_declaration_cnss" parent="menu_hr_reporting_paie"
+			name="Déclaration CNSS" />
+			<menuitem id="menu_wizard_print_declaration_cnss1" icon="STOCK_PRINT"
+				action="action_hr_payroll_tn_wizard_declaration_cnss" parent="account.menu_finance_reports"
+				name="Déclaration CNSS" />
+
+
+	</data>
+</openerp>

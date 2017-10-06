@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_recapitulatif_cnss">
+			<t t-call="report.html_container">
+				<t t-set="data_report_margin_top" t-value="12" />
+				<t t-set="data_report_header_spacing" t-value="9" />
+				<t t-set="data_report_dpi" t-value="110" />
+
+				<div class="page">
+					<div class="oe_structure" />
+
+					<div class="col-xs-12 text-center">
+						<strong>
+							ETAT RECAPITULATIF DES SALAIRES ET APPOINTEMENTS
+						</strong>
+						<br />
+						<br />
+						<br />
+						<br />
+					</div>
+					<table class="table table-bordered" style="margin-top:20x;">
+						<tr>
+							<td rowspan="2" class="text-center">
+								<strong>REPUBLIQUE TUNISIENNE</strong>
+								<br />
+								<strong> MINISTERE DES AFFAIRES SOCIALE </strong>
+								<br />
+								<strong>DE LA SOLIDARITE CAISSE NATIONALE</strong>
+								<br />
+							</td>
+							<td>
+								<!-- <strong>TR</strong> -->
+							</td>
+							<td>
+								<strong>Année</strong>
+							</td>
+							<td>
+								<strong>N° Employeur</strong>
+							</td>
+							<td>
+								<!-- <strong>BR</strong> -->
+							</td>
+							<td rowspan="4" width="50%">
+
+								<div t-field="company.partner_id"
+									t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span t-esc="data['form']['trimester']" />
+							</td>
+							<td>
+								<span t-esc="(data['form']['fiscalyear_id'])[1]" />
+							</td>
+							<td>
+								<span t-esc="company.cnss" /> 
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Permanents </strong>
+							</td>
+							<td colspan="2">
+								<strong>Occasionnels</strong>
+							</td>
+							<td colspan="2">
+								<strong> Nbre Tot.salariés</strong>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="2"></td>
+							<td colspan="2">
+								<span
+									t-esc="get_nb_employees(data['form']['company_id'] , data['form']['fiscalyear_id'],data['form']['trimester'])"></span>
+							</td>
+						</tr>
+					</table>
+					<table class="table table-bordered">
+						<tr>
+							<td rowspan="5" width="50%">
+								<p>
+									<strong>Date d'arrivée :</strong>
+								</p>
+								<p>
+									<strong> Mode de paiement par :</strong>
+								</p>
+								<p>
+									<strong>Montant : </strong>
+								</p>
+								<p>
+									<strong>Caisse le : </strong>
+								</p>
+								<p>
+									<strong>Chèque N° :</strong>
+								</p>
+								<p>
+									<strong> sur banque  </strong>
+								</p>
+								<p>
+									<strong>Virement bancaire sur :</strong>
+								</p>
+								<p>
+									<strong>Mondat N° :</strong>
+								</p>
+							</td>
+							<strong>
+								<td>
+									<strong>Nature </strong>
+								</td>
+								<td>
+									<strong>Salaires déclarés </strong>
+								</td>
+								<td>
+									<strong>Taux cotisations </strong>
+								</td>
+								<td>
+									<strong>Montant à payer</strong>
+								</td>
+							</strong>
+						</tr>
+						
+						<t t-set="res" t-value="get_total(data['form']['company_id'] , data['form']['fiscalyear_id'],data['form']['trimester'])"/>
+						<tr>
+							<td>
+								<strong>Sécurité sociale</strong>
+							</td>
+							<td class="text-right">
+								<span t-esc="formatLang(res['salaire'],digits=get_digits(dp='Montant Paie'))" />
+							</td>
+							<td> <span t-esc="res['taux_cnss']"> </span>% </td>
+							<td class="text-right">
+								<span t-esc="formatLang(res['montant_cnss'],digits=get_digits(dp='Montant Paie'))" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Accident de travail</strong>
+							</td>
+							<td></td>
+							<td> <span t-esc="res['taux_accident_travail']"> </span>% </td>
+							<td class="text-right">
+								<span t-esc="formatLang(res['montant_accident_travail'],digits=get_digits(dp='Montant Paie'))" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<strong>Pénalité Nbre de jours </strong>
+							</td>
+							<td> <span t-esc="res['total_taux']"> </span>% </td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="3" class="text-right">
+								<strong>Total à payer</strong>
+							</td>
+							<td class="text-right">
+								<strong>
+									<span
+										t-esc="formatLang(res['montant_total'],digits=get_digits(dp='Montant Paie'))" />
+								</strong>
+							</td>
+						</tr>
+					</table>
+					<table class="table table-bordered">
+						<tr>
+							<td colspan="2">
+								La présente déclaration de salaires certifiée sincere et
+								conforme à nos document comptables est arretée à la somme de :
+								<br />
+								 <span t-esc="res['montant_total_text']" /> 
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								<strong>OBSERVATIONS </strong>
+							</td>
+							<td>
+								<strong>Fait à : </strong>
+								<br />
+								<br />
+								<strong>Signature de L'employeur</strong>
+								<br />
+								<br />
+								<br />
+								<br />
+								<br />
+								<br />
+							</td>
+						</tr>
+					</table>
+				</div>
+
+
+			</t>
+		</template>
+	</data>
+</openerp>
+					

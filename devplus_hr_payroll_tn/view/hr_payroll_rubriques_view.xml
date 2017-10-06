@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- Les rubriques -->
+
+		<record model="ir.ui.view" id="hr_payroll_rubrique_form">
+			<field name="name">hr.payroll.rubrique.form</field>
+			<field name="model">hr.payroll.rubrique</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Les rubriques">
+					<sheet>
+						<group>
+							<field name="name" />
+						</group>
+						<group>
+							<group>
+								<field name="regime" />
+								<field name="categorie" />
+								<field name="type" attrs="{'invisible':[('categorie','==','deduction')]}" 
+									/> -
+								<field name="sequence" />
+							</group>
+							<group>
+								<field name="afficher" />
+								<field name="imposable"
+									attrs="{'invisible':[('categorie','==','deduction')]}" />
+								 <field name="cotisable"
+									attrs="{'invisible':[('categorie','==','deduction')]}" /> 
+								 <field name="absence"
+									attrs="{'invisible':[('categorie','==','deduction')]}" /> 
+
+							</group>
+						</group>
+						<newline />
+						<field name="note" colspan="4" />
+					</sheet>
+				</form>
+
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_payroll_rubrique_tree">
+			<field name="name">hr.payroll.rubrique.tree</field>
+			<field name="model">hr.payroll.rubrique</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Les rubriques">
+					<field name="name" />
+					<field name="categorie" />
+					<field name="afficher" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_payroll_rubrique_action">
+			<field name="name">Les rubriques</field>
+			<field name="res_model">hr.payroll.rubrique</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem action="hr_payroll_rubrique_action" id="hr_payroll_rubrique_menuitem"
+			parent="payroll_configuration" />
+
+		<!-- Les lignes de rubriques -->
+
+		<record model="ir.ui.view" id="ligne_rubrique_form">
+			<field name="name">hr.payroll.ligne_rubrique.form</field>
+			<field name="model">hr.payroll.ligne_rubrique</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Lignes rubriques">
+					<sheet>
+						<group>
+							<group>
+								<field name="rubrique_id" />
+								<field name="montant" />
+
+							</group>
+							<group>
+								<field name="permanent" />
+<!-- 								<field name="period_id" on_change="onchange_period_id(period_id)"
+									attrs="{'invisible':[('permanent','==',True)]}" />
+								<field name="date_start" attrs="{'invisible':[('permanent','==',True)]}" />
+								<field name="date_stop" attrs="{'invisible':[('permanent','==',True)]}" /> -->
+							</group>
+						</group>
+					</sheet>
+				</form>
+
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ligne_rubrique_tree">
+			<field name="name">hr.payroll.ligne_rubrique.tree</field>
+			<field name="model">hr.payroll.ligne_rubrique</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="rubriques">
+					<field name="rubrique_id" />
+					<field name="montant" />
+					<field name="permanent" />
+					<field name="date_start" />
+					<field name="date_stop" />
+					<field name="note" />
+				</tree>
+			</field>
+		</record>
+
+
+
+
+
+
+
+
+	</data>
+</openerp>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report id="devplus_hr_payroll_bulletin_report" string="Bulletin de paie"
+			model="hr.payroll.bulletin" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.bulletin_report" name="devplus_hr_payroll_tn.bulletin_report" />
+		<report id="devplus_hr_payroll_journal_paie_report" string="Journal paie "
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.report_journal_paie" name="devplus_hr_payroll_tn.report_journal_paie" />
+
+		<report id="devplus_hr_payroll_declaration_cnss_report" string="Déclaration CNSS"
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.report_declaration_cnss" name="devplus_hr_payroll_tn.report_declaration_cnss" />
+
+		<report id="devplus_hr_payroll_recapitulatif_cnss_report"
+			string="Récapitulatif cnss" model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.report_recapitulatif_cnss" name="devplus_hr_payroll_tn.report_recapitulatif_cnss" />
+
+		<report id="report_declaration_employer" string="Declaration employeur"
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.declaration_employer_report" name="devplus_hr_payroll_tn.declaration_employer_report" />
+
+		<report id="report_declaration_fiscal" string="Declaration fiscal"
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.declaration_fiscal_report" name="devplus_hr_payroll_tn.declaration_fiscal_report" />
+
+		<report id="devplus_hr_payroll_ordre_virement_report" string="Ordre virement"
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_tn.report_ordre_virement" name="devplus_hr_payroll_tn.report_ordre_virement" />
+	</data>
+</openerp>
+ 

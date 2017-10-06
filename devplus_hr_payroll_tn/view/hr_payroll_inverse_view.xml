@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_hr_payroll_inverse_tree_paie_tn" model="ir.ui.view">
+			<field name="name">hr.payroll_inverse.tree</field>
+			<field name="model">hr.payroll_inverse</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<!-- <tree colors="blue:state in ('confirm','hr_check','accont_check');black:state 
+					in ('new');gray:state in('cancel')" string="Payslip"> -->
+				<tree>
+					<field name="net" />
+					<field name="mois" />
+					<field name="cnss" />
+					<field name="basic" />
+					<field name="enfant" />
+					<field name="type" />
+					<field name="prime_base" />
+					<field name="ticket" />
+					<field name="prime_net" />
+					<field name="charge_ticket" />
+					<!-- <field name="employee_id"/> <field name="register_id" invisible="1"/> 
+						<field name="name"/> <field name="date"/> <field name="grows"/> <field name="net"/> 
+						<field name="state"/> <field name="company_id" groups="base.group_multi_company" 
+						widget="selection"/> -->
+				</tree>
+			</field>
+		</record>
+		<record id="view_hr_payroll_inverse_form_paie_tn" model="ir.ui.view">
+			<field name="name">hr.payroll_inverse.form</field>
+			<field name="model">hr.payroll_inverse</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form>
+					<header>
+						<button name="action_terminer" type="object" string="Valider"
+							states="new" class="oe_highlight" />
+						<field name="state" widget="statusbar" statusbar_visible="new,done"
+							class="oe_highlight" />
+					</header>
+
+					<sheet>
+						<group col="3">
+							<group>
+								<field name="net" />
+								<field name="mois" />
+								<field name="cnss" />
+								<field name="basic" />
+							</group>
+							<group>
+								<field name="enfant" />
+								<field name="type" />
+								<field name="prime_base" />
+							</group>
+							<group>
+								<field name="ticket" />
+								<field name="prime_net" />
+								<field name="charge_ticket" />
+							</group>
+						</group>
+
+
+						<group class="oe_subtotal_footer oe_right" colspan="2">
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<button name="button_dummy" string="(Calculer)" type="object"
+									class="oe_edit_only oe_link" />
+							</div>
+						</group>
+
+
+					</sheet>
+
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_hr_payroll_inverse_form_paie_tn">
+			<field name="name">Paie inverse </field>
+			<field name="res_model">hr.payroll_inverse</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Simulateur Paie Inverse" id="menu_hr_paye_inverse_paie_tn"
+			action="action_view_hr_payroll_inverse_form_paie_tn" parent="menu_hr_root_payroll" />
+
+
+
+
+	</data>
+</openerp>

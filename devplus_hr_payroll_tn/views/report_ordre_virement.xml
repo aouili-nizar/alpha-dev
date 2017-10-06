@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_ordre_virement">
+
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<div class="oe_structure" />
+						<div class="col-xs-12 text-center">
+							<table class="table" style="border:none;">
+								<tr>
+									<td colspan="2" class="text-center" style="border:none;">
+										<strong>
+											<h2>ORDRE DE VIREMENT</h2>
+										</strong>
+										<span>
+										A L'attention de Monsieur Le Directeur de L'Agence 
+										<span t-esc="get_bank(data['form']['bank_id'][0])" />
+										<span t-esc=" get_bank_street(data['form']['bank_id'][0])" />
+										
+										</span>
+									</td>
+								</tr>
+<!-- 								<tr>
+									<td style="border:none;"></td>
+									<td style="border:none;">
+										<span t-esc="get_city(data['form']['company_id'][0])" />
+										<br></br>
+										<span t-esc="time.strftime('%d-%m-%Y')" />
+									</td>
+								</tr>
+								<tr>
+
+									<td style="border:none;"></td>
+									<td style="border:none;">
+										<span t-esc="get_bank(data['form']['bank_id'][0])" />
+										<span t-esc="get_company_bank()" />
+									</td>
+								</tr>
+								<tr>
+									<td style="border:none;"></td>
+									<td style="border:none;">
+										<span t-esc=" get_bank_street(data['form']['bank_id'][0])" />
+									</td>
+								</tr> -->
+								<tr>
+									<td style="border:none;">
+										<strong>Objet : </strong>
+										Ordre de virement salaires
+										<span t-esc="get_period(data['form']['period_id'][0])" />
+									</td>
+									<td style="border:none;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="border:none;">
+										<strong>Monsieur ,</strong>
+										<br></br>
+										Nous vous prions de bien vouloir effectuer les virements
+										correspondants aux salaires
+										à partir de notre compte commercial ayant pour RIB
+										<span t-esc="get_bic(data['form']['bank_id'][0] , data['form']['company_id'][0])" />
+										selon les détails ci-dessous :
+										<!-- <span t-esc="get_company_bank()" /> -->
+										selon les détails ci-dessous :
+										<!-- <span t-esc="total_text(get_total(data['form']['period_id'][0]))" 
+											/> -->
+									</td>
+								</tr>
+							</table>
+							<table class="table table-bordered">
+
+								<tr>
+									<td>
+										<strong>Nbre</strong>
+									</td>
+									<td>
+										<strong>Matricule</strong>
+									</td>
+
+									<td>
+										<strong>NOM ET PRENOM</strong>
+									</td>
+									<td>
+										<strong> FONCTION</strong>
+									</td>
+									<!-- <td> <strong>Banque Employé </strong> </td> -->
+									<td>
+										<strong>RIB </strong>
+									</td>
+
+
+									<td>
+										<strong>Montant </strong>
+									</td>
+								</tr>
+
+
+
+								<tr t-foreach="get_net(data['form']['period_id'][0])" t-as="line">
+									<td>
+										<span t-esc="line_index +1" />
+									</td>
+									<td>
+										<span t-esc="line['matricule']" />
+									</td>
+
+
+									<td>
+										<span t-esc="line['r_name']" />
+									</td>
+
+									<td class="text-right">
+										<span t-esc="line['name']" />
+									</td>
+									<td>
+										<span t-esc="line['numero_compte']" />
+									</td>
+									<td class="text-right">
+										<!-- <span t-esc="line['salaire_net_a_payer'],digits=get_digits(dp='Montant 
+											Paie')" /> -->
+										<span
+											t-esc="formatLang(line['salaire_net_a_payer'],digits=get_digits(dp='Montant Paie'))" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="5" class="text-right">
+										<strong>TOTAL VIREMENT </strong>
+									</td>
+									<td class="text-right">
+										<span
+											t-esc="formatLang(get_total(data['form']['period_id'][0]),digits=get_digits(dp='Montant Paie'))" />
+									</td>
+								</tr>
+
+							</table>
+						</div>
+						<div class="col-xs-12 text-right">
+							<strong>Cachet et signature</strong>
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>
+					

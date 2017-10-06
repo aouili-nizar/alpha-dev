@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="autorisation_tree_view" model="ir.ui.view">
+			<field name="name">hr.autorisation.tree</field>
+			<field name="model">hr.autorisation</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="date" />
+					<field name="heure_start" widget="float_time" />
+					<field name="heure_stop" widget="float_time" />
+					<field name="state" />
+
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="autorisation_form_view">
+			<field name="name">hr.autorisation.form</field>
+			<field name="model">hr.autorisation</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="action_terminer" string="Valider" type="object"
+							states="new" class="oe_highlight" />
+						<field name="state" widget="statusbar" />
+					</header>
+					<sheet>
+						<group col="4">
+							<field name="name" readonly="1" />
+							<field name="date" />
+						</group>
+
+						<notebook>
+							<page string="Informations">
+								<group colspan="2">
+									<group>
+										<field name="employee_id" options="{'no_create': True}" />
+										<field name="raison_autorisation" options="{'no_create': True}" />
+									</group>
+									<group>
+										<field name="heure_start"
+											on_change="on_change_date(heure_start,duree_prevu,heure_stop)"
+											widget="float_time" />
+										<field name="heure_stop"
+											on_change="on_change_date(heure_start,duree_prevu,heure_stop)"
+											widget="float_time" />
+										<field name="duree_prevu" widget="float_time" />
+									</group>
+								</group>
+								<group>
+									<field name="description" />
+								</group>
+							</page>
+						</notebook>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="hr_autorisation_serach" model="ir.ui.view">
+			<field name="name">hr.autorisation.search</field>
+			<field name="model">hr.autorisation</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="date" />
+					<field name="employee_id" />
+					<newline />
+					<group expand="0" string="Grouper par...">
+						<filter string="Employé" context="{'group_by':'employee_id'}" />
+						<filter string="Date" context="{'group_by':'date'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_autorisation_form">
+			<field name="name">Autorisations</field>
+			<field name="res_model">hr.autorisation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+<!--  		<menuitem id="autorisation_ss_menu" name="Autorisations"
+			 parent="menu_hr_payroll_autorisation"
+			action="action_autorisation_form" /> -->
+
+
+
+	</data>
+</openerp>

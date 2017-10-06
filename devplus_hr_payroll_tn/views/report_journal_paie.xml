@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_journal_paie">
+			<t t-call="report.html_container">
+			
+	   <t t-set="data_report_margin_top" t-value="12"/>
+        <t t-set="data_report_header_spacing" t-value="9"/>
+        <t t-set="data_report_dpi" t-value="110"/>
+        
+				<div class="page">
+					       <div class="row mt32">
+						<table class="table" style="border:none;">
+							<tr>
+								<td  style="border:none;"  width="30%"><strong><span t-esc="(data['form']['company_id'])[1]" /></strong></td>
+								<td  style="border:none;"  class="text-center" width="40%">
+									<strong><h1>Journal de Paie</h1>
+									</strong>
+								</td>
+								<td  style="border:none;" width="30%"></td>
+							</tr>
+							<tr>
+								
+								<td style="border:none;" width="40%"></td>
+								<td  style="border:none;" width="30%"></td>
+								<td  style="border:none;" class="text-right" width="30%"><strong>Mois:</strong><span t-esc="(data['form']['month_id'])[1]"/></td>
+							</tr>
+						</table>
+						</div>
+						<table class="table table-bordered">
+							<tr>
+								<td>
+									<strong>Matricule</strong>
+								</td>
+								<td>
+									<strong>Nom et prénom</strong>
+								</td>
+<!-- 								<td>
+									<strong>Régime</strong>
+								</td> -->
+								 
+								<td>
+									<strong>Salaire base</strong>
+								</td>
+								<td>
+									<strong>Salaire Brut</strong>
+								</td>
+								<td>
+									<strong>Avantage en nature</strong>
+								</td>
+								<td>
+									<strong>Brute sans avantage en nature</strong>
+								</td>
+								<td>
+									<strong>Retenue CNSS</strong>
+								</td>
+								<td>
+									<strong>Salaire Imposable</strong>
+								</td>
+
+								<td>
+									<strong>IRPP</strong>
+								</td>
+								<td>
+									<strong>Salaire Net</strong>
+								</td>
+								<td>
+									<strong>Avances et prêts</strong>
+								</td>
+								<td>
+									<strong>Net payé</strong>
+								</td>
+								
+							</tr>
+							<tr
+								t-foreach="get_journal(data['form']['month_id'],data['form']['company_id'])"
+								t-as="line">
+
+
+								<td>
+									<span t-esc="line['matricule']" />
+								</td>
+								<td>
+									<span t-esc="line['e_name_related']" />
+								</td>
+<!-- 								<td>
+									<span t-esc="line['name']" />
+								</td> -->
+							 
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_base'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+								<td class="text-right">
+								<span
+										t-esc="formatLang(line['salaire_brute'],digits=get_digits(dp='Montant Paie'))" />
+									
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_brute']-line['salaire_brute_cotisable'],digits=get_digits(dp='Montant Paie'))" />
+								
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_brute_cotisable'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+								
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['cotisations_employee'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_brute_imposable'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+
+								<td class="text-right">
+									<span t-esc="line['igr']" />
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_net'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+								
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['deduction'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+								
+								<td class="text-right">
+									<span
+										t-esc="formatLang(line['salaire_net_a_payer'],digits=get_digits(dp='Montant Paie'))" />
+								</td>
+
+
+							</tr>
+							<tr t-foreach="get_total(data['form']['month_id'])" t-as="tot">
+								<td colspan="2"><strong>Totaux:</strong></td>
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_base'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_brute'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+								<td  class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['avantage_nature'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								
+								</td>
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_brute_cotisable'],digits=get_digits(dp='Taux Paie'))" /></strong>								
+								</td>
+								
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['cotisations_employee'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_brute_imposable'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+
+								<td class="text-right">
+									<strong><span t-esc="tot['igr']" /></strong>
+								</td>
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_net'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+								
+								<td class="text-right">
+									<strong><span
+							 			t-esc="formatLang(tot['deduction'],digits=get_digits(dp='Taux Paie'))" /></strong>
+								</td>
+								
+								<td class="text-right">
+									<strong><span
+										t-esc="formatLang(tot['salaire_net_a_payer'],digits=get_digits(dp='Montant Paie'))" /></strong>
+								</td>
+							</tr>
+						</table>
+						<div class="col-xs-12 text-right">
+							<strong>Imprimé le :</strong>
+							<span t-esc="time.strftime('%d-%m-%Y')" />
+						</div>
+					</div>
+		 
+			</t>
+
+
+
+
+		</template>
+	</data>
+</openerp>
+					
