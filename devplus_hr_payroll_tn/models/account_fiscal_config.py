@@ -43,3 +43,4 @@ class account_fiscal_config(models.Model):
     tva_ret_src=fields.Many2one('account.account',string='TVA Retenue à la source')
     report_tva=fields.Many2one('account.account',string='Report TVA du mois dernier')
     cpt_fact=fields.Many2one('account.account',string='Droit du timbre')
+    taux_dr_fisc = fields.Float('Taux Droit de timbre',digits_compute=dp.get_precision('Montant Paie'))

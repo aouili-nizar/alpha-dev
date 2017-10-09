@@ -378,7 +378,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         c6 = account.balance
         print 'this is c6'
         print c6
-        return c6
+        return -1 * c6
     def getc12(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -388,7 +388,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_col_12
         c12 = account.balance
-        return c12
+        return -1  * c12
     def getc18(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -398,7 +398,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_col_18
         c18 = account.balance
-        return c18
+        return -1 * c18
     def getd6(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -408,7 +408,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_ded_6
         d6 = account.balance
-        return d6
+        return -1 * d6
     def getd12(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -418,7 +418,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_ded_12
         d12 = account.balance
-        return d12
+        return -1 * d12
     def getd18(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -428,7 +428,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_ded_18
         d18 = account.balance
-        return d18
+        return -1 * d18
     def getmm6(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -438,7 +438,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_mmo_6
         m6 = account.balance
-        return m6
+        return -1 * m6
     def getmm12(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -448,7 +448,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_mmo_12
         m12 = account.balance
-        return m12
+        return -1 * m12
     def getmm18(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -458,7 +458,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_mmo_18
         m18 = account.balance
-        return m18
+        return -1 * m18
     def gettc(self,a,b,c,context=None):
         return a+b+c
     def getsrc25(self,fiscalyear_id,context=None):
@@ -470,7 +470,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tva_ret_src
         s25 = account.balance
-        return s25
+        return -1 * s25
     def getgtt(self,a,b,c,d,e,f,context=None):
         return a+b+c+d+e+f
                                                    
@@ -591,8 +591,12 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         print(b)
         return a+b
     def get_nbrfact(self,a,context=None):
-        print 'this is get nbrfact'
-        return 0
+        obj = self.pool.get('account.invoice')
+        ids = obj.search(self.cr,self.uid,[('period_id','=',a)])
+        i = 0 
+        for x in obj.browse(self.cr,self.uid,ids):
+            i = i+1
+        return i
     def get_fact(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -606,7 +610,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
             print x.cpt_fact.balance
             account  = x.cpt_fact
         balance = account.balance
-        return balance
+        return -1 *  balance
     def get_totdr(self,context=None):
         pass
 
@@ -694,7 +698,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         loy = 0
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_source_loy
-        loy = account.balance
+        loy = -1 * account.balance
         return loy
     def getb2(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
@@ -704,7 +708,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         hon = 0
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_source_hon
-        hon = account.balance
+        hon = -1 * account.balance
         return hon
     def getb3(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
@@ -725,7 +729,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         hon = account.balance
         b3 = 0
         b3 = loy + hon
-        return b3
+        return -1 * b3
     def getc(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -735,7 +739,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_source_hon_5
         c = account.balance
-        return c
+        return -1* c
     def getd(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -745,7 +749,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_source_hon_5
         d= account.balance
-        return d
+        return -1 * d
     def get_total_source(self,a,fiscalyear_id,context=None):
         # b3
         obj = self.pool.get('declaration.fiscal.config')
@@ -784,7 +788,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_source_hon_5
         d= account.balance
-        return a+b3+c+d
+        return -1* (a+b3+c+d)
     def get_report_tfp(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -793,7 +797,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         balance = 0
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.tfp
-        return account.balance
+        return -1 * account.balance
     def get_total_tfp(self,a,b,context=None):
         if b>a:
             return 0
@@ -841,7 +845,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         balance = 0
         for x in obj.browse(self.cr,self.uid,ids):
             account  = x.ret_sal
-        return account.balance
+        return (-1 * account.balance)
     def get_tfp_taux(self,fiscalyear_id,context=None):
         taux_obj = self.pool.get('declaration.fiscal.config')
         search_ids=taux_obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)

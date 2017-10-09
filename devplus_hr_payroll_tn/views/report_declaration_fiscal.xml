@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<openerp> 
 	<data>
 		<template id="declaration_fiscal_report">
 			<t t-call="report.html_container">
@@ -506,7 +506,7 @@ report TFP
 
 									<tr>
 										<td class="text-center" >
-										Nbre de facture
+										Nbre des factures
 										</td>
 										<td class="text-center" >
 
@@ -514,7 +514,7 @@ report TFP
 									</tr>
 									<tr>
 										<td class="text-center" >
-										<span t-raw="get_nbrfact(get_fact(data['form']['fiscalyear_id']))"/>
+										<span t-raw="get_nbrfact(data['form']['periode'])"/>
 										</td>
 										<td class="text-center" >
 										<span t-raw="get_fact(data['form']['fiscalyear_id'])"/>

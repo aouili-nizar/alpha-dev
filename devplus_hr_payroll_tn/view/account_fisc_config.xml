@@ -27,6 +27,7 @@
           <notebook>
             <page string="Paramétres Taux des Taxes">
               <group>
+              <field name="taux_dr_fisc" />
               <field name="taux_loy" />
               <field name="taux_hon15" />
               <field name="taux_hon5" />
