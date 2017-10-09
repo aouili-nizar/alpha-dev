@@ -61,6 +61,7 @@ class hr_employee(osv.osv):
         'assurance': fields.boolean(u'Assurance vie'),
         'amount_assurance':fields.float("Montant assurance", digits_compute=dp.get_precision('Montant Paie')),
         'categ_professionnelle':fields.char('Categ Professionnelle'),
+        'charge_patronale':fields.char('Charge patronale'),
 
 
     }
