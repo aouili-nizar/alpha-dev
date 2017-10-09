@@ -15,7 +15,7 @@
 
 							<div class="col-xs-12 text-center">
 								<h2>
-									<span>Declaration Fiscal  </span>
+									<span>Déclaration Fiscale  </span>
 								</h2>
 							</div>
 
@@ -37,7 +37,7 @@
 
 								<tr>
 									<td class="text-center">
-										<b>Periode:</b>
+										<b>Période:</b>
 										<span t-field="o.periode" />
 									</td>
 								</tr>
@@ -46,7 +46,7 @@
 							</table>
                             <br/>
 							<div class="col-xs-12 text-left">
-								<h3>Retenue a la source</h3>
+								<h3>Retenue a la source :</h3>
 								<strong> Retenue à la source sur salaire :</strong>
 							</div>
 						<div class="row mt32">
@@ -244,7 +244,7 @@
 									</tr>
 									<tr>
 										<td class="text-center" >
-report TFP
+Report TFP
 										</td>
 										<td class="text-center" >
 
@@ -364,7 +364,7 @@ report TFP
 						</div>
 						<br/>
 							<div class="col-xs-12 text-left">
-								<strong> TVA Deductible:</strong>
+								<strong> TVA Déductible:</strong>
 							</div>
 						<div class="row mt32">
 							<table
@@ -383,7 +383,7 @@ report TFP
 								<tbody>
 									<tr>
 										<td class="text-center" >
-										TVA Deductible 6%
+										TVA Déductible 6%
 										</td>
 										<td class="text-center" >
 									<span t-raw="get_ded6(data['form']['fiscalyear_id'],gettded6(data['form']['fiscalyear_id']))"/>
@@ -395,7 +395,7 @@ report TFP
 									</tr>
 									<tr>
 										<td class="text-center" >
-										TVA Deductible 12%
+										TVA Déductible 12%
 										</td>
 										<td class="text-center" >
 										<span t-raw="get_ded12(data['form']['fiscalyear_id'],gettded12(data['form']['fiscalyear_id']))"/>
@@ -408,7 +408,7 @@ report TFP
 									</tr>
 									<tr>
 										<td class="text-center" >
-										TVA Deductible 18%
+										TVA Déductible 18%
 										</td>
 										<td class="text-center" >
 										<span t-raw="get_ded18(data['form']['fiscalyear_id'],gettded18(data['form']['fiscalyear_id']))"/>
@@ -603,7 +603,7 @@ report TFP
 							</table>
 						</div>
 
-<div class="row text-center"><b> Fait le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>   - Par : <span t-esc="user.name"></span> </b></div>
+<div class="row text-center"><b> Fait le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>                        Par : <span t-esc="user.name"></span> </b></div>
 
 
 
