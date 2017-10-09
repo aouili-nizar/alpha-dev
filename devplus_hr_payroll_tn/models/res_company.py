@@ -9,7 +9,7 @@ class res_company(osv.osv):
     _columns = {
                 'cnss' : fields.char ('CNSS', size =11),
                 'code_exploitation': fields.char(u"Code d'exploiation" , size=4),
-                
-                
+                'BR':fields.char(u"BR"),
+
                 }
-res_company()    
+res_company()

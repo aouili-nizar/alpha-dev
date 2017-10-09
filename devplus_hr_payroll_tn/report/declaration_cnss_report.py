@@ -3,7 +3,8 @@
 from openerp.report import report_sxw
 import convertion
 from openerp.osv import osv
-
+import datetime
+import time
 class declaration_cnss_report(report_sxw.rml_parse):
     _name = 'report.declaration.cnss'
 
@@ -16,51 +17,50 @@ class declaration_cnss_report(report_sxw.rml_parse):
             'get_nb_page':self.get_nb_page,
             'get_nb_employees' : self.get_nb_employees,
             'get_total' : self.get_total,
+            'get_total_page':self.get_total_page,
+            'get_total_precedante':self.get_total_precedante,
         })
 
     def _get_lines(self, company_id,fiscalyear_id,trimester):
         period_ids=self.pool.get('account.period').search(self.cr,self.uid,[('fiscalyear_id','=',fiscalyear_id)])
-
+        obj = self.pool.get('account.period')
         # if existe periode ouverture period_ids=13 else period_ids=12
-        if period_ids==12 :
+        # if period_ids==12 :
+        for per in obj.browse(self.cr,self.uid,period_ids):
             if trimester =='1' :
-                mois1=period_ids[0]
-                mois2=period_ids[1]
-                mois3=period_ids[2]
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==1)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
+                    mois1=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==2)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois2=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==3)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois3=per.id
             elif trimester =='2' :
-                mois1=period_ids[3]
-                mois2=period_ids[4]
-                mois3=period_ids[5]
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==4)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
+                    mois1=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==5)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois2=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==6)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois3=per.id
             elif trimester =='3' :
-                mois1=period_ids[6]
-                mois2=period_ids[7]
-                mois3=period_ids[8]
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==7)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
+                    mois1=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==8)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois2=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==9)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois3=per.id
+
             else :
-                mois1=period_ids[9]
-                mois2=period_ids[10]
-                mois3=period_ids[11]
-        else :
-            if trimester =='1' :
-                mois1=period_ids[1]
-                mois2=period_ids[2]
-                mois3=period_ids[3]
-            elif trimester =='2' :
-                mois1=period_ids[4]
-                mois2=period_ids[5]
-                mois3=period_ids[6]
-            elif trimester =='3' :
-                mois1=period_ids[7]
-                mois2=period_ids[8]
-                mois3=period_ids[9]
-            else :
-                mois1=period_ids[10]
-                mois2=period_ids[11]
-                mois3=period_ids[12]
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==10)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois1=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==11)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
+                    mois2=per.id
+                if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==12)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
+                    mois3=per.id
 
 
 
         sql = '''
-               SELECT e.id ,e.matricule,e.cnss,SUBSTRING(r.name, 0, 60) as name,e.cin,
+               SELECT e.id ,e.matricule,e.cnss,e.categ_professionnelle,SUBSTRING(r.name, 0, 60) as name,e.cin,
 
              ( select  CASE WHEN b1.cotisations_employee > 0 THEN  b1.salaire_brute_cotisable ELSE 0  END   from hr_payroll_bulletin  b1 where
                b1.period_id = %s and b1.employee_id=e.id
@@ -80,7 +80,7 @@ class declaration_cnss_report(report_sxw.rml_parse):
             From  hr_employee e
             LEFT JOIN resource_resource r on (r.id=e.resource_id)
              where r.active=true and e.cnss5 is true
-             and ((select count(*) from hr_contract hc where  hc.employee_id=e.id)>0)
+             and ((select count(*) from hr_contract hc where  hc.employee_id=e.id)>0)ORDER BY e.matricule
             ''' % (mois1, mois2, mois3, mois1, mois2, mois3)
 
 
@@ -105,25 +105,44 @@ class declaration_cnss_report(report_sxw.rml_parse):
         all_lines=self._get_lines(company_id,fiscalyear_id,trimester)
         res=[]
         num_line1=0
-        num_page1=1
         id1=1
 
         for line_cnss in all_lines:
             if line_cnss['num_page'] == num_page :
                 res.append(line_cnss)
-            num_line1=line_cnss['num_line']
-            num_page1=line_cnss['num_page']
-            id1 = line_cnss['id']
+                num_line1+=1
 
-        if((num_page1==1)and(num_line1<12)):
+        if(num_line1<12) :
             while (num_line1<12):
                 num_line1 += 1
-                line_vide={'id':id1,'num_line':num_line1,'cnss': '','name':"",'matricule':'','mois1':'','mois2':'','mois3':'','total':''}
+                id1+=1
+                line_vide={'id':id1,'num_line':num_line1,'cnss': '','name':"",'matricule':'','categ_professionnelle':'','mois1':'','mois2':'','mois3':'','total':''}
                 res.append(line_vide)
         return res
+    def get_total_page(self,company_id,fiscalyear_id,trimester,num_page):
+        salaire_brute_cotisable_tot=0
+        all_lines=self._get_lines(company_id,fiscalyear_id,trimester)
+        res=[]
 
+        liste_tot_page=0
+        for line_cnss in all_lines:
+            if line_cnss['num_page'] == num_page :
+                salaire_brute_cotisable_tot+=line_cnss['total']
+        res={
+        'salaire_brute_cotisable_tot':salaire_brute_cotisable_tot,
+        }
+        return res
+    def get_total_precedante(self,company_id,fiscalyear_id,trimester,num_page):
+        i=1
+        liste_tot_page=0
+        i=num_page
+        liste_tot_page=0
+        while(0<i<=num_page):
+            num_page=i
+            liste_tot_page+=self.get_total_page(company_id,fiscalyear_id,trimester,num_page)['salaire_brute_cotisable_tot']
+            i=i-1
 
-
+        return liste_tot_page
 
     def get_nb_page(self, company_id,fiscalyear_id,trimester):
         all_lines=self._get_lines(company_id,fiscalyear_id,trimester)
@@ -148,6 +167,7 @@ class declaration_cnss_report(report_sxw.rml_parse):
                 total_mois3+=float(line['mois3'] or 0.0)
                 salaire+=float(line['total'] or 0.0)
 
+
         params_obj= self.pool.get('hr.payroll.parametres')
         ids_params = params_obj.search(self.cr, self.uid, [('fiscalyear_id', '=', fiscalyear_id)])
         param = params_obj.read(self.cr, self.uid, ids_params[0])
@@ -157,6 +177,7 @@ class declaration_cnss_report(report_sxw.rml_parse):
         montant_cnss= salaire * taux_cnss/100.0
         montant_total =  montant_cnss+montant_accident_travail
         total_page = total_mois1+total_mois2+total_mois3
+
         res = {
                 'total_mois1' :total_mois1,
                 'total_mois2' :total_mois2,
@@ -169,10 +190,11 @@ class declaration_cnss_report(report_sxw.rml_parse):
                 'montant_cnss' :montant_cnss,
                 'montant_accident_travail':montant_accident_travail,
                 'montant_total' :montant_total,
-                'montant_total_text':convertion.trad(montant_total,'Dinar')
+                'montant_total_text':convertion.trad(montant_total,'Dinar'),
+                'montant_salaire_text':convertion.trad(salaire,'Dinar')
              }
 
-        print '**res**',res
+        # print '**res**',res
         return res
 
 

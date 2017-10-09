@@ -5,11 +5,14 @@
 			<field name="name">res.company.payroll.inherit</field>
 			<field name="model">res.company</field>
 			<field name="inherit_id" ref="base.view_company_form" />
-			<field name="type">form</field>			
+			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="company_registry" position="after">
 					<field name="cnss" />
 					<field name="code_exploitation" />
+				</field>
+				<field name="website" position="after">
+					<field name="BR" />
 				</field>
 			</field>
 		</record>

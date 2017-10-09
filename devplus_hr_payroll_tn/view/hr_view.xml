@@ -2,39 +2,39 @@
 <openerp>
 	<data>
 
-		<!-- <record model="ir.ui.view" id="hr_contract_type_form"> <field name="name">hhr.contract.type.form</field> 
-			<field name="model">hr.contract.type</field> <field name="type">form</field> 
-			<field name="arch" type="xml"> <form string="Types de contrat"> <group> <field 
-			name="name" /> <field name="irpp" /> <field name="cotisation" /> </group> 
+		<!-- <record model="ir.ui.view" id="hr_contract_type_form"> <field name="name">hhr.contract.type.form</field>
+			<field name="model">hr.contract.type</field> <field name="type">form</field>
+			<field name="arch" type="xml"> <form string="Types de contrat"> <group> <field
+			name="name" /> <field name="irpp" /> <field name="cotisation" /> </group>
 			</form> </field> </record> -->
-			
+
 			<!-- hériter ce vieuw form pour ajouter le solde de congé de l'annéé précedent -->
-			
+
 		<record model="ir.ui.view" id="view_eployee_leave_form">
 			<field name="name">hr.employee.leave.form.inherit</field>
 			<field name="model">hr.employee</field>
 			<field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit" />
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-			
 
 
-				<xpath expr="//group[@string='Leaves']/label[@for='remaining_leaves']" 
-					position="attributes"> 
+
+				<xpath expr="//group[@string='Leaves']/label[@for='remaining_leaves']"
+					position="attributes">
 					<attribute name="string">Solde congé</attribute>
 					</xpath>
 
 
 				<xpath expr="//group[@name='active_group']" position="before">
                     <group string=".">
-                        <label for="last_remaining_leaves"/> 
+                        <label for="last_remaining_leaves"/>
                         <div>
                             <field name="last_remaining_leaves"  class="oe_inline"/> days
-                       
+
                         </div>
                      <!--   <field name="right_leaves"  on_change="onchange_right_leave( last_remaining_leaves,right_leaves)" />  -->
-                    	 <field name="right_leaves"  />   
-                       
+                    	 <field name="right_leaves"  />
+
                     </group>
 <!--                     						<group class="oe_subtotal_footer oe_right" colspan="2">
 							<div class="oe_subtotal_footer_separator oe_inline">
@@ -43,7 +43,7 @@
 							</div>
 						</group> -->
                 </xpath>
-                
+
 <!--                 <field name="remaining_leaves" position="attributes">
 					<attribute name="on_change">onchange_last_remaining_leaves(last_remaining_leaves, remaining_leaves)
 					</attribute>
@@ -51,10 +51,20 @@
 			<!-- 	 <field name="right_leaves"  position="attributes" >
                            <attribute name="on_change">onchange_right_leave(right_leaves, remaining_leaves)</attribute>
                         </field> -->
-			
+
 			</field>
 		</record>
-
+		<record model="ir.ui.view" id="base_view_emplloyee_form_inherit_payroll_devplus">
+			<field name="name">hr.employee.categ.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="work_location" position="after">
+					<field name="categ_professionnelle" />
+				</field>
+			</field>
+		</record>
 		<!-- Status holidays -->
 
 		<record model="ir.ui.view" id="view_holiday_status_form2">
@@ -135,8 +145,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 
-				<!-- <div class="oe_right oe_button_box"> <button name="%(action_employee_2_autorisation)d" 
-					class="oe_stat_button" icon="fa-book" type="action"> <field name="action_count_autorisation" 
+				<!-- <div class="oe_right oe_button_box"> <button name="%(action_employee_2_autorisation)d"
+					class="oe_stat_button" icon="fa-book" type="action"> <field name="action_count_autorisation"
 					widget="statinfo" string="Nombre d'Autorisation" /> </button> </div> -->
 
 				<field name="job_id" position="attributes">
@@ -197,20 +207,20 @@
 					</attribute>
 				</field>
 
-				 <notebook position="inside"> 
-				 <page string="Autres"> 
-				 	<group> 
-							<!-- <field name="specific" /> 
+				 <notebook position="inside">
+				 <page string="Autres">
+				 	<group>
+							<!-- <field name="specific" />
 							<field name="salaire_brute_imposable" />
-					 		<field name="amount_logement" /> --> 
-					 			<field name="create_move" /> 
+					 		<field name="amount_logement" /> -->
+					 			<field name="create_move" />
 					 			<field name="cnss5"> </field>
- 					 			<field name="assurance" /> 
+ 					 			<field name="assurance" />
 			        			<field name="amount_assurance"  attrs="{'invisible':[('assurance','==',False)]}" >
-								</field> 
-					 			
-					 </group> 
-				</page> 
+								</field>
+
+					 </group>
+				</page>
 					</notebook>
 
 			</field>
@@ -244,7 +254,7 @@
 				<field name="manager" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</field>
-				
+
 				<xpath
 					expr="//notebook/page[@string='Personal Information']/group/group[@string='Birth']"
 					position="after">
@@ -259,7 +269,7 @@
 		</record>
 
   				<!-- les filtres avec CIN et Matricule -->
-  
+
 		<record id="view_employee_filter2" model="ir.ui.view">
 			<field name="name">Employees</field>
 			<field name="model">hr.employee</field>
@@ -292,7 +302,7 @@
 					<div class="oe_inline">
 						<field name="salaire_net" class="oe_inline" />
 					 	<button name="net_to_brute" class="oe_edit_only" type="object"
-							icon="gtk-jump-to" help="Net vers Brut" />  
+							icon="gtk-jump-to" help="Net vers Brut" />
 					</div>
 					<field name="wage" string="Salaire de base" />
 				</field>
@@ -309,7 +319,7 @@
 				<group name="salary_and_advantages" position="attributes">
 					<attribute name="string">Salaire et cotisations</attribute>
 				</group>
-				
+
 				<label string="Duration" position="attributes">
 					<attribute name="string">Durée du contrat</attribute>
 				</label>
@@ -410,4 +420,4 @@
 
 
 	</data>
-</openerp>	
+</openerp>
