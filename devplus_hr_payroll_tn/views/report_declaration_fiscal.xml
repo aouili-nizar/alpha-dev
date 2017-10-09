@@ -509,7 +509,7 @@ report TFP
 										Nbre des factures
 										</td>
 										<td class="text-center" >
-
+										Nbre des factures(CT)
 										</td>
 									</tr>
 									<tr>
@@ -524,8 +524,9 @@ report TFP
 										<td class="text-center" >
 										Total
 										</td>
-										<td class="text-center" >
-
+									
+										<td class="text-center">
+												<span t-raw="get_fisc(get_fact(data['form']['fiscalyear_id']),data['form']['fiscalyear_id'])"></span>
 										</td>
 									</tr>
 							</table>

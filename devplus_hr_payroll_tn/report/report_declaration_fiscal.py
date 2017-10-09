@@ -597,6 +597,17 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         for x in obj.browse(self.cr,self.uid,ids):
             i = i+1
         return i
+    def get_fisc(self,a,fiscalyear_id,context=None):
+        obj = self.pool.get('declaration.fiscal.config')
+        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+        account = None
+        balance = 0
+        for x in obj.browse(self.cr,self.uid,ids):
+            balance = x.taux_dr_fisc
+        if a != 0 :
+            return a/balance
+        elif balance == 0 :
+            return 0 
     def get_fact(self,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
