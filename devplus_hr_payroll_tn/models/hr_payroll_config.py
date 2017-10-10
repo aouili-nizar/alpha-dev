@@ -70,6 +70,7 @@ class hr_cotisation(osv.osv):
                'tauxsalarial' : fields.float('Taux Salarial'),
                'tauxpatronal' : fields.float('Taux Patronal'),
                'tauxTotal' : fields.float("Taux Total"),
+               'tauxAT' : fields.float("Taux Accident de travail"),
                #'cotisation_id':fields.many2one('hr.payroll.cotisation.type','Types'),
 
                }

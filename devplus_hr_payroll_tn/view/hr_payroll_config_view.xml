@@ -14,6 +14,7 @@
 					<field name="name" />
 					<field name="tauxsalarial" />
 					<field name="tauxpatronal" />
+					<field name="tauxAT" />
 				</tree>
 			</field>
 		</record>
@@ -30,7 +31,7 @@
 							<field name="name" />
 							<field name="tauxsalarial" on_change="onchange_taux(tauxsalarial, tauxpatronal)" />
 							<field name="tauxpatronal" on_change="onchange_taux(tauxsalarial, tauxpatronal)" />
-							<field name="tauxTotal" />
+							<field name="tauxAT" />
 						</group>
 					</sheet>
 				</form>
