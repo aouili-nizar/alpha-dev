@@ -657,7 +657,7 @@ class hr_payroll_tn(osv.osv):
                     'name': name_move,
                     'amount_currency':-1*cotisations_employee,
                     'debit': 0.0,
-                    'credit':  -self._convert_amount(cr, uid,cotisations_employee,currency_id, currency_company_id, context=ctx),
+                    'credit':  self._convert_amount(cr, uid,cotisations_employee,currency_id, currency_company_id, context=ctx),
                     'currency_id': currency_id,
                     'state': 'valid'
                 }
@@ -698,13 +698,13 @@ class hr_payroll_tn(osv.osv):
                         'name': name_move,
                         'amount_currency':-1*cnss_accident_travail,
                         'debit':0.0,
-                        'credit':  -300,
+                        'credit': self._convert_amount(cr, uid,cnss_accident_travail,currency_id, currency_company_id, context=ctx),
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val CNSS Accident du travail**',(-1 * self._convert_amount(cr, uid,cnss_accident_travail,currency_id, currency_company_id, context=ctx))
+                    print '***val CNSS Accident du travail**',val
                     print"*****************************************************"
-                    move_cnss.append((0, 0, val)) 
+                    move_c_lines.append((0, 0, val)) 
                 cnss_patronale =taux_patronale*(salaire_Br/100)
                 if cnss_patronale :
                     name_move = u'CNSS Charge Patronale'
@@ -716,14 +716,14 @@ class hr_payroll_tn(osv.osv):
                         'name': name_move,
                         'amount_currency':-1*cnss_patronale,
                         'debit':0.0,
-                        'credit':  -520,
+                        'credit':  self._convert_amount(cr, uid,cnss_patronale,currency_id, currency_company_id, context=ctx),
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val CNSS Charge Patronale',(-1 * self._convert_amount(cr, uid,cnss_patronale,currency_id, currency_company_id, context=ctx))
+                    print '***val CNSS Charge Patronale',val
                     print"*****************************************************"
-                    move_cnss.append((0, 0, val)) 
-                # cnss_cot_accident_travail =taux_accident_travail*(salaire_Br/100)
+                    move_c_lines.append((0, 0, val)) 
+                cnss_cot_accident_travail =taux_accident_travail*(salaire_Br/100)
                 if cnss_accident_travail :
                     name_move = u'Cotisation Accident du travail'
                     val = {
@@ -733,15 +733,15 @@ class hr_payroll_tn(osv.osv):
                         'date': date_move,
                         'name': name_move,
                         'amount_currency':1*cnss_accident_travail,
-                        'debit':300,
+                        'debit':self._convert_amount(cr, uid,cnss_accident_travail,currency_id, currency_company_id, context=ctx),
                         'credit': 0.0, 
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val Cotisation Accident du travail',self._convert_amount(cr, uid,cnss_accident_travail,currency_id, currency_company_id, context=ctx)
+                    print '***val Cotisation Accident du travail',val
                     print"*****************************************************"
-                    move_cnss.append((0, 0, val)) 
-                # cnss_cot_patr =taux_patronale*(salaire_Br/100)
+                    move_c_lines.append((0, 0, val)) 
+                cnss_cot_patr =taux_patronale*(salaire_Br/100)
                 if cnss_patronale :
                     name_move = u'Cotisation patronale sécurité sociale'
                     val = {
@@ -751,28 +751,16 @@ class hr_payroll_tn(osv.osv):
                         'date': date_move,
                         'name': name_move,
                         'amount_currency':1*cnss_patronale ,
-                        'debit':520,
+                        'debit':self._convert_amount(cr, uid,cnss_patronale ,currency_id, currency_company_id, context=ctx) ,
                         'credit':  0.0,
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    move_cnss.append((0, 0, val))    
-                    print '***val Cotisation patronale sécurité sociale',self._convert_amount(cr, uid,cnss_patronale ,currency_id, currency_company_id, context=ctx)  
+                    move_c_lines.append((0, 0, val))    
+                    print '***val Cotisation patronale sécurité sociale',val
                     print"*****************************************************"					
 						
-            # move_lines.sort(cmp=None, key=None, reverse=True)
-            # create move
-            move_cnss_lines = {#'ref': u"Nets payées" + ' ' + sal.month_id.name + ' ' + bulletin.employee_id.name or '/',
-                    'ref': u"Declaration cnss " + ' ' + sal.period_id.name + ' ' + bulletin.employee_id.name or '/',
-                    'period_id': period_id,
-                    'journal_id': journal_id,
-                    'date': date_move,
-                    'state': 'draft',
-                    'name':  '/',
-                    'line_id': move_cnss
-                    }
-            print 'this is the move cnss'
-            print move_cnss_lines					
+           
             move_c = {#'ref': u"Nets payées" + ' ' + sal.month_id.name + ' ' + bulletin.employee_id.name or '/',
                     'ref': u"Declaration Cotisation" + ' ' + sal.period_id.name + ' ' + bulletin.employee_id.name or '/',
                     'period_id': period_id,
