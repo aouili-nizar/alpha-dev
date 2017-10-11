@@ -15,7 +15,7 @@
 
 							<div class="col-xs-12 text-center">
 								<h2>
-									<span>Déclaration Fiscale  </span>
+									<span>Declaration Fiscal  </span>
 								</h2>
 							</div>
 
@@ -37,7 +37,7 @@
 
 								<tr>
 									<td class="text-center">
-										<b>Période:</b>
+										<b>Periode:</b>
 										<span t-field="o.periode" />
 									</td>
 								</tr>
@@ -46,7 +46,7 @@
 							</table>
                             <br/>
 							<div class="col-xs-12 text-left">
-								<h3>Retenue a la source :</h3>
+								<h3>Retenue a la source</h3>
 								<strong> Retenue à la source sur salaire :</strong>
 							</div>
 						<div class="row mt32">
@@ -244,7 +244,7 @@
 									</tr>
 									<tr>
 										<td class="text-center" >
-Report TFP
+report TFP
 										</td>
 										<td class="text-center" >
 
@@ -364,7 +364,7 @@ Report TFP
 						</div>
 						<br/>
 							<div class="col-xs-12 text-left">
-								<strong> TVA Déductible:</strong>
+								<strong> TVA Deductible:</strong>
 							</div>
 						<div class="row mt32">
 							<table
@@ -383,7 +383,7 @@ Report TFP
 								<tbody>
 									<tr>
 										<td class="text-center" >
-										TVA Déductible 6%
+										TVA Deductible 6%
 										</td>
 										<td class="text-center" >
 									<span t-raw="get_ded6(data['form']['fiscalyear_id'],gettded6(data['form']['fiscalyear_id']))"/>
@@ -395,7 +395,7 @@ Report TFP
 									</tr>
 									<tr>
 										<td class="text-center" >
-										TVA Déductible 12%
+										TVA Deductible 12%
 										</td>
 										<td class="text-center" >
 										<span t-raw="get_ded12(data['form']['fiscalyear_id'],gettded12(data['form']['fiscalyear_id']))"/>
@@ -408,7 +408,7 @@ Report TFP
 									</tr>
 									<tr>
 										<td class="text-center" >
-										TVA Déductible 18%
+										TVA Deductible 18%
 										</td>
 										<td class="text-center" >
 										<span t-raw="get_ded18(data['form']['fiscalyear_id'],gettded18(data['form']['fiscalyear_id']))"/>
@@ -509,7 +509,7 @@ Report TFP
 										Nbre des factures
 										</td>
 										<td class="text-center" >
-										Nbre des factures(CT)
+										Droit de timbre (CT)
 										</td>
 									</tr>
 									<tr>
@@ -520,15 +520,7 @@ Report TFP
 										<span t-raw="get_fact(data['form']['fiscalyear_id'])"/>
 										</td>
 									</tr>
-									<tr>
-										<td class="text-center" >
-										Total
-										</td>
-									
-										<td class="text-center">
-												<span t-raw="get_fisc(get_fact(data['form']['fiscalyear_id']),data['form']['fiscalyear_id'])"></span>
-										</td>
-									</tr>
+								
 							</table>
 						</div>
 						<div class="col-xs-12 text-left">
@@ -603,7 +595,7 @@ Report TFP
 							</table>
 						</div>
 
-<div class="row text-center"><b> Fait le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>                        Par : <span t-esc="user.name"></span> </b></div>
+<div class="row text-center"><b> Fait le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>   - Par : <span t-esc="user.name"></span> </b></div>
 
 
 
