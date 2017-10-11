@@ -17,6 +17,19 @@ class hr_employee(osv.osv):
             if data.cin and  (len(data.cin) != 8):
                 return False
             return True
+    def _check_length_matricule(self, cr, uid, ids, context=None):
+        record = self.browse(cr, uid, ids, context=context)
+        for data in record:
+            if data.matricule and  (len(data.matricule) != 6):
+                return False
+            return True
+    def _check_length_cnss(self, cr, uid, ids, context=None):
+        record = self.browse(cr, uid, ids, context=context)
+        for data in record:
+            if data.cnss and  (len(data.cnss) != 10):
+                return False
+            return True
+
 
     def _action_count_autorisation(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
@@ -26,10 +39,10 @@ class hr_employee(osv.osv):
 
 
     _columns = {
-        'matricule' : fields.char('Matricule', size=64, select=True,required=True),
+        'matricule' : fields.char('Matricule', size=32,required=True),
         'cnss' : fields.char('CNSS', size=11),
         'cnrps' : fields.char('CNRPS', size=10),
-        'cin' : fields.char('CIN', size=8,required=True ),
+        'cin' : fields.char('CIN', size=18,required=True ),
         'date_entree': fields.date(u'Date  entrée'),
         'date_avancement': fields.date('Date avancement'),
         'nb_parents' : fields.integer(u'Nombre parents à charge'),
@@ -103,15 +116,12 @@ class hr_employee(osv.osv):
     }
     _sql_constraints = [
         ('cin_uniq', 'unique (cin)', ' cin doit etre  unique !'),
+        ('matricule_employee_uniq', 'UNIQUE(matricule)', u'Matricule existe déjà !'),
     ]
 
-    _constraints = [(_check_length_cin, u'Erreur: Le CIN doit être composé de huit chiffres', ['cin'])]
-
-
-
-    _sql_constraints = [
-         ('matricule_employee_uniq', 'UNIQUE(matricule)', u'Matricule existe déjà !')
-     ]
+    _constraints = [(_check_length_cin, u'Erreur: Le CIN doit être composé de huit chiffres', ['cin']),
+                    (_check_length_matricule, u'Erreur: Le matricule doit être composé de 6 chiffres', ['matricule']),
+                    (_check_length_cnss, u'Erreur: Le CNSS doit être composé de dix chiffres', ['cnss']),]
 
 
 
