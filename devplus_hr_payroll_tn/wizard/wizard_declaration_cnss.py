@@ -27,10 +27,10 @@ class wizard_declaration_cnss(osv.osv_memory):
     _description = u'Déclaration CNSS  For'
 
     TRIMESTER = [
-            ('1', u'1er trimestre'),
-            ('2', u'2e trimestre'),
-            ('3', u'3e trimestre'),
-            ('4', u'4e trimestre'),
+            ('0', u'1er trimestre'),
+            ('1', u'2e trimestre'),
+            ('2', u'3e trimestre'),
+            ('3', u'4e trimestre'),
 
             ]
 
@@ -83,21 +83,21 @@ class wizard_declaration_cnss(osv.osv_memory):
         # if existe periode ouverture period_ids=13 else period_ids=12
         # if period_ids==12 :
         for per in obj.browse(cr,uid,period_ids):
-            if trimester =='1' :
+            if trimester =='0' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==1)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==2)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois2=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==3)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois3=per.id
-            elif trimester =='2' :
+            elif trimester =='1' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==4)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==5)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois2=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==6)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois3=per.id
-            elif trimester =='3' :
+            elif trimester =='2' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==7)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==8)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):

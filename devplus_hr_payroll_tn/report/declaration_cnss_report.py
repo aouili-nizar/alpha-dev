@@ -27,21 +27,21 @@ class declaration_cnss_report(report_sxw.rml_parse):
         # if existe periode ouverture period_ids=13 else period_ids=12
         # if period_ids==12 :
         for per in obj.browse(self.cr,self.uid,period_ids):
-            if trimester =='1' :
+            if trimester =='0' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==1)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==2)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois2=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==3)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois3=per.id
-            elif trimester =='2' :
+            elif trimester =='1' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==4)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==5)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois2=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==6)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois3=per.id
-            elif trimester =='3' :
+            elif trimester =='2' :
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==7)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois1=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==8)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
