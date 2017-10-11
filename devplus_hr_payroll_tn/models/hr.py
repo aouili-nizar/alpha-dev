@@ -154,12 +154,11 @@ class hr_employee(osv.osv):
                 h.state='validate' and
                 s.payed=True and
                 h.employee_id = %s and
-                h.date_from  >    '%s' and
-                h.date_from  <    '%s'
-             """ % (employee_id, date_start, date_stop))
+                h.date_from  >=    '%s' and
+                h.date_from  <=    '%s'
+             """ % (employee_id, date_start+' 00:00:00', date_stop+' 23:59:59'))
         res = cr.dictfetchall()
         days = 0
-
         for r in res :
             days= days+ (r['number_of_days_temp'] or 0)
         return days
@@ -180,9 +179,9 @@ class hr_employee(osv.osv):
                 h.state='validate' and
                 s.payed=False and
                 h.employee_id = %s and
-                h.date_from  >    '%s' and
-                h.date_from  <    '%s'
-             """ % (employee_id, date_start, date_stop))
+                h.date_from  >=    '%s' and
+                h.date_from  <=    '%s'
+             """ % (employee_id, date_start+' 00:00:00', date_stop+' 23:59:59'))
         res = cr.dictfetchall()
         days = 0
         for r in res :
@@ -227,6 +226,8 @@ class hr_employee(osv.osv):
     def _get_total_days_restante(self, cr, uid, employee_id, context=None):
         days_all = self._get_total_days_conge_paye_attribue(cr, uid, employee_id, context=context)
         pris = self._get_total_days_conge_pris(cr, uid, employee_id, context=context)
+        day=days_all-pris
+        print"day congé",day
         return (days_all - pris)
 
 hr_employee()
