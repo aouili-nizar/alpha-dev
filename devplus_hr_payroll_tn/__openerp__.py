@@ -31,7 +31,6 @@
 #              'view/hr_payroll_tn_view.xml',
 #              'view/hr_avance_view.xml',
 #              'view/hr_pointage_view.xml',
-             'view/account_fisc_config.xml',
              'view/hr_payroll_menuitem.xml',
              'view/hr_view.xml',
              'view/hr_payroll_config_view.xml',
@@ -49,7 +48,6 @@
             'wizard/wizard_declaration_cnss_view.xml',
             'wizard/wizard_declaration_employer.xml',
             'wizard/wizard_ordre_virement.xml',
-            'wizard/wizard_declaration_fiscal.xml',
 
             'views/report_bulletin.xml',
             'views/report_declaration_cnss.xml',
@@ -57,7 +55,6 @@
             'views/report_journal_paie.xml',
             'views/report_declaration_employer.xml',
             'views/report_ordre_virement.xml',
-            'views/report_declaration_fiscal.xml',
             'views/report.xml',
 ],
 

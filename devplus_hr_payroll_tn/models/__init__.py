@@ -12,7 +12,6 @@ import hr_avance
 import hr_payroll_inverse
 import hr_convertion
 import res_company
-import account_fiscal_config
 #import tools
 
 #import hr_payroll_account
