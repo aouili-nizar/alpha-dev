@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp> 
+	<data>
+		<template id="declaration_fiscal_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+
+							<div class="oe_structure" />
+							<br />
+							<br />
+							<br />
+
+							<div class="col-xs-12 text-center">
+								<h2>
+									<span>Déclaration Fiscale  </span>
+								</h2>
+							</div>
+
+
+
+							<div class="col-xs-12 text-center">
+
+
+								<br />
+								<strong> Exercice Fiscale :</strong>
+								<strong>
+									<span t-field="o.fiscalyear_id" />
+								</strong>
+								<br />
+								<br />
+							</div>
+
+							<table style="width:100%;">
+
+								<tr>
+									<td class="text-center">
+										<b>Periode:</b>
+										<span t-field="o.periode" />
+									</td>
+								</tr>
+
+
+							</table>
+                            <br/>
+							<div class="col-xs-12 text-left">
+								<h3>Retenue a la source</h3>
+								<strong> Retenue à la source sur salaire :</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+										<th  class="text-center"> Base imposable</th>
+										<th  class="text-center"> IRPP(RH) </th>
+										<th  class="text-center"> IRPP(CT) </th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										<span t-raw="sum_impo_sal(data['form']['fiscalyear_id'],data['form']['periode'])"/>
+										</td>
+										<td class="text-center" >
+						<span t-raw="get_irpp(data['form']['fiscalyear_id'],data['form']['periode'])"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_irpp_cpt(data['form']['fiscalyear_id'])"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+							<div class="col-xs-12 text-left">
+								<strong> Retenue à la source 15 % :</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+									    <th  class="text-center"> Description </th>
+										<th  class="text-center"> Base</th>
+										<th  class="text-center"> Taux% </th>
+										<th class="text-center">Retenue</th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										Loyer
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_loyer(data['form']['fiscalyear_id'],gettloy(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettloy(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center">
+											<span t-raw="getb1(data['form']['fiscalyear_id'])"/>
+									</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										Honoraire
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_honoraire(data['form']['fiscalyear_id'],getthon15(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="getthon15(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center">
+											<span t-raw="getb2(data['form']['fiscalyear_id'])"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										Totaux
+										</td>
+										<td class="text-center" >
+										<span t-raw="sum_15(get_loyer(data['form']['fiscalyear_id'],gettloy(data['form']['fiscalyear_id'])),get_honoraire(data['form']['fiscalyear_id'],getthon15(data['form']['fiscalyear_id'])))"/>
+										</td>
+										<td class="text-center" >
+										</td>
+										<td class="text-center"><span t-raw="getb3(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+							<div class="col-xs-12 text-left">
+								<strong> Retenue à la source 5 % :</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+									    <th  class="text-center"> Description </th>
+										<th  class="text-center"> Base</th>
+										<th  class="text-center"> Taux% </th>
+										<th class="text-center">Retenue</th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										Honoraire
+										</td>
+										<td class="text-center" >
+											<span t-raw="get_hon5(data['form']['fiscalyear_id'],getthon5(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="getthon5(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getc(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+							<div class="col-xs-12 text-left">
+								<strong> Retenue à la source 1.5 % :</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+									    <th  class="text-center"> Description </th>
+										<th  class="text-center"> Base</th>
+										<th  class="text-center"> Taux% </th>
+										<th class="text-center">Retenue</th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										Marché
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_market(data['form']['fiscalyear_id'],gettmar(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettmar(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getd(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr >
+									    <th  class="text-center" style="background-color: lavender"> Total retenue à la source</th>
+											<th  class="text-center"><span t-raw="get_total_source(get_irpp_cpt(data['form']['fiscalyear_id']),data['form']['fiscalyear_id'])"/></th>
+									</tr>
+
+
+								</thead>
+
+							</table>
+						</div>
+
+							<div class="col-xs-12 text-left">
+								<h3> TFP:</h3>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+										<th  class="text-center"> Brut</th>
+										<th  class="text-center"> Taux% </th>
+										<th  class="text-center"> TFP </th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										 <span t-raw="get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode'])"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_tfp_taux(data['form']['fiscalyear_id'])"/>%
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_tfp(data['form']['fiscalyear_id'],get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode']))"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+report TFP
+										</td>
+										<td class="text-center" >
+
+										</td>
+										<td class="text-center" >
+<span t-raw="get_report_tfp(data['form']['fiscalyear_id'])"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										Totaux
+										</td>
+										<td class="text-center" >
+
+										</td>
+										<td class="text-center" >
+<span t-raw="get_total_tfp(get_tfp(data['form']['fiscalyear_id'],get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode'])),get_report_tfp(data['form']['fiscalyear_id']))"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+							<div class="col-xs-12 text-left">
+								<h3>FOPROLOS</h3>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+										<th  class="text-center"> Brut</th>
+										<th  class="text-center"> Taux% </th>
+										<th  class="text-center"> FOPORLOS </th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										<span t-raw="get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode'])"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_taux_fop(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_fop(get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode']),get_taux_fop(data['form']['fiscalyear_id']))"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+							<div class="col-xs-12 text-left">
+								<h3>Taxe sur la valeur ajoutée</h3>
+								<br/>
+								<strong> TVA collectée :</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+									<th  class="text-center"> Description</th>
+										<th  class="text-center"> Base</th>
+										<th  class="text-center"> Taux% </th>
+										<th class="text-center">TVA</th>
+
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										TVA Collectée 6%
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_cl6(data['form']['fiscalyear_id'],gettcol6(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="gettcol6(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center"><span t-raw="getc6(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA Collectée 12%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_cl12(data['form']['fiscalyear_id'],gettcol12(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettcol12(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center"><span t-raw="getc12(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA Collectée 18%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_cl18(data['form']['fiscalyear_id'],gettcol18(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+												<span t-raw="gettcol18(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getc18(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center">Totaux</td>
+										<td class="text-center"><span t-raw="get_totcol(get_cl18(data['form']['fiscalyear_id'],gettcol18(data['form']['fiscalyear_id'])),get_cl12(data['form']['fiscalyear_id'],gettcol12(data['form']['fiscalyear_id'])),get_cl6(data['form']['fiscalyear_id'],gettcol6(data['form']['fiscalyear_id'])))"/></td>
+										<td class="text-center"></td>
+										<td class="text-center"><span t-raw="gettc(getc18(data['form']['fiscalyear_id']),getc12(data['form']['fiscalyear_id']),getc6(data['form']['fiscalyear_id']))"/></td>
+</tr>
+								</tbody>
+							</table>
+						</div>
+						<br/>
+							<div class="col-xs-12 text-left">
+								<strong> TVA Deductible:</strong>
+							</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+									<th  class="text-center"> Description</th>
+										<th  class="text-center"> Base</th>
+										<th  class="text-center"> Taux% </th>
+									<th class="text-center">TVA</th>
+
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										TVA Deductible 6%
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_ded6(data['form']['fiscalyear_id'],gettded6(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+									<span t-raw="gettded6(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getd6(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA Deductible 12%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_ded12(data['form']['fiscalyear_id'],gettded12(data['form']['fiscalyear_id']))"/>
+										</td>
+
+										<td class="text-center" >
+										<span t-raw="gettded12(data['form']['fiscalyear_id'])"/>
+										</td>
+										<td class="text-center"><span t-raw="getd12(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA Deductible 18%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_ded18(data['form']['fiscalyear_id'],gettded18(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettded18(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getd18(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA/IMMO 6%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_mmo6(data['form']['fiscalyear_id'],gettmmo6(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettmmo6(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getmm6(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA/IMMO 12%
+										</td>
+										<td class="text-center" >
+											<span t-raw="get_mmo12(data['form']['fiscalyear_id'],gettmmo12(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettmmo12(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getmm12(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										TVA/IMMO 18%
+										</td>
+										<td class="text-center" >
+											<span t-raw="get_mmo18(data['form']['fiscalyear_id'],gettmmo18(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="gettmmo18(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getmm18(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										Tva retenue à la source
+										</td>
+										<td class="text-center" >
+											<span t-raw="get_tvars(data['form']['fiscalyear_id'],getttvasrc(data['form']['fiscalyear_id']))"/>
+										</td>
+										<td class="text-center" >
+<span t-raw="getttvasrc(data['form']['fiscalyear_id'])"/>
+										</td>
+<td class="text-center"><span t-raw="getsrc25(data['form']['fiscalyear_id'])"/></td>
+									</tr>
+									<tr>
+										<td class="text-center">Totaux</td>
+										<td class="text-center"><span t-raw="get_totded(get_ded6(data['form']['fiscalyear_id'],gettded6(data['form']['fiscalyear_id'])),get_ded12(data['form']['fiscalyear_id'],gettded12(data['form']['fiscalyear_id'])),get_ded18(data['form']['fiscalyear_id'],gettded18(data['form']['fiscalyear_id'])),get_mmo6(data['form']['fiscalyear_id'],gettmmo6(data['form']['fiscalyear_id'])),get_mmo12(data['form']['fiscalyear_id'],gettmmo12(data['form']['fiscalyear_id'])),get_mmo18(data['form']['fiscalyear_id'],gettmmo18(data['form']['fiscalyear_id'])),get_tvars(data['form']['fiscalyear_id'],getttvasrc(data['form']['fiscalyear_id'])))"/></td>
+										<td></td>
+										<td class="text-center"><span t-raw="getgtt(getd6(data['form']['fiscalyear_id']),getd12(data['form']['fiscalyear_id']),getd18(data['form']['fiscalyear_id']),getmm6(data['form']['fiscalyear_id']),getmm12(data['form']['fiscalyear_id']),getmm18(data['form']['fiscalyear_id']))"/></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr >
+									    <th  class="text-center" style="background-color: lavender"> Reliquat TVA du mois</th>
+										<th  class="text-center"> <span t-raw="get_relq(data['form']['fiscalyear_id'])"/></th>
+									</tr>
+									<tr >
+									    <th  class="text-center" style="background-color: lavender"> Report TVA mois précédent</th>
+										<th  class="text-center"><span t-raw="get_repder(data['form']['fiscalyear_id'])"/></th>
+									</tr>
+									<tr >
+									    <th  class="text-center" style="background-color: lavender"> TVA à reporter/TVA à payer</th>
+										<th  class="text-center"><span t-raw="get_tvarep(get_repder(data['form']['fiscalyear_id']),get_relq(data['form']['fiscalyear_id']))"/></th>
+									</tr>
+
+
+								</thead>
+
+							</table>
+						</div>
+						<div class="col-xs-12 text-left">
+							<strong>Droit de timbre:</strong>
+						</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+
+									<tr>
+										<td class="text-center" >
+										Nbre des factures
+										</td>
+										<td class="text-center" >
+										Droit de timbre (CT)
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										<span t-raw="get_nbrfact(data['form']['periode'])"/>
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_fact(data['form']['fiscalyear_id'])"/>
+										</td>
+									</tr>
+								
+							</table>
+						</div>
+						<div class="col-xs-12 text-left">
+							<strong>Taxe sur chiffre d'affaire(TCL):</strong>
+						</div>
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+										<th  class="text-center"> Base </th>
+										<th  class="text-center"> Taux% </th>
+										<th  class="text-center"> TCL </th>
+									</tr>
+
+
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" >
+										<span t-field="o.sum_vnt_loc" />
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_loc_taux(data['form']['fiscalyear_id'])"/>%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_loc_tcl(get_loc_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_loc'])"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+									<span t-field="o.sum_vnt_ext" />
+										</td>
+										<td class="text-center" >
+									<span t-raw="get_exp_taux(data['form']['fiscalyear_id'])"/>%
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_expr_tcl(get_exp_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_ext'])"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" >
+										Totaux
+										</td>
+										<td class="text-center" >
+
+										</td>
+										<td class="text-center" >
+										<span t-raw="get_sum_tcl(get_expr_tcl(get_exp_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_ext']),get_loc_tcl(get_loc_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_loc']),data['form']['fiscalyear_id'])"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<br/>
+						<br/>
+
+						<div class="row mt32">
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr >
+									    <th  class="text-center" style="background-color: lavender"> Total à payer</th>
+										<th  class="text-center"><span t-raw="get_big_sum(get_total_source(get_irpp_cpt(data['form']['fiscalyear_id']),data['form']['fiscalyear_id']),get_total_tfp(get_tfp(data['form']['fiscalyear_id'],get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode'])),get_report_tfp(data['form']['fiscalyear_id'])),get_fop(get_sum_brut(data['form']['fiscalyear_id'],data['form']['periode']),get_taux_fop(data['form']['fiscalyear_id'])),get_tvarep(get_repder(data['form']['fiscalyear_id']),get_relq(data['form']['fiscalyear_id'])),get_fact(data['form']['fiscalyear_id']),get_sum_tcl(get_expr_tcl(get_exp_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_ext']),get_loc_tcl(get_loc_taux(data['form']['fiscalyear_id']),data['form']['sum_vnt_loc']),data['form']['fiscalyear_id']))"/></th>
+
+									</tr>
+
+
+								</thead>
+
+							</table>
+						</div>
+
+<div class="row text-center"><b> Fait le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>   - Par : <span t-esc="user.name"></span> </b></div>
+
+
+
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

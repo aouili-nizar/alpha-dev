@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="wizard_declaration_employer_form">
+			<field name="name">wizard.declaration.employer.form</field>
+			<field name="model">devplus_hr_payroll_tn.declaration_employer</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Rapport declaration employeur">
+					<group>
+
+
+							<field name="fiscalyear_id" style="width: 40%" />
+							<field name="comptable_id" style="width: 40%" />
+					</group>
+			     <footer>
+						<button  name="print_report" string="Imprimer"
+							type="object" class="oe_highlight" />
+						Or
+						<button string="Annuler" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+				<record id="action_wizard_declaration_employer" model="ir.actions.act_window">
+            <field name="name">Declaration employeur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">devplus_hr_payroll_tn.declaration_employer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_declaration_employer_form"/>
+            <field name="target">new</field>
+        </record>
+
+				<menuitem id="menu_declaration_employer" name="Declaration employeur"
+					parent="account.menu_finance_reports" action="action_wizard_declaration_employer" />
+
+
+
+
+	</data>
+</openerp>

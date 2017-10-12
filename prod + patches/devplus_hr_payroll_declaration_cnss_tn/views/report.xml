@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report id="devplus_hr_payroll_declaration_cnss_report" string="Déclaration CNSS"
+			model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_declaration_cnss_tn.report_declaration_cnss" name="devplus_hr_payroll_declaration_cnss_tn.report_declaration_cnss" />
+
+		<report id="devplus_hr_payroll_recapitulatif_cnss_report"
+			string="Récapitulatif cnss" model="hr.payroll" report_type="qweb-pdf"
+			file="devplus_hr_payroll_declaration_cnss_tn.report_recapitulatif_cnss" name="devplus_hr_payroll_declaration_cnss_tn.report_recapitulatif_cnss" />
+
+      </data>
+</openerp>
+
+
+
+

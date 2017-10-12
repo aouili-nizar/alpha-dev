@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="hr_payroll_form" model="ir.ui.view">
+			<field name="name">spa.inherit.hr.payroll_tn</field>
+			<field name="model">hr.payroll</field>
+			<field name="inherit_id" ref="devplus_hr_payroll_tn.hr_payroll_form" />
+			<field name="arch" type="xml">
+				<!--  <field name="date_salary" position="after">
+					<field name="journal_id" />
+				</field>
+				<field name="partner_id" position="before">
+					<field name="currency_id" />
+				</field>
+				
+				-->
+			   <field name="name" position="after">
+					<field name="move_id" string="Pièce comptable" />
+					
+					
+				</field>
+				
+			</field>
+		</record>
+		
+		<record id="hr_payroll_bulletin_form" model="ir.ui.view">
+			<field name="name">spa.inherit.hr.payroll_bulletin_tn</field>
+			<field name="model">hr.payroll.bulletin</field>
+			<field name="inherit_id" ref="devplus_hr_payroll_tn.salary_form" />
+			<field name="arch" type="xml">
+				<!--  <field name="date_salary" position="after">
+					<field name="journal_id" />
+				</field>
+				<field name="partner_id" position="before">
+					<field name="currency_id" />
+				</field>
+				
+				-->
+			   <field name="period_id" position="after">
+					<field name="move_id" string="Pièce comptable" />
+					<field name="move_p_id" string="Pièce comptable(Paiement)"  />
+				</field>
+				
+			</field>
+		</record>
+		
+		 <!--  ajout champ partnaire pour les employées -->
+<!-- 		 
+		<record id="devplus_account_move_line" model="ir.ui.view">
+			<field name="name">devplus.account.move.line</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//notebook/page[@string='Journal Items']/field[@name='line_id']/tree/field[@name='partner_id']" position="after">
+					<field name="partner"  />
+				</xpath>
+				
+			</field>
+		</record> -->
+		
+		
+		
+	</data>
+</openerp>     

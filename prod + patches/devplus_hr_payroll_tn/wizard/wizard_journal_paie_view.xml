@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_journal_paie" model="ir.ui.view">
+			<field name="name">Journal de paie</field>
+			<field name="model">wizard.journal.paie</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Journal de Paie">
+
+					<group col="4">
+						<field name="company_id" options="{'no_create': 1,'no_open': 1,'create_edit':0}" />
+						<field name="month_id" options="{'no_create': 1,'no_open': 1,'create_edit':0}" />
+					</group>
+
+					<footer>
+						<button name="print_report" string="Imprimer" type="object"
+							class="oe_highlight" />
+<!-- 							or
+						<button name="print_report_excel" string="Imprimer Excel" type="object"
+							class="oe_highlight" /> -->
+						or
+						<button string="Cancel" special="cancel" class="oe_link" />
+					</footer>
+
+				</form>
+			</field>
+		</record>
+
+		<record id="action_journal_paie" model="ir.actions.act_window">
+			<field name="name">Journal de paie</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard.journal.paie</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_wizard_print_journal_paie" icon="STOCK_PRINT"
+			action="action_journal_paie" parent="menu_hr_reporting_paie" name="Journal de paie" />
+
+			<menuitem id="menu_wizard_print_journal_paie1" icon="STOCK_PRINT"
+				action="action_journal_paie" parent="account.menu_finance_reports" name="Journal de paie" />
+	</data>
+</openerp>

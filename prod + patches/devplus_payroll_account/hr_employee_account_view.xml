@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="hr_employee_form_inherit_account" model="ir.ui.view">
+			<field name="name">hr.employee.inherit.account</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Comptabilité">
+					<group>
+						<field name="account_salaire_base_id" />
+						<field name="account_brut_id" />
+						<field name="account_net_paye_id" />
+						<field name="account_avantage_id" />
+						<field name="account_deduction_id" />
+						<field name="account_irpp_id" />
+						<!-- <field name="account_foprolos_id" /> -->
+						<field name="account_cnss_id" />
+						<field name="account_prime_id" />
+						<field name="account_holiday_id" />
+						<field name="account_loan_id" />
+						<field name="account_banque_employeur_id" />
+					</group>
+				</page>
+			</notebook>
+			</field>
+		</record>
+	</data>
+</openerp>

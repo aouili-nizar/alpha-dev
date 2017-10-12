@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+
+		<!-- saisie de paie -->
+		
+		  <!--  action pour calculer le nombre de bullettin -->
+		   
+		<record id="action_payroll_to_bulletin" model="ir.actions.act_window">
+            <field name="name">Bulletins de paie</field>
+            <field name="res_model">hr.payroll.bulletin</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+		<record id="hr_payroll_form" model="ir.ui.view">
+			<field name="name">hr.payroll.form</field>
+			<field name="model">hr.payroll</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Saisie mensuelle" >
+<!-- 				  <header>
+				  <button name="confirm_cb" string="Confirmer" type="object" states="draft" />
+				     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid,cancelled" />
+				  </header> -->
+				  	<header>
+						<button name="draft_cb" string="Mettre en brouillon" type="object" class="oe_edit_only" states="confirmed" />
+						<button name="draft_pb" string="Remettre en brouillon" type="object" class="oe_edit_only" states="paid" />
+						<button name="draft_db" string="Remettre en brouillon 1" type="object" class="oe_edit_only" states="declared" />
+						<button name="draft_vb" string="Remettre en brouillon 2" type="object" class="oe_edit_only" states="versed" />
+						
+						<button name="confirm_cb" string="Confirmer" type="object" states="draft" />
+						<button name="cancel_cb" string="Payer" type="object" states="confirmed" />
+						<button name="declar_db" string="Declarer" type="object" states="paid" />
+						<button name="verse_vb" string="Verser" type="object" states="declared" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid,declared,versed,cancelled" />
+					</header>
+
+
+					<sheet class="oe_form_sheet_width_wider">
+					<div class="oe_right oe_button_box" name="buttons"> 
+						  <button type="action"   class="oe_stat_button" id="invoice_button"
+	                        icon="fa-list"  name="%(devplus_hr_payroll_tn.action_payroll_to_bulletin)d"
+	                        context="{'search_default_id_payroll': active_id,'default_id_payroll': active_id}">
+	                        <div><strong><field name="bulletinn_count"/></strong><br/>Bulletins de paie</div>
+                    		</button>
+					  </div>
+					  <group col="4">
+							<field name="month_id" on_change="onchange_month_id(month_id,company_id)" options="{'no_create': True,'no_open': True,'create_edit':False}" />
+							<field name="date_salary" />
+							<field name="company_id" />
+							<field name="period_id" />
+						</group>
+					
+				    <group>
+				    <field name="name"/>
+				    </group>
+				    
+				    <field name="bulletin_line_ids" readonly="1">
+							<tree string="Bulletins">
+								<field name="employee_id" />
+								<field name="salaire_brute" />
+								<field name="salaire_brute_imposable" />
+								<field name="cotisations_employee" />
+								 <field name="cotisations_employer" /> 
+								<field name="salaire_net_a_payer" />
+								<field name="state" invisible="1" />
+							</tree>
+						</field>
+		<div class="oe_subtotal_footer_separator">
+						
+						    <button name="generate_employees" string="Importer les employées" class="oe_edit_only oe_inline oe_stat_button" type="object"
+								states="draft" icon="fa-user" />
+								
+							<button name="compute_all_lines" string="Calculer les salaires" class="oe_edit_only oe_inline oe_stat_button" type="object"
+								states="draft" icon="fa-cogs" />
+		</div>
+						
+				
+					</sheet>
+				</form>
+			</field>
+		</record>
+	
+		
+		
+		<record id="hr_payroll_tree" model="ir.ui.view">
+			<field name="name">hr.payroll.tree</field>
+			<field name="model">hr.payroll</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree colors="blue:state=='draft';red:state=='cancelled'"
+					string="Saisie mensuelle">
+					<field name="name"/>
+					<field name="name"/>
+					<field name="number" invisible="1"/>
+					<field name="month_id"/>
+					<field name="date_salary"/>
+					<field name="state"/>
+					</tree>
+					</field>
+			</record>
+			
+		<record model="ir.actions.act_window" id="hr.payroll_all_act">
+			<field name="name">Saisie Paie</field>
+			<field name="res_model">hr.payroll</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem action="hr.payroll_all_act" id="menu_hr_payroll"
+			parent="menu_hr_root_payroll"  sequence="1"/>
+					
+
+
+		<record model="ir.ui.view" id="salary_tree">
+			<field name="name">hr.payroll.bulletin.tree</field>
+			<field name="model">hr.payroll.bulletin</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Salaire" colors="blue:state=='draft';red:state=='cancelled'">
+					<!-- <field name="name" /> -->
+					<field name="employee_id" />
+					<field name="month_id" />
+					<field name="pointage" />
+					<field name="salaire_base" />
+					<field name="salaire_brute" sum="Total" />
+					<field name="salaire_net_a_payer" sum="Total" />
+					<field name="id_payroll" invisible="1" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="salary_form">
+			<field name="name">hr.payroll.bulletin.form</field>
+			<field name="model">hr.payroll.bulletin</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Salaire">
+					<header>
+                        <button name="confirm_bulletin" string="Confirmer" type="object" states="draft" />
+                        <button name="draft_bulletin" states="confirmed" string="Mettre en brouillon"
+							class="oe_edit_only" type="object" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid,declared,versed" />
+					</header> 
+
+					<sheet>
+						<group>
+							<group>
+								<field name="employee_id" domain="[('active', '=',True)]"
+									on_change="onchange_employee_id(employee_id, period_id)" />
+								<field name="employee_contract_id" domain="[('employee_id', '=',employee_id)]"
+									on_change="onchange_contract_id(employee_contract_id)" />
+								<field name="month_id" />
+								<field name="period_id" />
+							</group>
+							<group>
+								<field name="pointage" />
+								<field name="salaire_base" />
+							</group>
+
+							<!-- <field name="id_payroll" /> <field name="comment" /> <field name="salaire" 
+								/> <field name="prime" /> <field name="indemnite" /> <field name="avantage" 
+								/> <field name="exoneration" /> <field name="deduction" /> <field name="loan_amount" 
+								/> <field name="pointage_line_id" /> <field name="note" /> <field name="frais_pro" 
+								/> -->
+
+						</group>
+						<notebook>
+							<page string="Structure de Salaire">
+								<field colspan="4" name="salary_line_ids" nolabel="1">
+									<tree string="Lignes de salaire" editable="bottom"
+										fonts="bold:type=='info'">
+										<field name="name" />
+										<field name="base" />
+										<field name="taux" />
+										<field name="gain" />
+										<field name="retenu" />
+										<field name="type" invisible="1" />
+
+									</tree>
+
+								</field>
+
+								<group colspan="4" col="6">
+									<field name="salaire_brute" />
+									<field name="cotisations_employee" />
+									<field name="salaire_net" />
+									<field name="salaire_brute_cotisable" />
+									<field name="cotisations_employer" />
+									<field name="salaire_net_a_payer" />
+									<field name="salaire_brute_imposable" />
+									<field name="igr" /> 
+									
+								</group>
+								<group>
+								<field name="montant_text" /> 
+								</group>
+
+                       <button name="compute_all_lines" string="Calculer" class="oe_edit_only oe_inline oe_stat_button" type="object"
+								states="draft" icon="fa-cogs" />
+							</page>
+							
+							<page string="Les congés">
+								<group>
+									<group>
+										<!-- <field name="nb_jours_cp_attribue" readonly="1"/> -->
+										<field name="nb_jours_cp_pris"  readonly="1"/>
+ 								<!-- 		<field name="nb_jours_cp_total_pris"  readonly="1"/>
+										<field name="nb_jours_cp_total"  readonly="1"/>  -->
+										<field name="nb_jours_cp_solde" readonly="1" />
+									</group>
+									<group>
+									</group>
+								</group>
+							</page>
+							
+							
+								
+							
+		                 
+
+							<page string="Notes">
+								<I>
+									<field name="note" placeholder="Information supplémentaire " />
+								</I>
+							</page>
+
+
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="hr_payroll_bulletin_serach" model="ir.ui.view">
+			<field name="name">hr.payroll.bulletin.search</field>
+			<field name="model">hr.payroll.bulletin</field>
+			<field name="arch" type="xml">
+				<search string="Recherche">
+					<field name="employee_id" />
+					<field name="employee_contract_id" />
+					<field name="month_id" />
+					<field name="id_payroll" />
+					<newline />
+					<group expand="0" string="Group By...">
+						<filter string="Employée" context="{'group_by':'employee_id'}" />
+						<filter string="Contrat" context="{'group_by':'employee_contract_id'}" />
+						<filter string="Mois" name="group_by_month_id" context="{'group_by':'month_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_salary_tree">
+			<field name="name">Bulletins de paie</field>
+			<field name="res_model">hr.payroll.bulletin</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_bullettin" name="Bullettin de paie"
+			parent="menu_hr_root_payroll" action="action_salary_tree"  sequence="2"/>
+
+
+
+
+
+
+
+
+
+	</data>
+</openerp>

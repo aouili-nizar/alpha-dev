@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- Les Cotisations -->
+
+		<record model="ir.ui.view" id="hr_payroll_cotisation_tree">
+			<field name="name">hr.payroll.cotisation.tree</field>
+			<field name="model">hr.payroll.cotisation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cotisations">
+					<field name="code" />
+					<field name="name" />
+					<field name="tauxsalarial" />
+					<field name="tauxpatronal" />
+					<field name="tauxAT" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_payroll_cotisation_form">
+			<field name="name">hr.payroll.cotisation.form</field>
+			<field name="model">hr.payroll.cotisation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cotisations">
+					<sheet>
+						<group>
+							<field name="code" />
+							<field name="name" />
+							<field name="tauxsalarial" on_change="onchange_taux(tauxsalarial, tauxpatronal)" />
+							<field name="tauxpatronal" on_change="onchange_taux(tauxsalarial, tauxpatronal)" />
+							<field name="tauxAT" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_payroll_cotisation_action">
+			<field name="name">Les cotisations</field>
+			<field name="res_model">hr.payroll.cotisation</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="hr_payroll_cotisation_action" id="hr_payroll_cotisation_menuitem"
+			parent="payroll_configuration" />
+
+		<!-- Les types de cotisation -->
+
+		<record model="ir.ui.view" id="hr_payroll_cotisation_type_form">
+			<field name="name">hr.payroll.cotisation_type.form</field>
+			<field name="model">hr.payroll.cotisation.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Types Cotisations">
+					<sheet>
+						<group>
+							<field name="name" />
+						</group>
+						<separator string="Les cotisations" />
+						<field name="cotisation_ids" />
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_payroll_cotisation_type_tree">
+			<field name="name">hr.payrol.cotisation_type.tree</field>
+			<field name="model">hr.payroll.cotisation.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Types Cotisations">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_payroll_cotisation_type_action">
+			<field name="name">Les types cotisations</field>
+			<field name="res_model">hr.payroll.cotisation.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="hr_payroll_cotisation_type_action" id="hr_payroll_cotisation_type_menuitem"
+			parent="payroll_configuration" />
+
+
+		<!-- Les baremes IRPP -->
+
+		<record model="ir.ui.view" id="hr_payroll_ir_form">
+			<field name="name">hr.payroll.ir.form</field>
+			<field name="model">hr.payroll.ir</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Barèmes IR">
+				<separator string="Barèmes IR" colspan="4" />
+						<group>
+							<field name="debuttranche" />
+							<field name="fintranche" />
+							<field name="taux" />
+						</group>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="hr_payroll_ir_tree">
+			<field name="name">hr.payroll.ir.tree</field>
+			<field name="model">hr.payroll.ir</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Barèmes IR" editable="bottom">
+
+							<field name="debuttranche" />
+							<field name="fintranche" />
+							<field name="taux" />
+
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_payroll_ir_action">
+			<field name="name">Barèmes IR</field>
+			<field name="res_model">hr.payroll.ir</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+<menuitem action="hr_payroll_ir_action" id="hr_payroll_ir_menuitem"
+			parent="payroll_configuration" />
+
+
+
+
+		<!-- les parametres de payroll -->
+
+		<record model="ir.ui.view" id="hr_payroll_parametres_form">
+			<field name="name">hr.payroll.parametres.form</field>
+			<field name="model">hr.payroll.parametres</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Paramètres de la Paie">
+					<sheet>
+						<group>
+							<group>
+								<field name="fiscalyear_id"
+									options="{'no_create': 1,'no_open': 1,'create_edit':0}" />
+									<field name="company_id" />
+							</group>
+							<group />
+						</group>
+						<notebook>
+							<page string="Paramétres IRPP">
+								<group>
+									<group string="Impot sur le revenu">
+										<field name="parent_charge" />
+										<field name="chef_famille" />
+										<field name="enfant1" />
+										<field name="enfant2" />
+										<field name="enfant3" />
+										<field name="enfant4" />
+										<field name="enfant_etudiant" />
+										<field name="enfant_handicape" />
+									</group>
+									<!-- <group string="Redevance de compensation">
+										<field name="redevance_taux" />
+										<field name="redevance_from" />
+										<field name="redevance_max" />
+									</group> -->
+									<group string="Autres">
+										<!-- <field name="smig" /> -->
+										<field name="fraispro" />
+										<field name="taux_accident_travail" />
+									</group>
+									<group string="Droit à des congés payés">
+										<field name="nb_jour_5j" />
+										<field name="nb_jour_6j" />
+										<field name="auto_droit_conge" />
+									</group>
+								</group>
+							</page>
+							<page string="Les mois de la Paie">
+								<group colspan="4">
+									<field name="month_ids" nolabel="1">
+										<tree editable="bottom">
+											<field name="name" />
+											<field name="period_id"
+												options="{'no_create': 1,'no_open': 1,'create_edit':0}"
+												on_change="onchange_period_id(period_id)" />
+											<field name="date_start" />
+											<field name="date_stop" />
+											<field name="nb_jour_5j" />
+											<field name="nb_jour_6j" />
+										</tree>
+									</field>
+								</group>
+							</page>
+
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_payroll_parametres_tree">
+			<field name="name">hr.payroll.parametres.tree</field>
+			<field name="model">hr.payroll.parametres</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Paramètres de la Paie">
+					<field name="fiscalyear_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_payroll_parametres_action">
+			<field name="name">Paramètres</field>
+			<field name="res_model">hr.payroll.parametres</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem action="hr_payroll_parametres_action" id="hr_payroll_parametres_menuitem"
+			parent="payroll_configuration" />
+
+
+
+
+
+	</data>
+</openerp>

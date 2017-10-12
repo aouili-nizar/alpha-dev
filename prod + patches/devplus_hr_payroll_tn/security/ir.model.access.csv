@@ -1,0 +1,70 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_payroll_parametres_manager ,name_hr_payroll_parametres_manager,devplus_hr_payroll_tn.model_hr_payroll_parametres,base.group_hr_manager,1,1,1,1
+access_hr_payroll_parametres_user,name_hr_payroll_parametres_user,devplus_hr_payroll_tn.model_hr_payroll_parametres,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_ir_manager ,name_hr_payroll_ir_manager,devplus_hr_payroll_tn.model_hr_payroll_ir,base.group_hr_manager,1,1,1,1
+access_hr_payroll_ir_user,name_hr_payroll_ir_user,devplus_hr_payroll_tn.model_hr_payroll_ir,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_cotisation_manager ,name_hr_payroll_cotisation_manager,devplus_hr_payroll_tn.model_hr_payroll_cotisation,base.group_hr_manager,1,1,1,1
+access_hr_payroll_cotisation_user,name_hr_payroll_cotisation_user,devplus_hr_payroll_tn.model_hr_payroll_cotisation,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_cotisation_type_manager ,name_hr_payroll_cotisation_type_manager,devplus_hr_payroll_tn.model_hr_payroll_cotisation_type,base.group_hr_manager,1,1,1,1
+access_hr_payroll_cotisation_type_user,name_hr_payroll_cotisation_type_user,devplus_hr_payroll_tn.model_hr_payroll_cotisation_type,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_rubrique_manager ,name_hr_payroll_rubrique_manager,devplus_hr_payroll_tn.model_hr_payroll_rubrique,base.group_hr_manager,1,1,1,1
+access_hr_payroll_rubrique_user,name_hr_payroll_rubrique_user,devplus_hr_payroll_tn.model_hr_payroll_rubrique,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_ligne_rubrique_manager ,name_hr_payroll_ligne_rubrique_manager,devplus_hr_payroll_tn.model_hr_payroll_ligne_rubrique,base.group_hr_manager,1,1,1,1
+access_hr_payroll_ligne_rubrique_user,name_hr_payroll_ligne_rubrique_user,devplus_hr_payroll_tn.model_hr_payroll_ligne_rubrique,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_manager ,name_hr_payroll_manager,devplus_hr_payroll_tn.model_hr_payroll,base.group_hr_manager,1,1,1,1
+access_hr_payroll_user,name_hr_payroll_user,devplus_hr_payroll_tn.model_hr_payroll,base.group_hr_user,0,0,0,0
+,,,,,,,
+access_hr_payroll_bulletin_manager ,name_hr_payroll_bulletin_manager,devplus_hr_payroll_tn.model_hr_payroll_bulletin,base.group_hr_manager,1,1,1,1
+access_hr_payroll_bulletin_user,name_hr_payroll_bulletin_user,devplus_hr_payroll_tn.model_hr_payroll_bulletin,base.group_hr_user,0,0,0,0
+,,,,,,,
+access_hr_payroll_bulletin_line_manager ,name_hr_payroll_bulletin_line_manager,devplus_hr_payroll_tn.model_hr_payroll_bulletin_line,base.group_hr_manager,1,1,1,1
+access_hr_payroll_bulletin_line_user,name_hr_payroll_bulletin_line_user,devplus_hr_payroll_tn.model_hr_payroll_bulletin_line,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_pointage_manager ,name_hr_pointage_manager,devplus_hr_payroll_tn.model_hr_pointage,base.group_hr_manager,1,1,1,1
+access_hr_pointage_user,name_hr_pointage_user,devplus_hr_payroll_tn.model_hr_pointage,base.group_hr_user,0,0,0,0
+,,,,,,,
+access_hr_pointage_line_manager ,name_hr_pointage_line_manager,devplus_hr_payroll_tn.model_hr_pointage_line,base.group_hr_manager,1,1,1,1
+access_hr_pointage_line_user,name_hr_pointage_line_user,devplus_hr_payroll_tn.model_hr_pointage_line,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_payroll_inverse_manager ,name_hr_payroll_inverse_manager,devplus_hr_payroll_tn.model_hr_payroll_inverse,base.group_hr_manager,1,1,1,1
+access_hr_payroll_inverse_user,name_hr_payroll_inverse_user,devplus_hr_payroll_tn.model_hr_payroll_inverse,base.group_hr_user,0,0,0,0
+,,,,,,,
+access_account_period_manager ,name_account_period_manager,account.model_account_period,base.group_hr_manager,1,1,1,1
+access_account_period_user,name_account_period_user,account.model_account_period,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_contract_manager ,name_hr_contract_manager,hr_contract.model_hr_contract,base.group_hr_manager,1,1,1,1
+access_hr_contract_user,name_hr_contract_user,hr_contract.model_hr_contract,base.group_hr_user,1,1,1,1
+,,,,,,,
+access_hr_month_manager ,name_hr_month_manager,devplus_hr_payroll_tn.model_hr_month,base.group_hr_manager,1,1,1,1
+access_hr_month_user,namehr_month_user,devplus_hr_payroll_tn.model_hr_month,base.group_hr_user,1,1,0,0
+,,,,,,,
+access_hr_infraction_type_manager,name_hr_infraction_type_manager,devplus_hr_payroll_tn.model_hr_infraction_type,base.group_hr_manager,1,1,1,1
+access_hr_infraction_type_user,name_hr_infraction_type_user,devplus_hr_payroll_tn.model_hr_infraction_type,devplus_hr_payroll_tn.infration_managment,1,1,0,0
+,,,,,,,
+access_hr_infraction_manager,name_hr_infraction_manager,devplus_hr_payroll_tn.model_hr_infraction,base.group_hr_manager,1,1,1,1
+access_hr_infraction_user,name_hr_infraction_user,devplus_hr_payroll_tn.model_hr_infraction,devplus_hr_payroll_tn.infration_managment,1,1,0,0
+,,,,,,,
+access_hr_autorisation_group_autorisation_managment,name_hr_autorisation_group_autorisation_managment,devplus_hr_payroll_tn.model_hr_autorisation,autorisation_managment,1,1,1,1
+,,,,,,,
+access_hr_avance_group_avance_managment,name_hr_avance_group_avance_managment,devplus_hr_payroll_tn.model_hr_avance,avance_managment,1,1,1,1
+,,,,,,,
+access_hr_avance_line_group_avance_managment,name_hr_avance_line_group_avance_managment,devplus_hr_payroll_tn.model_hr_avance_line,avance_managment,1,1,1,1
+,,,,,,,
+access_hr_contract_regime_manager ,name_hr_contract_regime_manager,devplus_hr_payroll_tn.model_hr_contract_regime,base.group_hr_manager,1,1,1,1
+access_hr_contract_regime_user,name_hr_contract_regime_user,devplus_hr_payroll_tn.model_hr_contract_regime,base.group_hr_user,1,0,0,0
+
+access_wizard_journal_paie_manager ,name_wizard_journal_paie_manager,devplus_hr_payroll_tn.model_wizard_journal_paie,base.group_hr_manager,1,1,1,1
+access_wizard_journal_paie_user,name_wizard_journal_paie_user,devplus_hr_payroll_tn.model_wizard_journal_paie,base.group_hr_user,0,0,0,0
+
+access_wizard_journal_paie_manager ,name_wizard_journal_paie_manager,devplus_hr_payroll_tn.model_wizard_journal_paie,base.group_hr_manager,1,1,1,1
+access_wizard_journal_paie_user,name_wizard_journal_paie_user,devplus_hr_payroll_tn.model_wizard_journal_paie,base.group_hr_user,0,0,0,0
+
+access_wizard_declaration_cnss_manager ,name_wizard_declaration_cnss_manager,devplus_hr_payroll_tn.model_wizard_declaration_cnss,base.group_hr_manager,1,1,1,1
+access_wizard_declaration_cnss_user,name_wizard_declaration_cnss_user,devplus_hr_payroll_tn.model_wizard_declaration_cnss,base.group_hr_user,0,0,0,0
+

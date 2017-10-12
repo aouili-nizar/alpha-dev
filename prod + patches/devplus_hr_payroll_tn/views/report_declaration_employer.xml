@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="declaration_employer_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+
+							<div class="oe_structure" />
+							<br />
+							<br />
+							<br />
+
+							<div class="col-xs-12 text-center">
+								<h2>
+									<span>Declaration employeur  </span>
+								</h2>
+							</div>
+
+
+							<div class="col-xs-12 text-center">
+
+
+								<br />
+								<strong> Exercice Fiscal :</strong>
+								<strong>
+									<span t-field="o.fiscalyear_id" />
+								</strong>
+								<br />
+								<br />
+							</div>
+
+							<table
+								class="table right table-bordered table-bg-head-gray-border table-padding-1">
+								<thead>
+									<tr style="background-color: lavender">
+										<th class="text-center">Employé</th>
+										<th class="text-center"> Salaire Brute Imposable</th>
+										<th class="text-center"> IRPP</th>
+									</tr>
+								</thead>
+								<tbody>
+									<t t-set="salaire_brute_imposable" t-value="0" />
+									<t t-set="irpp" t-value="0" />
+									<tr t-foreach="get_declaration_employer(data['form']['fiscalyear_id'])"
+										t-as="res">
+
+										<t t-set="salaire_brute_imposable"
+											t-value="salaire_brute_imposable+res['salaire_brute_imposable']" />
+										<t t-set="irpp" t-value="irpp+res['irpp']" />
+
+										<td class="text-center">
+											<span t-esc="res['employee_id']" />
+										</td>
+
+										<td class="text-center">
+											<!-- <span t-esc="res['salaire_brute_imposable']" /> -->
+											<span
+												t-esc="formatLang(res['salaire_brute_imposable'], digits=get_digits(dp='Montant Paie'))" />
+										</td>
+										<td class="text-center">
+											<!-- <span t-esc="res['irpp']" /> -->
+											<span
+												t-esc="formatLang(res['irpp'], digits=get_digits(dp='Montant Paie'))" />
+										</td>
+
+
+
+
+									</tr>
+									<tr>
+										<td class="text-center">
+											<strong> Total</strong>
+										</td>
+
+										<td class="text-center">
+											<strong>
+												<span t-esc="salaire_brute_imposable" />
+											</strong>
+										</td>
+										<td class="text-center">
+											<strong>
+												<span t-esc="irpp" />
+											</strong>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+							<div class="col-xs-11">
+								<table style="width:100%;">
+
+									<tr>
+										<td class="text-left">
+											<br />
+											<b>
+												Comptable
+											</b>
+
+											<br />
+											<br />
+											<b>
+												<span t-field="o.comptable_id.name" />
+											</b>
+										</td>
+										<td>
+											<b></b>
+											<br />
+											<br />
+											<b></b>
+										</td>
+										<td>
+										</td>
+
+										<td></td>
+
+									</tr>
+
+								</table>
+							</div>
+
+
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>
+    
