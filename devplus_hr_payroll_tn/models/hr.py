@@ -30,18 +30,7 @@ class hr_employee(osv.osv):
                 return False
             return True
 
-    @api.model
-    def _get_default_image1(self,colorize=False):
 
-        img_path = openerp.modules.get_module_resource('devplus_hr_payroll_tn', 'static/src/img', 'avatar.png')
-        image = None
-        with open(img_path, 'rb') as f:
-            image = f.read()
-        image = tools.image_colorize(image)
-        return tools.image_resize_image_big(image.encode('base64'))
-    defaults = {
-        'image_medium':_get_default_image1,
-        }
     def _action_count_autorisation(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
         for employee in self.browse(cr,uid,ids):

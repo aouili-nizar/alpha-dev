@@ -20,10 +20,6 @@
 			model="hr.payroll" report_type="qweb-pdf"
 			file="devplus_hr_payroll_tn.declaration_employer_report" name="devplus_hr_payroll_tn.declaration_employer_report" />
 
-		<report id="report_declaration_fiscal" string="Declaration fiscal"
-			model="hr.payroll" report_type="qweb-pdf"
-			file="devplus_hr_payroll_tn.declaration_fiscal_report" name="devplus_hr_payroll_tn.declaration_fiscal_report" />
-
 		<report id="devplus_hr_payroll_ordre_virement_report" string="Ordre virement"
 			model="hr.payroll" report_type="qweb-pdf"
 			file="devplus_hr_payroll_tn.report_ordre_virement" name="devplus_hr_payroll_tn.report_ordre_virement" />

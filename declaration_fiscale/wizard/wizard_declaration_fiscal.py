@@ -8,7 +8,7 @@ from openerp.tools.translate import _
 # wizard_resume_paie
 #-------------------------------------------------------------------------------
 class wizard_declaration_fiscal(models.TransientModel):
-    _name = 'devplus_hr_payroll_tn.declaration_fiscal'
+    _name = 'declaration_fiscale.declaration_fiscal'
     fiscalyear_id = fields.Many2one('account.fiscalyear', string='Exercice fiscal', required=True)
     periode = fields.Many2one('account.period',string='Période',required=True)
     sum_vnt_loc = fields.Integer(required=True,string='Somme des ventes locale')
@@ -20,7 +20,7 @@ class wizard_declaration_fiscal(models.TransientModel):
         datas['form'] = self.read(cr, uid, ids, context=context)[0]
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'devplus_hr_payroll_tn.declaration_fiscal_report',
+            'report_name': 'declaration_fiscale.declaration_fiscal_report',
             'datas': datas,
             'name': u'Rapport de declaration Fiscal',
             'context':context

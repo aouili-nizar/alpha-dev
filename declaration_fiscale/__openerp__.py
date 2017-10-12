@@ -28,6 +28,7 @@
         'views/account_fisc_config.xml',
         'wizard/wizard_declaration_fiscal.xml',
         'reportXml/report_declaration_fiscal.xml',
+        'reportXml/report.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

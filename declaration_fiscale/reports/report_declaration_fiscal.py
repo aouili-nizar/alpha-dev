@@ -876,7 +876,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         return round(taxres,3)
     def get_sum_brut(self,fiscalyear_id,periode_id,context=None):
         salaire_obj=self.pool.get('hr.payroll.bulletin')
-        search_ids=salaire_obj.search(self.cr,self.uid,[('month_id.period_id.fiscalyear_id','=',fiscalyear_id),('period_id.name','=',periode_id),('employee_contract_id.type_id.name','!=','SIVP')],context)
+        search_ids=salaire_obj.search(self.cr,self.uid,[('month_id.period_id.fiscalyear_id','=',fiscalyear_id[1]),('period_id.name','=',periode_id[1]),('employee_contract_id.type_id.name','!=','SIVP')],context)
         total=0.0
         for line in salaire_obj.browse(self.cr,self.uid,search_ids) :
             total += line.salaire_brute
@@ -884,10 +884,17 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         return total
     def _get_irpp(self,fiscalyear_id,periode_id,context=None):
         salaire_obj=self.pool.get('hr.payroll.bulletin')
-        search_ids=salaire_obj.search(self.cr,self.uid,[('month_id.period_id.fiscalyear_id','=',fiscalyear_id),('period_id.name','=',periode_id),('employee_contract_id.type_id.name','!=','SIVP')],context)
+        search_ids=salaire_obj.search(self.cr,self.uid,[('period_id.fiscalyear_id','=',fiscalyear_id),('period_id.name','=',periode_id),('employee_contract_id.type_id.name','!=','SIVP')],context)
         total=0.0
+        print "this is the result of the search  irpp ^_^ and it's parameters"
+        print(search_ids)
+        print'------'
+        print(fiscalyear_id)
+        print'-------'
+        print(periode_id[1])
         for line in salaire_obj.browse(self.cr,self.uid,search_ids) :
             total += line.igr
+        print"this is the total of irpp ^_^"
         print(total)
         return total
     def _get_total_salaire_imposable(self,fiscalyear_id,periode_id,context=None):
@@ -922,7 +929,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
 
 
 class declaration_employer_report(osv.AbstractModel):
-    _name = 'report.devplus_hr_payroll_tn.declaration_fiscal_report'
+    _name = 'report.declaration_fiscale.declaration_fiscal_report'
     _inherit = 'report.abstract_report'
-    _template = 'devplus_hr_payroll_tn.declaration_fiscal_report'
+    _template = 'declaration_fiscale.declaration_fiscal_report'
     _wrapped_report_class = report_declaration_fiscal
