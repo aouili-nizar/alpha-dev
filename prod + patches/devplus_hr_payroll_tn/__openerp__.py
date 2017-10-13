@@ -45,13 +45,10 @@
 
 
             'wizard/wizard_journal_paie_view.xml',
-            'wizard/wizard_declaration_cnss_view.xml',
             'wizard/wizard_declaration_employer.xml',
             'wizard/wizard_ordre_virement.xml',
 
             'views/report_bulletin.xml',
-            'views/report_declaration_cnss.xml',
-            'views/report_recapitulatif_cnss.xml',
             'views/report_journal_paie.xml',
             'views/report_declaration_employer.xml',
             'views/report_ordre_virement.xml',

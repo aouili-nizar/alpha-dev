@@ -11,9 +11,6 @@
 					<field name="cnss" />
 					<field name="code_exploitation" />
 				</field>
-				<field name="website" position="after">
-					<field name="BR" />
-				</field>
 			</field>
 		</record>
 	</data>
