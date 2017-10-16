@@ -11,7 +11,7 @@ from openerp.osv import osv
 
 
 class report_declaration_fiscal(report_sxw.rml_parse):
-
+""" classe de deffinition et calcule des différente valeurs de la declaration fiscale """
     def __init__(self, cr, uid, name, context):
             super(report_declaration_fiscal, self).__init__(cr, uid, name, context=context)
             self.localcontext.update({
@@ -221,51 +221,60 @@ class report_declaration_fiscal(report_sxw.rml_parse):
     def get_sum_tcl(self,a,b,fiscalyear_id,context=None):
         return round(a+b , 3 )
     def get_cl6(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print 'this is ids 6'
-        print(ids)
-        account = None
-        balance = 0
-        print 'this is obj 6'
-        print obj
-        print b
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_6
-            print 'this is acc6 val and b '
-            print x.tva_col_6.balance
-        balance = account.balance
-        if balance != 0:
-            print'this is the result of cl 6'
-            print round((balance/((balance/100)*b)),3)
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print 'this is ids 6'
+            print(ids)
+            account = None
+            balance = 0
+            print 'this is obj 6'
+            print obj
+            print b
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_6
+                print 'this is acc6 val and b '
+                print x.tva_col_6.balance
+            balance = account.balance
+            if balance != 0:
+                print'this is the result of cl 6'
+                print round((balance/((balance/100)*b)),3)
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_cl12(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_12
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_12
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_cl18(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_18
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_18
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_totcol(self,a,b,c,context=None):
         print('this is tot col')
@@ -274,330 +283,389 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         print c
         return a+b+c
     def get_ded6(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_6
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_6
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_ded12(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_12
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_12
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_ded18(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_18
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_18
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_mmo6(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_6
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_6
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_mmo12(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_12
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_12
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_mmo18(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_18
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_18
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_tvars(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ret_src
-        balance = account.balance
-        if balance != 0:
-            return (balance/((balance/100)*b))
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ret_src
+            balance = account.balance
+            if balance != 0:
+                return (balance/((balance/100)*b))
+            elif balance == 0:
+                return 0
+        except:
             return 0
 
     def get_totded(self,a,b,c,d,e,f,g,context=None):
         return a+b+c+d+e+f+g
     def getc6(self,fiscalyear_id,context=None):
         #c 6%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_6
-        c6 = account.balance
-        print 'this is c6'
-        print c6
-        return round(-1 * c6, 3) if c6 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_6
+            c6 = account.balance
+            print 'this is c6'
+            print c6
+            return round(-1 * c6, 3) if c6 != 0 else 0
+        except:
+            return 0
     def getc12(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_12
-        c12 = account.balance
-        return round(-1 * c12, 3) if c12 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_12
+            c12 = account.balance
+            return round(-1 * c12, 3) if c12 < 0 else  c12
+        except:
+            return 0
     def getc18(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_18
-        c18 = account.balance
-        return round(-1 * c18,3) if c18 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_18
+            c18 = account.balance
+            return round(-1 * c18,3) if c18 != 0 else 0
+        except:
+            return 0
     def getd6(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_6
-        d6 = account.balance
-        return round(-1 * d6, 3) if d6 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_6
+            d6 = account.balance
+            return round(-1 * d6, 3) if d6 != 0 else 0
+        except:
+            return 0
     def getd12(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_12
-        d12 = account.balance
-        return round(-1 * d12,3) if d12 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_12
+            d12 = account.balance
+            return round(-1 * d12,3) if d12 != 0 else 0
+        except:
+            return 0
     def getd18(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_18
-        d18 = account.balance
-        return round(-1 * d18, 3) if d18 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_18
+            d18 = account.balance
+            return round(-1 * d18, 3) if d18 != 0 else 0
+        except:
+            return 0
     def getmm6(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_6
-        m6 = account.balance
-        return round(-1 * m6, 3) if m6 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_6
+            m6 = account.balance
+            return round(-1 * m6, 3) if m6 != 0 else 0
+        except:
+            return 0
     def getmm12(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_12
-        m12 = account.balance
-        return round(-1 * m12, 3) if m12 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_12
+            m12 = account.balance
+            return round(-1 * m12, 3) if m12 != 0 else 0
+        except:
+            return 0
     def getmm18(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_18
-        m18 = account.balance
-        return round(-1 * m18, 3) if m18 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_18
+            m18 = account.balance
+            return round(-1 * m18, 3) if m18 != 0 else 0
+        except:
+            return 0
     def gettc(self,a,b,c,context=None):
         return a+b+c
     def getsrc25(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        s25 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ret_src
-        s25 = account.balance
-        return round(-1 * s25, 3) if s25 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            s25 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ret_src
+            s25 = account.balance
+            return round(-1 * s25, 3) if s25 != 0 else 0
+        except:
+            return 0
     def getgtt(self,a,b,c,d,e,f,context=None):
         return a+b+c+d+e+f
                                                    
     def get_relq(self,fiscalyear_id,context=None):
+        try:
         #c 6%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_6
-        c6 = -1 * account.balance
-        # c 12%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_12
-        c12 = -1 * account.balance
-        # c 18%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_col_18
-        c18 = -1 * account.balance
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_6
+            c6 =   account.balance
+            # c 12%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_12
+            c12 =   account.balance
+            # c 18%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_col_18
+            c18 =   account.balance
 
 
 
-        # d 6%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_6
-        d6 = -1 * account.balance
+            # d 6%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_6
+            d6 =   account.balance
 
-        # d 12%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_12
-        d12 = -1 *  account.balance
+            # d 12%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_12
+            d12 =   account.balance
 
-        # d 18%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ded_18
-        d18 = -1 *  account.balance
+            # d 18%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ded_18
+            d18 =   account.balance
 
-        # m 6%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m6 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_6
-        m6 =  -1 * account.balance
+            # m 6%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m6 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_6
+            m6 =   account.balance
 
-        # m 12%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m12 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_12
-        m12 = -1 * account.balance
+            # m 12%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m12 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_12
+            m12 =  account.balance
 
-        # m 18%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        m18 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_mmo_18
-        m18 = -1 * account.balance
-        # s 12%
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        s25 = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tva_ret_src
-        s25 = -1 * account.balance
-        return round(((c6+c12+c18)-(d6+d12+d18+m6+m12+m18+s25)),3) if ((c6+c12+c18)-(d6+d12+d18+m6+m12+m18+s25)) != 0 else 0
-
+            # m 18%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            m18 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_mmo_18
+            m18 =  account.balance
+            # s 12%
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            s25 = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tva_ret_src
+            s25 =  account.balance
+            return -1 * round(((c6 + c12 + c18) - (d6 + d12 + d18 + m6 + m12 + m18 + s25)), 3) if ((c6 + c12 + c18) - (d6 + d12 + d18 + m6 + m12 + m18 + s25)) < 0 else ((c6 + c12 + c18) - (d6 + d12 + d18 + m6 + m12 + m18 + s25))
+        except:
+            return 0
     def get_repder(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.report_tva
-        balance = account.balance
-        return round((0-balance),3) if balance != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.report_tva
+            balance = account.balance
+            return round((0-balance),3) if balance != 0 else 0
+        except:
+            return 0
     def get_tvarep(self,a,b,context=None):
         print('this is tvarp a')
         print(a)
         print(b)
         return a+b
     def get_nbrfact(self,a,context=None):
-        obj = self.pool.get('account.invoice')
-        ids = obj.search(self.cr,self.uid,[('period_id.code','=',a)])
-        i = 0 
-        for x in obj.browse(self.cr,self.uid,ids):
-            i = i+1
-        return i
+        try:
+            obj = self.pool.get('account.invoice')
+            ids = obj.search(self.cr,self.uid,[('period_id.code','=',a)])
+            i = 0 
+            for x in obj.browse(self.cr,self.uid,ids):
+                i = i+1
+            return i
+        except:
+            return 0
     def get_fisc(self,a,fiscalyear_id,context=None):
         obj = self.pool.get('declaration.fiscal.config')
         ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -610,19 +678,22 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         elif balance == 0 :
             return 0 
     def get_fact(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print('these r fact ids')
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            print('these r fact shit')
-            print x
-            print x.cpt_fact.balance
-            account  = x.cpt_fact
-        balance = account.balance
-        return round(-1 *  balance,3) if balance !=0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print('these r fact ids')
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                print('these r fact shit')
+                print x
+                print x.cpt_fact.balance
+                account  = x.cpt_fact
+            balance = account.balance
+            return round(-1 *  balance,3) if balance !=0 else 0
+        except:
+            return 0
     def get_totdr(self,context=None):
         pass
 
@@ -642,34 +713,40 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         return a+b+c+d+e+f
 
     def get_loyer(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print "this is loy"
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_loy
-        balance = account.balance
-        if balance != 0:
-            print "this is loy result positive"
-            print (balance/((balance/100)*b))
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print "this is loy"
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_loy
+            balance = account.balance
+            if balance != 0:
+                print "this is loy result positive"
+                print (balance/((balance/100)*b))
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
 
     def get_honoraire(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def sum_15(self,a,b,context=None):
         print'this is sum 15'
@@ -677,139 +754,166 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         print b
         return a+b
     def get_hon5(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon_5
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon_5
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def get_market(self,fiscalyear_id,b,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tfp
-        balance = account.balance
-        if balance != 0:
-            return round((balance/((balance/100)*b)),3)
-        elif balance == 0:
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tfp
+            balance = account.balance
+            if balance != 0:
+                return round((balance/((balance/100)*b)),3)
+            elif balance == 0:
+                return 0
+        except:
             return 0
     def getb1(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        loy = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_loy
-        loy = -1 * account.balance
-        return round(loy,3) if loy !=0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            loy = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_loy
+            loy = -1 * account.balance
+            return round(loy,3) if loy !=0 else 0
+        except:
+            return 0
     def getb2(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        hon = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon
-        hon = -1 * account.balance
-        return round(hon,3) if hon !=0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            hon = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon
+            hon = -1 * account.balance
+            return round(hon,3) if hon !=0 else 0
+        except:
+            return 0
     def getb3(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        loy = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_loy
-        loy = account.balance
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        hon = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon
-        hon = account.balance
-        b3 = 0
-        b3 = loy + hon
-        return round(-1 * b3, 3) if b3 != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            loy = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_loy
+            loy = account.balance
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            hon = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon
+            hon = account.balance
+            b3 = 0
+            b3 = loy + hon
+            return round(-1 * b3, 3) if b3 != 0 else 0
+        except:
+            return 0
     def getc(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon_5
-        c = account.balance
-        return round(-1* c ,3) if c != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon_5
+            c = account.balance
+            return round(-1* c ,3) if c != 0 else 0
+        except:
+            return 0
     def getd(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d= 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon_5
-        d= account.balance
-        return round(-1 * d ,3)  if d != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d= 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon_5
+            d= account.balance
+            return round(-1 * d ,3)  if d != 0 else 0
+        except:
+            return 0
     def get_total_source(self,a,fiscalyear_id,context=None):
-        # b3
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        loy = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_loy
-        loy = account.balance
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        hon = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon
-        hon = account.balance
-        b3 = 0
-        b3 = loy + hon
-        # c
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        c = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon_5
-        c = account.balance
-        # d
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        d= 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_source_hon_5
-        d= account.balance
-        return -1* (a+b3+c+d)
+        try:
+            # b3
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            loy = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_loy
+            loy = account.balance
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            hon = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon
+            hon = account.balance
+            b3 = 0
+            b3 = loy + hon
+            # c
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            c = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon_5
+            c = account.balance
+            # d
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            d= 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_source_hon_5
+            d= account.balance
+            return -1* (a+b3+c+d)
+        except:
+            return 0
     def get_report_tfp(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.tfp
-        return round(-1 * account.balance ,3) if account.balance != 0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.tfp
+            return round(-1 * account.balance ,3) if account.balance != 0 else 0
+        except:
+            return 0
     def get_total_tfp(self,a,b,context=None):
         if b>a:
             return 0
@@ -850,14 +954,17 @@ class report_declaration_fiscal(report_sxw.rml_parse):
         res = (a/100)*b
         return round(res ,3)
     def get_irpp_cpt(self,fiscalyear_id,context=None):
-        obj = self.pool.get('declaration.fiscal.config')
-        ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
-        print(ids)
-        account = None
-        balance = 0
-        for x in obj.browse(self.cr,self.uid,ids):
-            account  = x.ret_sal
-        return round((-1 * account.balance),3) if account.balance !=0 else 0
+        try:
+            obj = self.pool.get('declaration.fiscal.config')
+            ids = obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
+            print(ids)
+            account = None
+            balance = 0
+            for x in obj.browse(self.cr,self.uid,ids):
+                account  = x.ret_sal
+            return round((-1 * account.balance),3) if account.balance !=0 else 0
+        except:
+            return 0
     def get_tfp_taux(self,fiscalyear_id,context=None):
         taux_obj = self.pool.get('declaration.fiscal.config')
         search_ids=taux_obj.search(self.cr,self.uid,[('year','=',fiscalyear_id)],context)
@@ -929,6 +1036,7 @@ class report_declaration_fiscal(report_sxw.rml_parse):
 
 
 class declaration_employer_report(osv.AbstractModel):
+    """ classe de deffinition du rapport de declaration fiscale """
     _name = 'report.declaration_fiscale.declaration_fiscal_report'
     _inherit = 'report.abstract_report'
     _template = 'declaration_fiscale.declaration_fiscal_report'

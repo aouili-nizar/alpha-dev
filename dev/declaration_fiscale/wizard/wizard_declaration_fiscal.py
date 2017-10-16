@@ -9,10 +9,10 @@ from openerp.tools.translate import _
 #-------------------------------------------------------------------------------
 class wizard_declaration_fiscal(models.TransientModel):
     _name = 'declaration_fiscale.declaration_fiscal'
-    fiscalyear_id = fields.Many2one('account.fiscalyear', string='Exercice fiscal', required=True)
-    periode = fields.Many2one('account.period',string='Période',required=True)
-    sum_vnt_loc = fields.Integer(required=True,string='Somme des ventes locale')
-    sum_vnt_ext = fields.Integer(required=True,string='Somme des ventes export')
+    fiscalyear_id = fields.Many2one('account.fiscalyear', string='Exercice fiscal', required=True,help="entrer ici l'année fiscale")
+    periode = fields.Many2one('account.period',string='Période',required=True,help="entrer les methodes ici")
+    sum_vnt_loc = fields.Integer(required=True,string='Somme des ventes locale',help="ici en va entrer la somme des vente locales")
+    sum_vnt_ext = fields.Integer(required=True,string='Somme des ventes export',help="ici en va entrer la somme des ventes distant")
     @api.v7
     def print_report(self, cr, uid, ids, context=None):
         datas = {'ids': context.get('active_ids', [])}
