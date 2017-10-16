@@ -23,7 +23,7 @@
             'views/report_declaration_cnss.xml',
             'views/report_recapitulatif_cnss.xml',
             'views/report.xml',
-            '/views/res_company.xml'
+            'views/res_company.xml'
            
 ],
 

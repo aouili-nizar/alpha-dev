@@ -145,7 +145,8 @@ class wizard_declaration_cnss(osv.osv_memory):
                 num_line += 1
             resultats.append(declaration)
         return resultats
-    #testé la structure de fichier text de déclaration des salaires(N° Employeur:8,code exploitation:2, N° assurré sociale:10,
+	#methode generate_file
+    #permet de tester la structure de fichier text de déclaration des salaires(N° Employeur:8,code exploitation:2, N° assurré sociale:10,
     #Trimestre:1, Année:2,Salaire Trimestriel:8,Numéro chez Employeur:6,Identité:34,N° Page:3 ,N° Ligne:2,Zone Vierge:4)
     def generate_file(self, cr, uid, ids, context=None):
 

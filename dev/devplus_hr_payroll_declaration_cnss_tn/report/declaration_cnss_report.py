@@ -20,6 +20,7 @@ class declaration_cnss_report(report_sxw.rml_parse):
             'get_total_page':self.get_total_page,
             'get_total_precedante':self.get_total_precedante,
         })
+		#methode _get_lines
         #Rapport DECLARATION TRIMESTRIELLE DES SALAIRES ET DES SALARIES
         #TABLEAU[N°Ordre|MATRICULE DE ASSURE|IDENTITITE DU SALAIRE(1)|N° chez Emp|Categ professionelle|REMUNERATION MENSULLE(1ᵉʳ mois|2ème mois|3ème mois)
         #TOTAL GENERAL(la somme des salaires brutes)] chaque page contient 12 lignes avec le total à reporter
