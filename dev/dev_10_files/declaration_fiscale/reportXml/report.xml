@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       
+        <report id="report_declaration_fiscal" string="Declaration fiscal" model="hr.payroll" report_type="qweb-pdf" file="declaration_fiscale.declaration_fiscal_report" name="declaration_fiscale.declaration_fiscal_report" />
+        
+    </data>
+</openerp>
+ 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+    <record model="ir.ui.view" id="declaration_fiscal_config_tree">
+      <field name="name">declaration.fiscal.config.tree</field>
+      <field name="model">declaration.fiscal.config</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Parametres fiscale">
+          <field name="year" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="declaration_fiscal_config_form">
+      <field name="name">declaration.fiscal.config.form</field>
+      <field name="model">declaration.fiscal.config</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form >
+          <sheet>
+            <separator string="Parametres fiscale "/>
+            <group>
+            <field name="year" />
+          </group>
+          <notebook>
+            <page string="Paramétres Taux des Taxes">
+              <group>
+              <field name="taux_dr_fisc" />
+              <field name="taux_loy" />
+              <field name="taux_hon15" />
+              <field name="taux_hon5" />
+              <field name="taux_mar" />
+              <field name="taux_col6" />
+              <field name="taux_col12" />
+              <field name="taux_col18" />
+              <field name="taux_ded6" />
+              <field name="taux_ded12" />
+              <field name="taux_ded18" />
+              <field name="taux_mmo6" />
+              <field name="taux_mmo12" />
+              <field name="taux_mmo18" />
+              <field name="taux_retsrc" />
+                <field name="taux_tfp" />
+                <field name="taux_fps" />
+                <field name="tcl_loc" />
+                <field name="taux_exr" />
+              </group>
+            </page>
+            <page string="Paramétres Des comptes des taxes">
+              <group>
+
+                <field name="ret_sal" />
+
+                <field name="ret_source_loy" />
+                <field name="ret_source_hon" />
+
+                <field name="ret_source_hon_5" />
+
+                <field name="market" />
+
+                <field name="tfp" />
+
+                <field name="tva_col_6" />
+                <field name="tva_col_12" />
+                <field name="tva_col_18" />
+
+                <field name="tva_ded_6" />
+                <field name="tva_ded_12" />
+                <field name="tva_ded_18" />
+                <field name="tva_mmo_6" />
+                <field name="tva_mmo_12" />
+                <field name="tva_mmo_18" />
+                <field name="tva_ret_src" />
+
+                <field name="report_tva" />
+
+
+                <field name="cpt_fact" />
+
+              </group>
+            </page>
+          </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="declaration_fiscal_config_action">
+      <field name="name">Paramètres</field>
+      <field name="res_model">declaration.fiscal.config</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+<menuitem action="declaration_fiscal_config_action" id="declaration_fiscal_config_menuitem" name="Paramétre fiscale"
+  parent="account.menu_finance_configuration" sequence="1" />
+
+
+
+
+
+</data>
+</openerp>
