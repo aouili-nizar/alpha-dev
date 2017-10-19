@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+		<data>
+		<record model="ir.ui.view" id="base_view_company_form_inherit_payroll_devplus1">
+			<field name="name">res.company.payroll.inherit</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="email" position="after">
+					<field name="SAS_capital" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

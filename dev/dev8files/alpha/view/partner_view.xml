@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_partner_inherit_alpha">
+			<field name="name">res.partner.form.inherit.alpha</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+
+				<field name="property_account_receivable" position="attributes">
+					<attribute name="attrs">{'invisible': [('customer','=',False)]}
+					</attribute>
+				</field> 
+				<!-- <field name="property_account_receivable" position="attributes">
+					<attribute name="attrs">{['required','=',False]}
+					</attribute>
+				</field> -->
+				<field name="property_payment_term" position="attributes">
+					<attribute name="attrs">{'invisible': [('customer','=',False)]}
+					</attribute>
+				</field>
+				<field name="credit" position="attributes">
+					<attribute name="attrs">{'invisible': [('customer','=',False)]}
+					</attribute>
+				</field>
+				<field name="credit_limit" position="attributes">
+					<attribute name="attrs">{'invisible': [('customer','=',False)]}
+					</attribute>
+				</field>
+
+				<field name="property_account_payable" position="attributes">
+					<attribute name="attrs">{'invisible': [('supplier','=',False)]}
+					</attribute>
+				</field>
+				<field name="property_supplier_payment_term" position="attributes">
+					<attribute name="attrs">{'invisible': [('supplier','=',False)]}
+					</attribute>
+				</field>
+				<field name="debit" position="attributes">
+					<attribute name="attrs">{'invisible': [('supplier','=',False)]}
+					</attribute>
+				</field>
+
+			</field>
+		</record>
+	</data>
+</openerp>

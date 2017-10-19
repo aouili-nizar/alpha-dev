@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="hr_employee_form_inherit_account1" model="ir.ui.view">
+			<field name="name">hr.employee.inherit.account</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="devplus_payroll_account.hr_employee_form_inherit_account" />
+			<field name="arch" type="xml">
+		
+				<xpath expr="//notebook/page[@string='Comptabilité']/group/field[@name='account_banque_employeur_id']" position="after" >	
+<field name="cpt_cot_acc_tra" />
+<field name="cpt_cot_patr" />
+<field name="cpt_cnss_acc_tra" />
+<field name="cpt_cnss_chg_pat" />
+<field name="account_cotisation_id" />
+<field name="account_banque_id" />
+					
+</xpath>
+						
+				
+				
+			</field>
+		</record>
+		<record model="ir.ui.view" id="base_view_emplloyee_form_inherit_payroll_devplus">
+	<field name="name">hr.employee.categ.inherit</field>
+	<field name="model">hr.employee</field>
+	<field name="inherit_id" ref="hr.view_employee_form" />
+	<field name="type">form</field>
+	<field name="arch" type="xml">
+		<field name="work_location" position="after">
+			<field name="categ_professionnelle" />
+			<field name="charge_patronale" /></field>
+	</field>
+</record>
+	</data>
+</openerp>

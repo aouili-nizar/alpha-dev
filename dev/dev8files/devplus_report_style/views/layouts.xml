@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report.style">
+			body {
+			color: #000 !important;
+			}
+			.border-black td {
+			border-top: 1px solid black !important;
+			}
+			.table-condensed > thead > tr
+			> th {
+			border-bottom: 1px solid black !important;
+			}
+			.zero_min_height {
+			min-height: 0px !important;
+			}
+
+
+			/*--table-padding-1-- */
+			.table-padding-1 > thead > tr > th
+			{ padding:2px ; padding-left : 5px ;padding-right:5px ;}
+			.table-padding-1 > tbody > tr > td
+			{ padding:2px ; padding-left : 5px ;padding-right:5px ;}
+
+			/*--- */
+			.table-bg-head-gray-border{
+			border-width:1px ;
+			border-style:solid;
+			border-color:black;
+			}
+
+			.table-bg-head-gray-border > thead > tr > th{
+			background-color:#cccccc !important;
+			}
+			.table-bg-head-gray > thead > tr > th{
+			background-color: #cccccc !important;
+			}
+
+
+			/*--radius div-- */
+			.div-radius{
+			border: 1px
+			solid;
+			border-color:#000000 ;
+			border-radius:
+			10px;
+			}
+
+			.table-border-collapse{
+			border-collapse:
+			collapse;
+			border: 1px
+			solid#000000;
+			max-width: 100%;
+			width: 100%;
+
+			}
+
+			.table-collapse {
+			border-collapse: collapse;
+			}
+
+			.table-none-border {
+			max-width: 100%;
+			width: 100%;
+			}
+			td.border{
+			border: 1px solid #cccccc;
+			padding: 8px;
+			}
+
+			.table {}
+			td.border-none{
+			border:none;
+			}
+
+			/*
+			---redifine
+			class
+			table-bordered
+			to add a border color-----------
+			*/
+
+			.table-bordered {
+			border: 1px
+			solid
+			#000000;
+			}
+
+			.table-bordered > thead >
+			tr > th,
+			.table-bordered >
+			tbody >
+			tr > th,
+			.table-bordered > tfoot > tr
+			> th,
+			.table-bordered >
+			thead > tr
+			> td,
+			.table-bordered > tbody > tr >
+			td,
+			.table-bordered >
+			tfoot > tr >
+			td {
+			border: 1px solid #000000;
+			}
+
+			.table-bordered > tbody >
+			tr >
+			td.border-none{
+			border:none;
+			}
+			.table-bordered > tr >
+			td.border-none{
+			border:none;
+			}
+
+
+			/*---------text-transform-vertical-----------*/
+			.text-transform-vertical{
+			writing-mode:tb-rl;
+			-webkit-transform:rotate(270deg);
+			-moz-transform:rotate(90deg);
+			-o-transform: rotate(180deg);
+			white-space:nowrap;
+			display:table;/*block;*/
+			/*bottom:0;*/
+			padding:0;
+			display:table-cell;
+			vertical-align:middle;
+			/*width:20px;
+			height:20px;*/
+			}
+
+
+
+
+
+
+
+		</template>
+	</data>
+</openerp>
