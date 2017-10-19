@@ -11,7 +11,7 @@ from openerp.osv import osv
 
 
 class report_declaration_fiscal(report_sxw.rml_parse):
-""" classe de deffinition et calcule des différente valeurs de la declaration fiscale """
+    """ classe de deffinition et calcule des différente valeurs de la declaration fiscale """
     def __init__(self, cr, uid, name, context):
             super(report_declaration_fiscal, self).__init__(cr, uid, name, context=context)
             self.localcontext.update({
