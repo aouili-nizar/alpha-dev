@@ -52,37 +52,37 @@ class declaration_cnss_report(report_sxw.rml_parse):
                     mois3=per.id
 
             else :
+                print"trimestre4"
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==10)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois1=per.id
+                    print"mois1",mois1
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==11)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day)):
                     mois2=per.id
                 if((datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").month==12)and(datetime.datetime.strptime(per.date_stop ,"%Y-%m-%d").day+1-datetime.datetime.strptime(per.date_start ,"%Y-%m-%d").day>=28)):
                     mois3=per.id
 
-
-
         sql = '''
-               SELECT e.id ,e.matricule,e.cnss,e.categ_professionnelle,SUBSTRING(r.name, 0, 60) as name,e.cin,
+                SELECT e.id ,e.matricule,e.cnss,e.categ_professionnelle,SUBSTRING(r.name, 0, 60) as name,e.cin,
 
-             ( select  CASE WHEN b1.cotisations_employee > 0 THEN  b1.salaire_brute_cotisable ELSE 0  END   from hr_payroll_bulletin  b1 where
-               b1.period_id = %s and b1.employee_id=e.id
-                ) as mois1,
+              ( select  b1.salaire_brute_cotisable  from hr_payroll_bulletin  b1 where
+                b1.period_id = %s and b1.employee_id=e.id
+                 ) as mois1,
 
-             ( select  CASE WHEN b2.cotisations_employee > 0 THEN  b2.salaire_brute_cotisable ELSE 0  END   from hr_payroll_bulletin  b2 where
-               b2.period_id = %s and b2.employee_id=e.id
-                ) as mois2,
+              ( select  b2.salaire_brute_cotisable  from hr_payroll_bulletin  b2 where
+                b2.period_id = %s and b2.employee_id=e.id
+                 ) as mois2,
 
-             ( select  CASE WHEN b3.cotisations_employee > 0 THEN  b3.salaire_brute_cotisable ELSE 0  END   from hr_payroll_bulletin  b3 where
-               b3.period_id = %s and b3.employee_id=e.id
-                ) as mois3 ,
+              ( select  b3.salaire_brute_cotisable  from hr_payroll_bulletin  b3 where
+                b3.period_id = %s and b3.employee_id=e.id
+                 ) as mois3 ,
 
-            (select  sum(CASE WHEN b4.cotisations_employee > 0 THEN  b4.salaire_brute_cotisable ELSE 0  END )  from hr_payroll_bulletin  b4 where
-               b4.period_id  in(%s,%s,%s)  and b4.employee_id=e.id) as total
+             (select  sum(b4.salaire_brute_cotisable)  from hr_payroll_bulletin  b4 where
+                b4.period_id  in(%s,%s,%s)  and b4.employee_id=e.id) as total
 
-            From  hr_employee e
-            LEFT JOIN resource_resource r on (r.id=e.resource_id)
-             where r.active=true and e.cnss5 is true
-             and ((select count(*) from hr_contract hc where  hc.employee_id=e.id)>0)ORDER BY e.matricule
+             From  hr_employee e
+             LEFT JOIN resource_resource r on (r.id=e.resource_id)
+              where r.active=true and e.cnss5 is true
+              and ((select count(*) from hr_contract hc where  hc.employee_id=e.id)>0)
             ''' % (mois1, mois2, mois3, mois1, mois2, mois3)
 
 
@@ -173,11 +173,16 @@ class declaration_cnss_report(report_sxw.rml_parse):
         params_obj= self.pool.get('hr.payroll.parametres')
         ids_params = params_obj.search(self.cr, self.uid, [('fiscalyear_id', '=', fiscalyear_id)])
         param = params_obj.read(self.cr, self.uid, ids_params[0])
-        taux_accident_travail='taux_accident_travail' in param.keys() and param['taux_accident_travail']  or 0.5
+        cot_obj= self.pool.get('hr.payroll.cotisation')
+        ids_cot = params_obj.search(self.cr, self.uid,[])
+        cot = cot_obj.read(self.cr, self.uid, ids_cot[0])
+        taux_accident_travail=cot['tauxAT']
+        taux_securite_soc=cot['tauxsalarial']+cot['tauxpatronal']
+        # taux_accident_travail='taux_accident_travail' in param.keys() and param['taux_accident_travail']  or 0.5
         taux_cnss=25.75
         montant_accident_travail= salaire * taux_accident_travail/100.0
-        montant_cnss= salaire * taux_cnss/100.0
-        montant_total =  montant_cnss+montant_accident_travail
+        montant_securite_soc= salaire * taux_securite_soc/100.0
+        montant_total =  montant_securite_soc+montant_accident_travail
         total_page = total_mois1+total_mois2+total_mois3
 
         res = {
@@ -188,9 +193,10 @@ class declaration_cnss_report(report_sxw.rml_parse):
                 'salaire' : salaire,
                 'taux_cnss':taux_cnss,
                 'taux_accident_travail':taux_accident_travail,
+                'taux_securite_soc':taux_securite_soc,
                 'total_taux' : taux_cnss+taux_accident_travail,
-                'montant_cnss' :montant_cnss,
                 'montant_accident_travail':montant_accident_travail,
+                'montant_securite_soc':montant_securite_soc,
                 'montant_total' :montant_total,
                 'montant_total_text':convertion.trad(montant_total,'Dinar'),
                 'montant_salaire_text':convertion.trad(salaire,'Dinar')
@@ -198,9 +204,6 @@ class declaration_cnss_report(report_sxw.rml_parse):
 
         # print '**res**',res
         return res
-
-
-
 
 
 class report_declaration_cnss(osv.AbstractModel):

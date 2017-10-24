@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       
+        <report id="report_certif_emp" string="Certificat de retenue d'impot sur le revenue/employe" model="hr.employee" report_type="qweb-pdf" file="certif_retenue.certif_retenue_report" name="certif_retenue.certif_retenue_report" />
+        
+    </data>
+</openerp>
+ 

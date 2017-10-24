@@ -40,7 +40,6 @@
 					<field name="move_id" string="Pièce comptable" />
 					<field name="move_p_id" string="Pièce comptable(Paiement)"  />
 					<field name="move_c_id"  />
-<field name="move_c_id1"  />
 					<field name="move_v_id"  />
 				</field>
 				

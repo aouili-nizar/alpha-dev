@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp> 
+	<data>
+		<template id="certif_retenue_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+						<t t-set="emp" t-value="hr_employee"/>
+						<t t-set="company" t-value="res_company"/>
+							<div class="row" >
+								<div class="col-md-12 text-center" style="font-size:16px;font-family:initial;">
+								<b>Certificat de retenue d'impôt sur le revenu au titre</b><br/>
+								des traitements, salaires,pensions et rentes viagères<br/>
+								<b>Retenue effectuée durant l'année : <span t-field="o.fiscalyear_id" /></b>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<br/>
+							<div class="row">
+							<h4><b>A - Employeur ou organisme payeur</b></h4>
+							- Raison sociale: <span t-raw="company.name" /> <br/>
+							- Adresse: <br/>
+							- Code TVA : <br/>
+							- Affiliation CNSS : <br/> 
+							</div>
+
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

@@ -53,7 +53,7 @@ class wizard_declaration_cnss(osv.osv_memory):
                 'company_id':_get_default_company,
                 'state': 'choose',
               }
-
+    
     def print_report(self, cr, uid, ids, context=None):
         datas = {'ids': []}
         datas['model'] = 'wizard_declaration_cnss'
@@ -213,8 +213,5 @@ class wizard_declaration_cnss(osv.osv_memory):
             'views': [(False, 'form')],
             'target': 'new',
         }
-
-
-
 
 wizard_declaration_cnss()

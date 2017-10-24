@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="wizard_certif_emp_form">
+			<field name="name">wizard.certif.emp.form</field>
+			<field name="model">rs_emp</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Certificat de retenue d'impot sur le revenue/employe">
+					<group>
+
+
+						<field name="fiscalyear_id" style="width: 40%" />
+						<field name="emp" style="width: 40%"  />
+
+				
+
+					</group>
+					<footer>
+						<button name="print_report" string="Imprimer" type="object"
+							class="oe_highlight" />
+						Or
+						<button string="Annuler" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="action_wizard_certif_emp" model="ir.actions.act_window">
+			<field name="name">Certificat de retenue d'impot sur le revenue/employe</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">rs_emp</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="wizard_certif_emp_form" />
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_certif_emp" name="Certificat de retenue d'impot sur le revenue/employe"
+			parent="account.menu_finance_reports" action="action_wizard_certif_emp" />
+
+
+
+
+	</data>
+</openerp>
