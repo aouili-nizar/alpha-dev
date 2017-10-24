@@ -20,10 +20,11 @@
 							<br/>
 							<div class="row">
 							<h4><b>A - Employeur ou organisme payeur</b></h4>
-							- Raison sociale: <span t-raw="company.name" /> <br/>
-							- Adresse: <br/>
-							- Code TVA : <br/>
-							- Affiliation CNSS : <br/> 
+							- Raison sociale: <b><span t-raw="company.name" /></b>  <br/>
+							- Adresse: <b><span t-raw="company.street" />-<span t-raw="company.city" />-<span t-raw="company.state_id.name" />-<span t-raw="company.zip" />-<span t-raw="company.country_id.name" /></b><br/>
+							- Code TVA : <b><span t-raw="company.vat" /> </b><br/>
+							- Affiliation CNSS : <b><t t-if="company.cnss">
+	<span t-raw="company.cnss" /> </b> </t> <br/> 
 							</div>
 
 
