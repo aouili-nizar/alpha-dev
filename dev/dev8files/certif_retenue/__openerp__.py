@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','devplus_hr_payroll_tn','account'],
+    'depends': ['base', 'devplus_hr_payroll_tn', 'account', 'account_voucher'],
 
     # always loaded
     'data': [
@@ -27,6 +27,8 @@
         #'templates.xml',
         'wizard/wizard_rs_emp.xml',
         'reportXml/report_rs_emp.xml',
+        'wizard/wizard_rs_four.xml',
+        'reportXml/report_rs_four.xml',
         'reportXml/report.xml'
     ],
     # only loaded in demonstration mode

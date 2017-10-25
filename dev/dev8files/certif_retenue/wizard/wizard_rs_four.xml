@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="wizard_certif_four_form">
+            <field name="name">wizard.certif.four.form</field>
+            <field name="model">rs_four</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Certificat de retenue d'impot sur le revenue/fournisseur">
+                    <group>
+                        <field name="fiscalyear_id" style="width: 40%" />
+                        <field name="four" style="width: 40%" />
+                        <field name="libel"  domain="[('partner_id','=','four.id')]" style="width: 40%"  />
+                        <field name="journal" style="width: 40%" />
+                        <field name="taux" style="width: 40%" />
+                        <field name="move_line"  />
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimer" type="object" class="oe_highlight" />
+						Or
+						
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_wizard_certif_four" model="ir.actions.act_window">
+            <field name="name">Certificat de retenue d'impot sur le revenue/fournisseur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rs_four</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_certif_four_form" />
+            <field name="target">new</field>
+        </record>
+                
+        <record model="ir.ui.view" id="wiz_inherit">
+            <field name="name">wiz.cert</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='238']" position="before">
+                   
+                        <button name="certif_retenue.action_wizard_certif_four"   states="open"  string="payer information Retenue a la source" class="oe_highlight" type="action"/>
+                   
+                </xpath>
+            </field>
+        </record>
+        <!--<menuitem id="menu_certif_four" name="Certificat de retenue d'impot sur le revenue/fournisseur" parent="account.menu_finance_reports" action="action_wizard_certif_four" />-->
+    </data>
+</openerp>
