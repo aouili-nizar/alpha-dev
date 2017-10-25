@@ -4,10 +4,11 @@
 		<template id="certif_retenue_report">
 			<t t-call="report.html_container">
 				<t t-foreach="docs" t-as="o">
-					<t t-call="report.external_layout">
+					
 						<div class="page">
 						<t t-set="emp" t-value="hr_employee"/>
 						<t t-set="company" t-value="res_company"/>
+							<!--   section : titre      !-->
 							<div class="row" >
 								<div class="col-md-12 text-center" style="font-size:16px;font-family:initial;">
 								<b>Certificat de retenue d'impôt sur le revenu au titre</b><br/>
@@ -18,18 +19,95 @@
 							<br/>
 							<br/>
 							<br/>
+							<!--   section :  Employeur ou organisme payeur     !-->
 							<div class="row">
 							<h4><b>A - Employeur ou organisme payeur</b></h4>
-							- Raison sociale: <b><span t-raw="company.name" /></b>  <br/>
+							- Raison sociale: <b><span t-raw="company.name" /></b> <br/>
 							- Adresse: <b><span t-raw="company.street" />-<span t-raw="company.city" />-<span t-raw="company.state_id.name" />-<span t-raw="company.zip" />-<span t-raw="company.country_id.name" /></b><br/>
 							- Code TVA : <b><span t-raw="company.vat" /> </b><br/>
-							- Affiliation CNSS : <b><t t-if="company.cnss">
-	<span t-raw="company.cnss" /> </b> </t> <br/> 
+							- Affiliation CNSS : <t t-if="company.cnss"><b><span t-raw="company.cnss" /></b></t> <br/> 
 							</div>
 
+							<!--   section : Désignation du Bénéficiaire      !-->
+							<div class="row col-md-12"  >
+														
+							<br/>
+							<br/>
+							<h4><b>B - Désignation du Bénéficiaire</b></h4>
+							<br/>
+							<table  border="0" width="100%">
+							<tr>
+							<td><b>Situation de  Famille :</b> <span t-field="o.emp.marital" /> </td>
+							<td><b>Nombre d'enfants</b> (prise en  consideration pour le calcul de la retenue) : <t t-if="o.emp.marital"><span t-field="o.emp.children" /></t><t t-if="o.emp.marital == 'Célibataire'">0</t> </td>
+							</tr>
+							<tr>
+							<td><b>Nom et Prénoms :</b> <span t-field="o.emp.name" /></td>
+							<td><b>N° CIN : </b> <span t-field="o.emp.cin" /></td>
+							</tr>
+							<tr>
+							<td><b>Adresse de résidence :</b> <span t-field="o.emp.address_personnel" /></td>
+							<td><b>N° CNSS: </b> <span t-field="o.emp.cnss" /></td>
+							</tr>
+							<tr>
+							<td colspan="2"><b>Emploi Occupé : </b> <span t-field="o.emp.job_id.name" /></td>
+							</tr>
+							</table>
+							<br/>
+							<br/>
+							<b>Période du travail durant l'année : </b>  <span t-raw="worked_period(data['form']['fiscalyear_id'],data['form']['emp'])" /> mois
+							</div>
+							<!--   section : cordonnée employé      !-->
+							<div class="row">
+							<br/>
+							<br/>
+							<br/>
+							<table class="table-bordered" width="100%">
+							<thead>
+							<tr class="bg-warning">
+							<th class="text-center">
+							Revenu imposable
+							</th>
+							<th class="text-center">
+							Total de revenu brut imposable
+							</th>
+							<th class="text-center">Montant des retenues
+							</th>
+							<th class="text-center"> Revenu net de retenues</th>
 
+							</tr>
+							</thead>							
+							<tbody>
+							<tr>
+							<td class="text-center"><span t-raw="sum_brut_imp(data['form']['fiscalyear_id'],data['form']['emp'])" /></td>
+							<td class="text-center"><span t-raw="sum_brut(data['form']['fiscalyear_id'],data['form']['emp'])" /></td>
+							<td class="text-center"><span t-raw="sum_irpp(data['form']['fiscalyear_id'],data['form']['emp'])" /></td>
+							<td class="text-center"><span t-raw="sum_net(data['form']['fiscalyear_id'],data['form']['emp'])" /></td>
+							</tr>
+							</tbody>
+							</table>
+							<br/>
+							<br/>
+							<br/>
+							</div>
+							<!--   section : revenus     !-->
+							<div class="row pull-right">
+							<b>Je soussigné, certifie exacts et sincéres les renseignements figurant sur le présent certificat et <br/>
+							m'expose aux sanctions prévues par la loi pour toute inexactitude.</b>
+							<br/>
+							<br/>
+							<br/>
+							</div>
+							<!--   section : phrase de fin      !-->
+							<div class="row">
+							</div>
+							
+							<!--   section : signature et cachet      !-->
+							<div class="row pull-right">
+							<b>Tunis le  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></b><br/>
+							<b>Cachet et signature de l'employeur </b>
+							</div>
 						</div>
-					</t>
+					
 				</t>
 			</t>
 		</template>
