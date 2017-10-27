@@ -29,7 +29,8 @@
         'reportXml/report_rs_emp.xml',
         'wizard/wizard_rs_four.xml',
         'reportXml/report_rs_four.xml',
-        'reportXml/report.xml'
+        'reportXml/report.xml',
+        'views/res_taux.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

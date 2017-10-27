@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="emp_inherit_badg">
+            <field name="name">emp.badg</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="inside">
+                    
+                        
+                        
+                            <field name="badge_id"/>
+                            
+                       
+                  
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

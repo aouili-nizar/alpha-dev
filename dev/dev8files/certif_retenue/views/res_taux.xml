@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+                
+    
+        <record model="ir.ui.view" id="taux_rs_tree">
+            <field name="name">aux.seetting.tree</field>
+            <field name="model">taux_rs</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Parametres taux retenue à la source">
+                            
+                <field name="code" />
+                <field name="nom" />
+                <field name="account" />
+                <field name="accountc" />
+                <field name="value" />
+                <field name="percent" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="taux_rs_form">
+            <field name="name">taux.seetting.form</field>
+            <field name="model">taux_rs</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form >
+                    <sheet>
+                        <separator string="Parametres taux retenue à la source "/>
+                        <group>
+                            <field name="code" />
+                            <field name="nom" />
+                            <field name="account" />
+                            <field name="accountc" />
+                            <field name="value" />
+                            <field name="percent" />
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="taux_rs_action">
+            <field name="name">Paramètres taux retenue a la source</field>
+            <field name="res_model">taux_rs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+       
+        <menuitem action="taux_rs_action" id="rs_taux" name="Taux retenue a la source" parent="account.menu_finance_configuration" sequence="2" />
+
+    </data>
+</openerp>

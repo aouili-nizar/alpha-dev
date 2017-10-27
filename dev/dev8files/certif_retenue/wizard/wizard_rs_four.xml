@@ -8,12 +8,14 @@
             <field name="arch" type="xml">
                 <form string="Certificat de retenue d'impot sur le revenue/fournisseur">
                     <group>
-                        <field name="fiscalyear_id" style="width: 40%" />
+                   
+                        <field name="periode" style="width: 40%" />
                         <field name="four" style="width: 40%" />
-                        <field name="libel"  domain="[('partner_id','=','four.id')]" style="width: 40%"  />
+                        <field name="libel"   style="width: 40%"  />
+                        <field name="reference" style="width: 40%" />
                         <field name="journal" style="width: 40%" />
                         <field name="taux" style="width: 40%" />
-                        <field name="move_line"  />
+                       
                     </group>
                     <footer>
                         <button name="print_report" string="Imprimer" type="object" class="oe_highlight" />
@@ -40,9 +42,9 @@
             <field name="inherit_id" ref="account.invoice_supplier_form" />
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <xpath expr="//header/button[@name='238']" position="before">
+                <xpath expr="//header/button[@string='Validate']" position="after">
                    
-                        <button name="certif_retenue.action_wizard_certif_four"   states="open"  string="payer information Retenue a la source" class="oe_highlight" type="action"/>
+                        <button name="openwiz"   states="open"  string="Payer  Retenue a la source" context="{'amount_total':amount_total}" class="oe_highlight" type="object"/>
                    
                 </xpath>
             </field>

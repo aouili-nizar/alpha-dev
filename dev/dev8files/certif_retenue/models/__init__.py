@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#import tools
+import ret_taux
 
 #import hr_payroll_account

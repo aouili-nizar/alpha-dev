@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_badge_add_badge_add,badge_add.badge_add,model_badge_add_badge_add,,1,0,0,0

@@ -1,0 +1,27 @@
+<openerp>
+<data>
+<record model="ir.ui.view" id="saleorder_inherit">
+    <field name="name">sale.order.attach</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']" position="after">
+        <div class="text-center o-row">
+        <group>
+            
+            <field name="attach"/>
+            </group>
+        </div>
+           
+        </xpath>
+    </field>
+</record>
+
+
+
+
+
+
+</data>
+</openerp>

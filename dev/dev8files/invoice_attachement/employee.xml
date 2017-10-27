@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="emp_inherit">
+            <field name="name">emp.attach</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@string='Contact Information']" position="inside">
+                    
+                        
+                    <field name="tva1"/>
+
+                             
+                    <field name="attach"/>
+                       
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
