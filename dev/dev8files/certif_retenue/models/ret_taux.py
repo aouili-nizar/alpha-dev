@@ -14,7 +14,8 @@ class ret_taux(models.Model):
     _rec_name="nom"
     code = fields.Integer('Code du taxe')
     nom = fields.Char('Nom du taux')
-    account  = fields.Many2one('account.account',string="Compte debit")
-    accountc = fields.Many2one('account.account',string="Compte credit")
-    value = fields.Float('Valeur du taux')
-    percent = fields.Boolean('Pourcentage ???')
+    account  = fields.Many2one('account.account',string="Compte")
+
+    value = fields.Float('Valeur')
+
+    

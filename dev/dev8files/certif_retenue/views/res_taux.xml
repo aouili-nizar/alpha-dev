@@ -12,10 +12,8 @@
                             
                 <field name="code" />
                 <field name="nom" />
-                <field name="account" />
-                <field name="accountc" />
-                <field name="value" />
-                <field name="percent" />
+           
+               
                 </tree>
             </field>
         </record>
@@ -27,13 +25,17 @@
                 <form >
                     <sheet>
                         <separator string="Parametres taux retenue à la source "/>
+                      
                         <group>
                             <field name="code" />
                             <field name="nom" />
+                        </group>
+                          
+                        <group>
+                        <group>
                             <field name="account" />
-                            <field name="accountc" />
                             <field name="value" />
-                            <field name="percent" />
+                        </group>
                         </group>
 
 
