@@ -4,7 +4,7 @@
        
         <report id="report_certif_emp" string="Certificat de retenue d'impot sur le revenue/employe" model="hr.employee" report_type="qweb-pdf" file="certif_retenue.certif_retenue_report" name="certif_retenue.certif_retenue_report" />
          
-<report id="report_certif_four" string="Certificat de retenue d'impot sur le revenue/Fournisseur" model="account.invoice" report_type="qweb-pdf" file="certif_retenue.certif_retenue_four_report" name="certif_retenue.certif_retenue_four_report" />
+<report id="report_certif_four" string="Certificat de retenue d'impot sur le revenue/Fournisseur" model="account.voucher" report_type="qweb-pdf" file="certif_retenue.certif_retenue_four_report" name="certif_retenue.certif_retenue_four_report" />
         
     </data>
 </openerp>

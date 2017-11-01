@@ -4,9 +4,122 @@
         <template id="certif_retenue_four_report">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                    </div>
-					
+                					
+                    <t t-call="report.external_layout">
+
+                        <div class="page">
+                            <t t-set="vouch"   t-value="account_voucher"/>
+                            <t t-set="company" t-value="res_company"/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="header text-center"><b>CERTIFICAT DE RETENUE D'IMPÔT SUR LE REVENU<br/>OU D'IMPÔT SUR LES SOCIÉTÉS</b></div>
+                                <br/>
+                                <br/>
+                                </div>
+                                <b>A - PERSONNE OU ORGANISME PAYEUR</b>
+                                <div class="row">
+                                    <br/>
+                                    <br/>
+                                    <div class="pull-right col-md-8 text-center">
+                                        <table  class="table col-md-8 pull-right table-bordered" > 
+                                            <tr>
+                                                <th width="25%" class="text-center">Matricule fiscal</th>
+                                                <th width="25%" class="text-center">Code T.V.A</th>
+                                                <th width="25%" class="text-center">Code Catégorie</th>
+                                                <th width="25%" class="text-center">Num Etab Secondaire</th>
+                                            </tr>  
+                                            <tr>
+                                                <td class="text-center"><t t-raw="company.company_registry"/></td>
+                                                <td class="text-center"><t t-raw="company.vat"/></td>
+                                                <td class="text-center"><t t-raw="company.catg"/></td>
+                                                <td class="text-center"><t t-raw="company.nsec"/></td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    -<b> Dénomination de la personne ou de l'organisme payeur :</b> <t t-raw="company.name"/> <br/>
+                                    -<b>Adresse :</b>  <t t-raw="company.street"/> - <t t-raw="company.city"/> - <t t-raw="company.state_id.name"/> - <t t-raw="company.zip"/>    
+                                <br/>
+                                <br/>
+                                </div>
+                                <b>B - RETENUES EFFECTUEES SUR :</b>
+                                <div class="row">
+                                    <br/>
+                                    <br/>
+                                    <div class="pull-right col-md-12 text-center">
+                                        <table  class="table col-md-12  table-bordered" > 
+                                            <tr>
+                                                <th width="25%" class="text-center">Libelle</th>
+                                                <th width="25%" class="text-center">Montant brut</th>
+                                                <th width="25%" class="text-center">Retenue</th>
+                                                <th width="25%" class="text-center">Montant Net</th>
+                                            </tr>  
+                                            <tr>
+                                                <td class="text-center"><span t-field="o.name"/></td>
+                                                <td class="text-center"><span t-field="o.amount"/></td>
+                                                <td class="text-center"><span t-field="o.ret_val"/></td>
+                                                <td class="text-center"><span t-field="o.net"/></td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <b>C - BENEFICIAIRE</b>
+                                <div class="row">
+                                    <br/>
+                                    <br/>
+                                    -<b>N° de la carte d'identité :</b><br/><span t-field="o.partner_id.cin"/><br/>
+                                    -<b>N° de la carte de séjour :</b><br/><span t-field="o.partner_id.passport"/><br/>
+                                    <br/>
+                                </div>
+                                <div class="row">
+                                    <br/>
+                                    <br/>
+                                    <div class="pull-right col-md-8 text-center">
+                                        <table  class="table col-md-8 pull-right table-bordered" > 
+                                            <tr>
+                                                <th width="25%" class="text-center">Matricule fiscal</th>
+                                                <th width="25%" class="text-center">Code T.V.A</th>
+                                                <th width="25%" class="text-center">Code Catégorie</th>
+                                                <th width="25%" class="text-center">Num Etab Secondaire</th>
+                                            </tr>  
+                                            <tr>
+                                                <td class="text-center"><span t-field="o.partner_id.vat"></span></td>
+                                                <td class="text-center"><span t-field="o.partner_id.tva"></span></td>
+                                                <td class="text-center"><span t-field="o.partner_id.catg"></span></td>
+                                                <td class="text-center"><span t-field="o.partner_id.nsec" ></span></td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                        <br/>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                <br/><br/>
+                                    -<b> Nom , prénoms ou raison sociale  :</b> <span t-field="o.partner_id.name"/><br/>
+                                    -<b>Adresse :</b>  <span t-field="o.partner_id.street"/> - <span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.state_id.name"/> - <span t-field="o.partner_id.zip"/>  
+                                <br/>
+                                <br/>
+                                </div>
+
+                                <div class="row text-center">
+                                <br/>
+                                <br/>
+                                    <b>Je soussigné , certifie exacts les renseignements figurant sur le présent <br/>
+                                    certificat et m'expose aux sanctions prévues par la loi pour toute inexactitude<br/>
+                                    A Tunis le :<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/><br/>
+                                    Cachet et signature du payeur</b>
+                                </div>
+                            </div>
+
+                                                   
+                        </div>
+					</t>
 				</t>
 			</t>
 		</template>

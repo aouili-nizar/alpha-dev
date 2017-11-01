@@ -1,0 +1,44 @@
+<openerp>
+<data>       
+<record model="ir.ui.view" id="comp_ingerit">
+    <field name="name">comp.ingeit</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//group/group/field[@name='website']" position="after">
+            <field name="catg"/>
+            <field name="nsec"/>
+        </xpath>
+    </field>
+</record>
+<record model="ir.ui.view" id="part_ingerit">
+    <field name="name">part.ingeit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//group/group/field[@name='website']" position="after">
+            <field name="catg"/>
+            <field name="nsec"/>
+            <field name="cin"/>
+            <field name="passport"/>
+            <field name="tva"/>
+        </xpath>
+    </field>
+</record>
+        
+<!--<record model="ir.ui.view" id="comp_inherit">
+    <field name="name">emp.badg</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//group[@name='active_group']" position="inside">
+            <field name="badge_id"/>
+        </xpath>
+    </field>
+</record>
+-->
+</data>
+</openerp>

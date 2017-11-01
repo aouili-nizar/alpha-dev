@@ -4,7 +4,7 @@
 		<template id="certif_retenue_report">
 			<t t-call="report.html_container">
 				<t t-foreach="docs" t-as="o">
-					
+					<t t-call="report.external_layout">
 						<div class="page">
 						<t t-set="emp" t-value="hr_employee"/>
 						<t t-set="company" t-value="res_company"/>
@@ -107,7 +107,7 @@
 							<b>Cachet et signature de l'employeur </b>
 							</div>
 						</div>
-					
+					</t>
 				</t>
 			</t>
 		</template>

@@ -30,7 +30,8 @@
         'wizard/wizard_rs_four.xml',
         'reportXml/report_rs_four.xml',
         'reportXml/report.xml',
-        'views/res_taux.xml'
+        'views/res_taux.xml',
+        'views/part_comp_inherit.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
