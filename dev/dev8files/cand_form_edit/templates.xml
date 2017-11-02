@@ -1,0 +1,19 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="cand_inherit">
+            <field name="name">cand.inh</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='priority']" position="after">                       
+                         <field name="adress"/>
+                         <field name="gmap"/>   
+                       
+                  
+                </xpath>
+            </field>
+        </record>        
+
+    </data>
+</openerp>

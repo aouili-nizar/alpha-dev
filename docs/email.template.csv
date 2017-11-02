@@ -1,0 +1,37 @@
+"id","user_signature","model_object_field/id","email_cc","body_html","email_from","copyvalue","lang","name","report_name","subject","attachment_ids/id","email_to","partner_to","report_template/id","reply_to","model_id/id","sub_model_object_field/id","null_value"
+"hr_recruitment.applicant_interest","True","cand_form_edit.field_hr_applicant_gmap","","<pre style=""color: rgb(0, 0, 0); word-wrap: break-word; white-space: pre-wrap;"">Bonjour,
+
+Faisant suite à votre candidature au poste de ${object.job_id.display_name} pour la société ${object.company_id.display_name}, nous vous informons que votre CV a  retenu notre attention. 
+
+Ainsi, vous êtes convié de vous présenter à notre local sis à ${object.adress} pour un 1er entretien. 
+
+Et ce le ${object.date_action} à ${object.title_action}
+
+Lien google-maps : </pre><pre style=""color: rgb(0, 0, 0); word-wrap: break-word; white-space: pre-wrap;"">${object.gmap}
+<br></pre><pre style=""color: rgb(0, 0, 0); word-wrap: break-word; white-space: pre-wrap;"">Restant à disposition pour tout complément d'information, 
+
+Meilleures salutations
+<pre style=""word-wrap: break-word; white-space: pre-wrap;"">${object.company_id.display_name}</pre>Tél : ${object.company_id.phone}
+Fax : ${object.company_id.fax}
+Site Web : ${object.company_id.website}
+Email : ${object.company_id.email}</pre><p></p>","","${object.gmap}","${object.partner_id and object.partner_id.lang or ''}","Application approved","","Candidature approuvée","","${object.email_from}","${object.partner_id and object.partner_id.id or ''}","","","cand_form_edit.model_hr_applicant","",""
+"hr_recruitment.applicant_refuse","False","","","<p><br></p><pre style=""color: rgb(0, 0, 0); word-wrap: break-word; white-space: pre-wrap;"">Bonjour,
+
+Nous vous remercions pour votre candidature au poste de ${object.job_id.display_name} et l'intérêt que vous avez accordé à la société ${object.company_id.display_name}, <br>
+Nous avons le regret de vous informer que votre candidature n'a pas été retenue.
+
+Nous nous permettons cependant de conserver votre CV dans notre base de données et ne manquerons pas de vous recontacter dès qu'une opportunité répondant à vos attentes se présentera.
+
+Nous vous souhaitons la pleine réussite dans votre vie professionnelle.
+
+<pre style=""word-wrap: break-word; white-space: pre-wrap;"">Meilleures salutations
+<pre style=""word-wrap: break-word; white-space: pre-wrap;"">${object.company_id.display_name}</pre>Tél : ${object.company_id.phone}
+Fax : ${object.company_id.fax}
+Site Web : ${object.company_id.website}
+Email : ${object.company_id.email}</pre></pre>","","","${object.partner_id and object.partner_id.lang or ''}","Application refused","","Candidature refusée","","${object.email_from}","${object.partner_id and object.partner_id.id or ''}","","","cand_form_edit.model_hr_applicant","",""
+"event.confirmation_registration","False","","","
+        <p>Bonjour ${object.name},</p>
+        <p>Nous vous confirmons que votre inscription à l'évènement ${object.event_id.name} a été enregistrée.
+        Vous recevrez automatiquement un courriel avec des informations pratiques supplémentaires (telles que le programme, l'agenda)... dès que l'évènement sera confirmé.</p>
+        <p>Merci pour votre participation!</p>
+        <p>Cordialement</p>","${(object.user_id.email or object.company_id.email or 'noreply@' + object.company_id.name + '.com')|safe}","","${object.partner_id.lang}","Confirmation of the Registration","","Votre inscription à ${object.event_id.name}","","${object.email|safe}","","","","event.model_event_registration","",""
