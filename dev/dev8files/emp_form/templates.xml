@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+<!--   report attestation der stage    -->
+        <record model="ir.ui.view" id="wizard_att_emp_form">
+            <field name="name">wizard.att.emp.form</field>
+            <field name="model">att.stage</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Attestation de stage">
+                    <group>
+
+
+                        <field name="emp" style="width: 40%" />
+                        <field name="ds" style="width: 40%" />
+                        <field name="de" style="width: 40%" />
+                        <field name="boss" style="width: 40%" />
+                        
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimer" type="object"
+                            class="oe_highlight" />
+                        Or
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_att_emp" model="ir.actions.act_window">
+            <field name="name">Attestation de stage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">att.stage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_att_emp_form" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_datt-emp" name="Attestation de stage"
+            parent="devplus_hr_payroll_tn.menu_hr_reporting_paie" action="action_wizard_att_emp" />
+        <template id="att_stage_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page" style="font-family: 'Times New Roman', Times, serif;">
+                            <t t-set="comp" t-value="res_company"/>
+                        <br/> <br/> <br/> <br/> <br/> <br/><br/> <br/>
+                           <div class="row pull-right">
+                              Tunis, le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>  
+                             
+                           </div>
+                           <div class="row text-center">
+                                 <br/> <br/>  <br/> <br/> 
+                              <h2><b> ATTESTATION  DE STAGE</b></h2><br/>
+                           </div>
+                           <div class="row text-justify" style="font-size: 200%;"><p>
+                            <![CDATA[
+
+
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné  <span t-raw="get_boss_gender(data['form']['emp'])"></span> <span t-raw="data['form']['boss'][1]"></span>,  <span t-raw="get_work(data['form']['emp'])"></span> de la société <b><span t-raw="comp.name"></span></b> atteste que 
+                                <span t-raw="get_gender(data['form']['emp'])"></span> <span t-raw="data['form']['emp'][1]"></span>
+
+
+                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp'])"></span>, a effectué un stage au sein de notre société du  <span t-raw="data['form']['ds']"></span> au <span t-raw="data['form']['de']"></span><br/><br/>
+                                Cette Attestation est délivrée à l’intéressé, pour lui servir et valoir ce que  de droit.</p>
+
+                           </div>
+                           <div class="row pull-right" style=" padding-right: 150px;">
+                               <br/><br/><br/>
+                                                                       <h3><b> <span t-raw="get_user_work(user.id)"></span></b></h3>
+                                                                                         <h4><span t-esc="user.name"></span></h4>
+
+
+                           </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report id="report_att_emp" string="Attestation de stage" model="hr.employee" report_type="qweb-pdf" file="emp_form.att_stage_report" name="emp_form.att_stage_report" />
+         <record model="ir.ui.view" id="emp_inherit_delv">
+            <field name="name">emp.delv</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string='Citizenship &amp; Other Info']" position="inside">
+                    
+                        
+                        
+                            <field name="deliv"/>
+                            
+                       
+                  
+                </xpath>
+            </field>
+        </record>
+<!--   report attestation der salaire    -->
+    </data>
+</openerp>

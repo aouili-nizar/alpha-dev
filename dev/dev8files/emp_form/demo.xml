@@ -1,0 +1,25 @@
+<openerp>
+    <data>
+        <!--  -->
+        <!--   <record id="object0" model="emp_form.emp_form"> -->
+        <!--     <field name="name">Object 0</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object1" model="emp_form.emp_form"> -->
+        <!--     <field name="name">Object 1</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object2" model="emp_form.emp_form"> -->
+        <!--     <field name="name">Object 2</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object3" model="emp_form.emp_form"> -->
+        <!--     <field name="name">Object 3</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object4" model="emp_form.emp_form"> -->
+        <!--     <field name="name">Object 4</field> -->
+        <!--   </record> -->
+        <!--  -->
+    </data>
+</openerp>
