@@ -26,7 +26,7 @@
 						<field name="account_loan_id" />
 						<field name="account_cotisation_id" />
 						<field name="account_banque_employeur_id" />
-						<field name="account_banque_id" />
+						<field name="account_banque_id1"  />
 					</group>
 				</page>
 			</notebook>

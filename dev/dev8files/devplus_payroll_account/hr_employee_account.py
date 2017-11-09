@@ -23,7 +23,7 @@ class hr_employee_account(osv.osv):
 					'account_holiday_id': fields.many2one('account.account', u'Congés',),
 					'account_cotisation_id': fields.many2one('account.account', u'Declaration',),
 					'account_banque_employeur_id': fields.many2one('account.account', u"Compte Bancaire de l'employeur",),
-					'account_banque_id': fields.many2one('account.account', u"Compte Bancaire",),
+					'account_banque_id1': fields.many2one('account.journal', u"Journal de banque",),
 					'cpt_cot_acc_tra':fields.many2one('account.account',string='Cotisation accident de travail'),
 					'cpt_cot_patr':fields.many2one('account.account',string='Cotisation patronale sécurité sociale'),
 					'cpt_cnss_acc_tra':fields.many2one('account.account',string='CNSS Accident de travail'),

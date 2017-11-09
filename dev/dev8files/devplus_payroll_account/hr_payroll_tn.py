@@ -105,14 +105,15 @@ class hr_payroll_tn(osv.osv):
         bulletin_lines=[]
         for sal in self.browse(cr, uid, ids):
             for bulletin in sal.bulletin_line_ids:
-                if not bulletin.employee_id.create_move:
+                if not bulletin.employee_id.create_move and bulletin.employee_id.cnss5 == True:
                     bulletin_lines.append(bulletin)
         if bulletin_lines:
             self._move_create_cotisations_employee(cr, uid, ids, bulletin_lines,True)
         # create   move for each employee have option  create_move
         for sal in self.browse(cr, uid, ids):
             for bulletin in sal.bulletin_line_ids:
-                if bulletin.employee_id.create_move:
+                if bulletin.employee_id.create_move and bulletin.employee_id.cnss5 == True:
+                    
                     self._move_create_cotisations_employee(cr, uid, ids, [bulletin],False)
 
 
@@ -599,7 +600,7 @@ class hr_payroll_tn(osv.osv):
                 move_c_lines.append((0, 0, val))
             salaire_Br=0.0
             for x in bulletin_lines:
-                salaire_Br=x.salaire_brute
+                salaire_Br=x.salaire_brute_cotisable
             # 5
 			# generation des ecriture comptable pour la déclaration :(CNSS Accident du travail):
                 cnss_accident_travail =taux_accident_travail*(salaire_Br/100)
@@ -617,8 +618,7 @@ class hr_payroll_tn(osv.osv):
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val CNSS Accident du travail**',val
-                    print"*****************************************************"
+                   
                     move_c_lines1.append((0, 0, val))
                 cnss_patronale =taux_patronale*(salaire_Br/100)
 				# generation des ecriture comptable pour la déclaration :(CNSS Charge Patronale):
@@ -636,8 +636,7 @@ class hr_payroll_tn(osv.osv):
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val CNSS Charge Patronale',val
-                    print"*****************************************************"
+                    
                     move_c_lines1.append((0, 0, val))
                 cnss_cot_accident_travail =taux_accident_travail*(salaire_Br/100)
 				# generation des ecriture comptable pour la déclaration :(Cotisation Accident du travail):
@@ -655,8 +654,8 @@ class hr_payroll_tn(osv.osv):
                         'currency_id': currency_id,
                         'state': 'valid'
                     }
-                    print '***val Cotisation Accident du travail',val
-                    print"*****************************************************"
+                   
+                  
                     move_c_lines1.append((0, 0, val))
                 cnss_cot_patr =taux_patronale*(salaire_Br/100)
 				# generation des ecriture comptable pour la déclaration :(Cotisation patronale sécurité sociale):
@@ -675,8 +674,8 @@ class hr_payroll_tn(osv.osv):
                         'state': 'valid'
                     }
                     move_c_lines1.append((0, 0, val))
-                    print '***val Cotisation patronale sécurité sociale',val
-                    print"*****************************************************"
+                   
+                    
 
             move_c1 = {
                     'ref': u"Declaration CNSS" + ' ' + sal.period_id.name + ' ' + bulletin.employee_id.name or '/',
@@ -687,7 +686,7 @@ class hr_payroll_tn(osv.osv):
                     'name':  '/',
                     'line_id': move_c_lines1
                     }
-            print"movec1*******************************",move_c1
+        
 
             move_c = {#'ref': u"Nets payées" + ' ' + sal.month_id.name + ' ' + bulletin.employee_id.name or '/',
                     'ref': u"Declaration Cotisation" + ' ' + sal.period_id.name + ' ' + bulletin.employee_id.name or '/',
@@ -698,7 +697,7 @@ class hr_payroll_tn(osv.osv):
                     'name':  '/',
                     'line_id': move_c_lines
                     }
-            print"movec*******************************",move_c
+           
 
 
 
@@ -742,7 +741,9 @@ class hr_payroll_tn(osv.osv):
 
             # date and period
             date_move = sal.date_salary or time.strftime('%Y-%m-%d')
+            date_vir = sal.date_vir or date_move or time.strftime('%Y-%m-%d')
             period_id = sal.period_id and sal.period_id.id or False
+            per_vir = sal.per_vir and sal.per_vir.id or period_id or False
 
             if not period_id:
                 raise osv.except_osv(_('UserError'), _(u'Période obligatoire'))
@@ -763,10 +764,10 @@ class hr_payroll_tn(osv.osv):
             if salaire_net_a_payer :
                 name_move = u'Virement'
                 val = {
-                    'account_id': bulletin.employee_id.account_banque_id.id,
-                    'period_id': period_id,
-                    'journal_id': journal_id,
-                    'date': date_move,
+                    'account_id': bulletin.employee_id.account_banque_id1.default_credit_account_id.id,
+                    'period_id': per_vir,
+                    'journal_id': bulletin.employee_id.account_banque_id1.id,
+                    'date': date_vir,
                     'name': name_move,
                     'amount_currency':-1*salaire_net_a_payer,
                     'debit': 0.0,
@@ -781,9 +782,9 @@ class hr_payroll_tn(osv.osv):
                 name_move = u'Paiement'
                 val = {
                     'account_id': bulletin.employee_id.account_banque_employeur_id.id,
-                    'period_id': period_id,
-                    'journal_id': journal_id,
-                    'date': date_move,
+                    'period_id': per_vir,
+                    'journal_id': bulletin.employee_id.account_banque_id1.id,
+                    'date': date_vir,
                     'name': name_move,
                     'amount_currency':1*salaire_net_a_payer,
                     'debit': self._convert_amount(cr, uid,salaire_net_a_payer,currency_id, currency_company_id, context=ctx),
@@ -796,9 +797,9 @@ class hr_payroll_tn(osv.osv):
             # create move
             move_v = {#'ref': u"Nets payées" + ' ' + sal.month_id.name + ' ' + bulletin.employee_id.name or '/',
                       'ref': u"Virement" + ' ' + sal.period_id.name + ' ' + bulletin.employee_id.name or '/',
-                    'period_id': period_id,
-                    'journal_id': journal_id,
-                    'date': date_move,
+                'period_id': per_vir,
+                    'journal_id': bulletin.employee_id.account_banque_id1.id,
+                    'date': date_vir,
                     'state': 'draft',
                     'name':  '/',
                     'line_id': move_v_lines

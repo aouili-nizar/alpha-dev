@@ -82,6 +82,8 @@ class hr_payroll(osv.osv):
         'name': fields.char('Description', size=64, readonly=True, states={'draft':[('readonly', False)]}),
         'number': fields.char('Numero du salaire', size=32, readonly=False),
         'date_salary': fields.date('Date salaire', readonly=True, states={'draft':[('readonly', False)]}),
+	'date_vir': fields.date('Date virement'),
+	'per_vir': fields.many2one('account.period', u'Periode Virement'),
         'company_id': fields.many2one('res.company', u'Société', change_default=True, readonly=True, required=True, states={'draft':[('readonly', False)]}),
         'month_id': fields.many2one('hr.month', 'Mois', readonly=True, required=True, states={'draft':[('readonly', False)]}, select=1),
         'period_id': fields.many2one('account.period',u'Période Comptable', domain=[('state', '<>', 'done')], readonly=True, required=True, states={'draft':[('readonly', False)]}, select=1),
@@ -156,7 +158,7 @@ class hr_payroll(osv.osv):
             bulletins2 = self.pool.get('hr.payroll.bulletin').browse(cr, uid, bulletins)
             for bul in bulletins2:
                 bul.draft_bulletin()
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        return self.write(cr, uid, ids, {'state':'paid'}, context=context)
     def draft_vb(self, cr, uid, ids, context=None):
         for sal in self.browse(cr, uid, ids):
             if sal.move_id:
@@ -167,7 +169,7 @@ class hr_payroll(osv.osv):
             bulletins2 = self.pool.get('hr.payroll.bulletin').browse(cr, uid, bulletins)
             for bul in bulletins2:
                 bul.draft_bulletin()
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        return self.write(cr, uid, ids, {'state':'declared'}, context=context)
     
 
     def declar_db(self, cr, uid, ids, context=None):

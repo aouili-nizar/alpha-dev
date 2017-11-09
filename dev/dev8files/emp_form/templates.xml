@@ -1,6 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+<data>
+<!--   heritage hr_contract    -->
+    <record model="ir.ui.view" id="hr_contr_ing">
+    <field name="name">hr.cont.inherit</field>
+    <field name="model">hr.contract</field>
+    <field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//page/group/group/field[@name='wage']" position="after">
+            <field name="salaire_b" />
+            
+        </xpath>
+    </field>
+    </record>
+<!--   ajout des signataire    -->
+    <record model="ir.ui.view" id="base_view_company_form_inherit_payroll_sign">
+    <field name="name">res.company.sign.inherit</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form" />
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <xpath expr="//page/group/group/field[@name='website']" position="after">
+            <field name="signataire" />
+            <field name="fctsign" />
+        </xpath>
+    </field>
+    </record>
+<!--   interface stagiaires    -->
+        
+    <record model="ir.ui.view" id="stag_formul">
+    <field name="name">stag.form</field>
+    <field name="model">hr.stagiaires</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form >
+            <sheet>
+           
+                <field name="image" widget="image" class="oe_left oe_avatar"/>
+                <div class="oe_title">
+                    <label for="nom" class="oe_edit_only"/>
+                        <h1>
+                            <field name="nom" />
+                        </h1>
+
+                    <label for="user_id" class="oe_edit_only"/>
+                    <field name="user_id" />
+                    <label for="actif" class="oe_edit_only"/>
+                    <field name="actif" />
+                </div>
+                <div class="oe_right oe_button_box" name="button_box">
+                            <!-- Put here related buttons -->
+                </div>
+                <notebook>
+                <page string="Information publique">
+                    <group>
+                        <group string="Contact Information">
+                            <field name="adresse_pro" />
+                            <field name="tel_pro" />
+                        </group>
+                        <group string="Poste">
+                        <field name="departement" />
+                            <field name="job" />
+                            <field name="responsa" /></group>
+                            <group string="Stage">
+                            <field name="date_entre" />
+                            <field name="date_fin" />
+                            <field name="theme" /></group>
+                        
+                    </group>
+                </page>
+                <page string="Information Personnelle" groups="base.group_hr_user">
+
+                    <group string="Information Personnelle">
+                        <field name="nationalite" />
+                        <field name="cin" />
+                        <field name="deliv" />
+                        <field name="naiss" />
+                        <field name="naisslieux" />
+                        <field name="pers_addr" />
+                        <field name="gender" />
+                        <field name="etciv" />
+                    </group>
+                </page>
+                </notebook>
+            </sheet>        
+        </form>
+    </field>
+    </record>
+   <record model="ir.ui.view" id="stag_formul_kanban">
+    <field name="name">stag.kanban</field>
+    <field name="model">hr.stagiaires</field>
+    <field name="type">kanban</field>
+    <field name="domain">[('activ','=',True)]</field>
+    <field name="arch" type="xml">
+    <kanban>     
+        <templates>
+            <t t-name="kanban-box"> 
+                <div class="oe_employee_vignette">
+                    <div class="oe_employee_image">
+                        <a type="open"><img t-att-src="kanban_image('hr.stagiaires', 'image', record.id.value)" class="oe_employee_picture"/></a>
+                        </div>
+                    <div class="oe_employee_details">
+                        <h4>
+                            <a type="open"><field name="nom"/></a>
+                        </h4>
+                        <ul>
+                            <li t-if="record.theme.raw_value">
+    <field name="theme"/>
+    </li>
+                            <li t-if="record.job.raw_value"><field name="job"/></li>
+                            <li t-if="record.adresse_pro.raw_value"><field name="adresse_pro"/></li>
+                        
+                        </ul>
+                    </div> 
+                </div>
+            </t>
+        </templates>
+    </kanban>
+    </field>
+    </record>  
+    <record id="stag_actw" model="ir.actions.act_window">
+    <field name="name">Stagiaires</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">hr.stagiaires</field>
+    <field name="view_type">tree</field>
+    <field name="view_mode">kanban,tree,form</field>
+    
+    </record>
+
+
+
+
 <!--   report attestation der stage    -->
         <record model="ir.ui.view" id="wizard_att_emp_form">
             <field name="name">wizard.att.emp.form</field>
@@ -11,10 +142,8 @@
                     <group>
 
 
-                        <field name="emp" style="width: 40%" />
-                        <field name="ds" style="width: 40%" />
-                        <field name="de" style="width: 40%" />
-                        <field name="boss" style="width: 40%" />
+                        <field name="emp1" style="width: 40%" />
+               
                         
                     </group>
                     <footer>
@@ -43,12 +172,41 @@
         <template id="att_stage_report">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t t-call="report.external_layout">
-                        <div class="page" style="font-family: 'Times New Roman', Times, serif;">
-                            <t t-set="comp" t-value="res_company"/>
-                        <br/> <br/> <br/> <br/> <br/> <br/><br/> <br/>
+                    
+    <div class ="header" style="font-family: Arial, Helvetica, sans-serif;margin-buttom:20px;height:500px">
+    <div class="col-xs-4 text-center">
+        <t t-set="company" t-value="res_company"/>
+        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 130px;width:290px"/>
+    </div>
+    <div class="col-xs-8" style="margin-top:15px;font-size:17px;font-family: Arial, Helvetica, sans-serif;">
+        <b>
+            <t t-raw="company.name"/>
+        </b>
+        <br/>
+        <b>S.A.R.L au capital de  </b>
+        <span t-raw="company.capital" style="color:#606060;"></span>
+        <br/>
+        <b>Adresse du siège : </b>
+        <span t-raw="company.street" style="color:#606060;"></span> -
+        <span t-raw="company.city" style="color:#606060;"></span> -
+        <span t-raw="company.zip" style="color:#606060;"></span>
+        <br/>
+        <b>Adresse de Correspondance : </b>
+        <span t-raw="company.adr_cor" style="color:#606060;"></span>
+        <br/>
+        <b>Code TVA : </b>
+        <span t-raw="company.vat" style="color:#606060;"></span> - 
+        <b>RC :</b>
+        <span t-raw="company.company_registry" style="color:#606060;"></span>
+        <br/>
+    </div>
+    <br/>
+    </div>
+                        <div class="page" style="font-family: 'Times New Roman', Times, serif; padding-left:20px;padding-right:20px;">
+                         <t t-set="company" t-value="res_company"/>
+                        <br/> <br/> <br/> <br/> <br/> 
                            <div class="row pull-right">
-                              Tunis, le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>  
+                              Tunis, le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>  
                              
                            </div>
                            <div class="row text-center">
@@ -59,27 +217,33 @@
                             <![CDATA[
 
 
-                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné  <span t-raw="get_boss_gender(data['form']['emp'])"></span> <span t-raw="data['form']['boss'][1]"></span>,  <span t-raw="get_work(data['form']['emp'])"></span> de la société <b><span t-raw="comp.name"></span></b> atteste que 
-                                <span t-raw="get_gender(data['form']['emp'])"></span> <span t-raw="data['form']['emp'][1]"></span>
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné Mr <t t-raw="company.signataire.name_related"></t> , <t t-raw="company.fctsign"></t>  de la société <b><span t-raw="company.name"></span></b> atteste que 
+                                <span t-raw="get_gender(data['form']['emp1'])"></span> <span t-raw="data['form']['emp1'][1]"></span>
 
 
-                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp'])"></span>, a effectué un stage au sein de notre société du  <span t-raw="data['form']['ds']"></span> au <span t-raw="data['form']['de']"></span><br/><br/>
-                                Cette Attestation est délivrée à l’intéressé, pour lui servir et valoir ce que  de droit.</p>
+                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp1'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp1'])"></span>, a effectué un stage au sein de notre société du  <span t-raw="get_date_start(data['form']['emp1'])"></span> au <span t-raw="get_date_end(data['form']['emp1'])"></span> 
+
+
+                                                 sous le thème : <br/>
+                                                                                 <b><h3 class="col-xs-12 text-center">   « <span  t-raw="get_stag_work(data['form']['emp1'])"></span> »  </h3></b> <br/><br/>
+
+                                Cette Attestation est délivrée à l’intéressé<span t-raw="get_e(data['form']['emp1'])"></span>, pour lui servir et valoir ce que  de droit.</p>
 
                            </div>
-                           <div class="row pull-right" style=" padding-right: 150px;">
-                               <br/><br/><br/>
-                                                                       <h3><b> <span t-raw="get_user_work(user.id)"></span></b></h3>
-                                                                                         <h4><span t-esc="user.name"></span></h4>
+                           <div class="row pull-right text-center" style=" padding-right: 150px;">
+                               <br/><br/><br/><h3><t t-raw="company.fctsign"></t></h3>
+                                                                       <h4><b> <t t-raw="company.signataire.name_related"></t> </b></h4>
+                                                                                         
 
 
                            </div>
                         </div>
-                    </t>
+                      
+    <t t-call="report.external_layout_footer"/>
                 </t>
             </t>
         </template>
-        <report id="report_att_emp" string="Attestation de stage" model="hr.employee" report_type="qweb-pdf" file="emp_form.att_stage_report" name="emp_form.att_stage_report" />
+        
          <record model="ir.ui.view" id="emp_inherit_delv">
             <field name="name">emp.delv</field>
             <field name="model">hr.employee</field>
@@ -97,6 +261,426 @@
                 </xpath>
             </field>
         </record>
+        <report id="report_att_emp" string="Attestation de stage" model="report.abstract_report" report_type="qweb-pdf" file="emp_form.att_stage_report" name="emp_form.att_stage_report" />
 <!--   report attestation der salaire    -->
-    </data>
+        <record model="ir.ui.view" id="wizard_att_sal_form">
+            <field name="name">wizard.att.sal.form</field>
+            <field name="model">att.salaire</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Attestation de salaire">
+                    <group>
+
+
+                        <field name="emp" style="width: 40%" />
+                      
+                        
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimer" type="object"
+                            class="oe_highlight" />
+                        Or
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_att_sal" model="ir.actions.act_window">
+            <field name="name">Attestation de salaire</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">att.salaire</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_att_sal_form" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_datt-sal" name="Attestation de salaire"
+            parent="devplus_hr_payroll_tn.menu_hr_reporting_paie" action="action_wizard_att_sal" />
+        
+    <template id="att_slaire_report">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <div class ="header" style="font-family: Arial, Helvetica, sans-serif;margin-buttom:20px;height:500px">
+            <div class="col-xs-4 text-center">
+                <t t-set="company" t-value="res_company"/>
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 130px;width:290px"/>
+            </div>
+            <div class="col-xs-8" style="margin-top:15px;font-size:17px;font-family: Arial, Helvetica, sans-serif;">
+                <b>
+                    
+                        <t t-raw="company.name"/>
+                </b>
+                <br/>
+                
+                    <b>S.A.R.L au capital de  </b>
+                        <span  t-raw="company.capital" style="color:#606060;">
+                           
+                        </span>
+                   
+                
+                <br/>
+                
+                    <b>Adresse du siège : </b>
+                        <span t-raw="company.street" style="color:#606060;">
+                            
+                        </span> -<span t-raw="company.city" style="color:#606060;"></span> -<span t-raw="company.zip" style="color:#606060;"></span>
+                    
+               
+                <br/>
+                
+                    <b>Adresse de Correspondance : </b>
+                        <span t-raw="company.adr_cor" style="color:#606060;">
+                            
+                        </span>
+                    
+                
+                <br/>
+                
+                    <b>Code TVA : </b>
+                        <span t-raw="company.vat" style="color:#606060;">
+                           
+                        </span> - <b>RC :</b> <span t-raw="company.company_registry" style="color:#606060;"></span>
+                    
+             
+                <br/>
+            </div>
+         
+            <br/>
+        </div>
+                <div class="page" style="font-family: 'Times New Roman', Times, serif; padding-left:20px;padding-right:20px;">
+                    <t t-set="comp" t-value="res_company"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                
+                    <div class="row pull-right">                              Tunis, le : 
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                    <div class="row text-center">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h2>
+                            <b>ATTESTATION  DE SALAIRE</b>
+                        </h2>
+                        <br/>
+                    </div>
+                    <div class="row text-justify" style="font-size: 200%;">
+                        <p>
+                            <![CDATA[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné   <t t-raw="comp.signataire.name_related"></t> ,         
+    <t t-raw="comp.fctsign"></t> de la société <b><span t-raw="comp.name"></span></b> atteste que 
+                                <span t-raw="get_gender(data['form']['emp'])"></span> <span t-raw="data['form']['emp'][1]"></span>
+
+
+                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp'])"></span>,  fait partie du personnel de notre société en qualité de <span t-raw="get_emp_work(data['form']['emp'])"></span> et ce depuis le <span t-raw="get_emp_contract_start(data['form']['emp'])"></span> et perçoit un salaire brut annuel de <span t-raw="get_emp_sal_string(data['form']['emp'])"></span>, (<span t-raw="get_emp_sal_number(data['form']['emp'])"></span>) DT.<br/>
+                                <br/>Cette Attestation est délivrée à l’intéressé<span t-raw="get_e(data['form']['emp'])"></span>, pour lui servir et valoir ce que  de droit.</p>
+
+                           </div>
+                           <div class="row pull-right text-center" style=" padding-right: 150px;">
+                               <br/><br/><br/>                               <h3><t t-raw="comp.fctsign"></t></h3>
+                                                                       <h4><b> <t t-raw="comp.signataire.name_related"></t></b></h4>
+                                                                                        
+
+
+                           </div>
+                      </div>
+                      
+    <t t-call="report.external_layout_footer"/>
+                </t>
+            </t>
+        </template>
+    <report id="report_att_sal" string="Attestation de salaire" model="report.abstract_report" report_type="qweb-pdf" file="emp_form.att_slaire_report" name="emp_form.att_slaire_report" />
+<!--   Attestation de travail-->
+
+       <record model="ir.ui.view" id="wizard_att_tra_form">
+            <field name="name">wizard.att.tra.form</field>
+            <field name="model">att.travail</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Attestation de travail">
+                    <group>
+
+
+                        <field name="emp" style="width: 40%" />
+                 
+                        
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimer" type="object"
+                            class="oe_highlight" />
+                        Or
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_att_tra" model="ir.actions.act_window">
+            <field name="name">Attestation de travail</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">att.travail</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_att_tra_form" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_datt-tra" name="Attestation de travail"
+            parent="devplus_hr_payroll_tn.menu_hr_reporting_paie" action="action_wizard_att_tra" />
+        
+    <template id="att_travail_report">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <div class ="header" style="font-family: Arial, Helvetica, sans-serif;margin-buttom:20px;height:500px">
+            <div class="col-xs-4 text-center">
+                <t t-set="company" t-value="res_company"/>
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 130px;width:290px"/>
+            </div>
+            <div class="col-xs-8" style="margin-top:15px;font-size:17px;font-family: Arial, Helvetica, sans-serif;">
+                <b>
+                    
+                        <t t-raw="company.name"/>
+                </b>
+                <br/>
+                
+                    <b>S.A.R.L au capital de  </b>
+                        <span  t-raw="company.capital" style="color:#606060;">
+                           
+                        </span>
+                   
+                
+                <br/>
+                
+                    <b>Adresse du siège : </b>
+                        <span t-raw="company.street" style="color:#606060;">
+                            
+                        </span> -<span t-raw="company.city" style="color:#606060;"></span> -<span t-raw="company.zip" style="color:#606060;"></span>
+                    
+               
+                <br/>
+                
+                    <b>Adresse de Correspondance : </b>
+                        <span t-raw="company.adr_cor" style="color:#606060;">
+                            
+                        </span>
+                    
+                
+                <br/>
+                
+                    <b>Code TVA : </b>
+                        <span t-raw="company.vat" style="color:#606060;">
+                           
+                        </span> - <b>RC :</b> <span t-raw="company.company_registry" style="color:#606060;"></span>
+                    
+             
+                <br/>
+            </div>
+         
+            <br/>
+        </div>
+                <div class="page" style="font-family: 'Times New Roman', Times, serif; padding-left:20px;padding-right:20px;">
+                    <t t-set="comp" t-value="res_company"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                  
+                    <div class="row pull-right">                              Tunis, le : 
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                    <div class="row text-center">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h2>
+                            <b>ATTESTATION  DE TRAVAIL</b>
+                        </h2>
+                        <br/>
+                    </div>
+                    <div class="row text-justify" style="font-size: 200%;">
+                        <p>
+                            <![CDATA[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné   <t t-raw="comp.signataire.name_related"></t> ,     
+    <t t-raw="comp.fctsign"></t> de la société <b><span t-raw="comp.name"></span></b> atteste que 
+                                <span t-raw="get_gender(data['form']['emp'])"></span> <span t-raw="data['form']['emp'][1]"></span>
+
+
+                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp'])"></span>, employé  au sein de notre société en qualité de <br/>
+                                 <h3><b><span class="col-xs-12 text-center" t-raw="get_emp_work(data['form']['emp'])"></span></b></h3><br/><br/> 
+                                 Et ce depuis le <span t-raw="get_emp_contract_start(data['form']['emp'])"></span>   suivant un Contrat <span t-raw="get_emp_contract_type(data['form']['emp'])"></span> 
+                                <br/>Cette Attestation est délivrée à l’intéressé<span t-raw="get_e(data['form']['emp'])"></span>, pour lui servir et valoir ce que  de droit.</p>
+
+                           </div>
+                           <div class="row pull-right text-center" style=" padding-right: 150px;">
+                               <br/><br/><br/>                                  
+                                                                                         <h3><t t-raw="comp.fctsign"></t></h3>
+                                                                       <h4><b> <t t-raw="comp.signataire.name_related"></t> </b></h4>
+                                                                                        
+
+
+                           </div>
+                      </div>
+                     
+    <t t-call="report.external_layout_footer"/>
+                </t>
+            </t>
+        </template>
+    <report id="report_att_tra" string="Attestation de travail" model="report.abstract_report" report_type="qweb-pdf" file="emp_form.att_travail_report" name="emp_form.att_travail_report" />
+
+<!--   Attestation de stage ( SIVP ) -->
+
+       <record model="ir.ui.view" id="wizard_att_sivp_form">
+            <field name="name">wizard.att.sivp.form</field>
+            <field name="model">att.sivp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Attestation de stage ( SIVP ) ">
+                    <group>
+
+
+                        <field name="emp" style="width: 40%" />
+                 
+                        
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimer" type="object"
+                            class="oe_highlight" />
+                        Or
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_att_sivp" model="ir.actions.act_window">
+            <field name="name">Attestation de stage ( SIVP ) </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">att.sivp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_att_sivp_form" />
+            <field name="target">new</field>
+        </record>
+
+
+        
+    <template id="att_sivp_report">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <div class ="header" style="font-family: Arial, Helvetica, sans-serif;margin-buttom:20px;height:500px">
+            <div class="col-xs-4 text-center">
+                <t t-set="company" t-value="res_company"/>
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 130px;width:290px"/>
+            </div>
+            <div class="col-xs-8" style="margin-top:15px;font-size:17px;font-family: Arial, Helvetica, sans-serif;">
+                <b>
+                    
+                        <t t-raw="company.name"/>
+                </b>
+                <br/>
+                
+                    <b>S.A.R.L au capital de  </b>
+                        <span  t-raw="company.capital" style="color:#606060;">
+                           
+                        </span>
+                   
+                
+                <br/>
+                
+                    <b>Adresse du siège : </b>
+                        <span t-raw="company.street" style="color:#606060;">
+                            
+                        </span> -<span t-raw="company.city" style="color:#606060;"></span> -<span t-raw="company.zip" style="color:#606060;"></span>
+                    
+               
+                <br/>
+                
+                    <b>Adresse de Correspondance : </b>
+                        <span t-raw="company.adr_cor" style="color:#606060;">
+                            
+                        </span>
+                    
+                
+                <br/>
+                
+                    <b>Code TVA : </b>
+                        <span t-raw="company.vat" style="color:#606060;">
+                           
+                        </span> - <b>RC :</b> <span t-raw="company.company_registry" style="color:#606060;"></span>
+                    
+             
+                <br/>
+            </div>
+         
+            <br/>
+        </div>
+                <div class="page" style="font-family: 'Times New Roman', Times, serif; padding-left:20px;padding-right:20px;">
+                    <t t-set="company" t-value="res_company"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                   
+                    <div class="row pull-right">                              Tunis, le : 
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                    <div class="row text-center">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h2>
+                            <b>ATTESTATION  DE STAGE</b>
+                        </h2>
+                        <br/>
+                    </div>
+                    <div class="row text-justify" style="font-size: 200%;">
+                        <p>
+                            <![CDATA[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]]>Je soussigné  Mr <t t-raw="company.signataire.name_related"></t> , 
+    <t t-raw="company.fctsign"></t> de la société <b><span t-raw="company.name"></span></b> atteste que 
+                                <span t-raw="get_gender(data['form']['emp'])"></span> <span t-raw="data['form']['emp'][1]"></span>
+
+
+                                 titulaire de la C.I.N N° <span t-raw="get_cin(data['form']['emp'])"></span> délivrée à Tunis, le <span t-raw="get_deliv(data['form']['emp'])"></span>, est en train d’accomplir un Stage au sein de notre société en qualité de <br/>
+                                 <h3><b><span class="col-xs-12 text-center" t-raw="get_emp_work(data['form']['emp'])"></span></b></h3><br/> 
+                                 Et ce depuis le <span t-raw="get_emp_contract_start(data['form']['emp'])"></span>   suivant un Contrat de Stage d’Initiation à la Vie Professionnelle. 
+                                <br/>Cette Attestation est délivrée à l’intéressé<span t-raw="get_e(data['form']['emp'])"></span>, pour lui servir et valoir ce que  de droit.</p>
+
+                           </div>
+                           <div class="row pull-right text-center" style=" padding-right: 150px;">
+                               <br/><br/><br/>
+                                                                                        <h3><t t-raw="company.fctsign"></t></h3>
+                                                                       <h4><b> <t t-raw="company.signataire.name_related"></t> </b></h4>
+                                                                                         
+
+
+                           </div>
+                      </div>
+                   <t t-call="report.external_layout_footer"/>
+                </t>
+            </t>
+        </template>
+    <report id="report_att_sivp" string="Attestation de stage (SIVP)" model="report.abstract_report" report_type="qweb-pdf" file="emp_form.att_sivp_report" name="emp_form.att_sivp_report" />
+    
+    
+
+
+
+<menuitem id="menu_stag" sequence="2" name="Stagiaires" parent="hr.menu_hr_main" action="stag_actw" />              
+<menuitem id="menu_datt"  name="Attestations" parent="devplus_hr_payroll_tn.menu_hr_reporting_paie"  />
+<menuitem id="menu_datt-sal" sequence="1" name="Attestation de salaire" parent="menu_datt" action="action_wizard_att_sal" />         
+<menuitem id="menu_datt-tra" sequence="2" name="Attestation de travail" parent="menu_datt" action="action_wizard_att_tra" />  
+<menuitem id="menu_datt-emp" sequence="4" name="Attestation de stage( été , PFE...)" parent="menu_datt" action="action_wizard_att_emp" />          
+<menuitem id="menu_datt-sivp" sequence="3" name="Attestation de stage ( SIVP )" parent="menu_datt" action="action_wizard_att_sivp" /> 
+</data>
 </openerp>
