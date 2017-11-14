@@ -7,46 +7,8 @@ from openerp.report import report_sxw
 import datetime
 import hr_convertion
 from openerp.exceptions import except_orm, Warning, RedirectWarning
-#-------------------------------------------------------------------------------
-# signataire
-#-------------------------------------------------------------------------------
-class boss(models.Model):
-    _inherit="res.company"
 
-    signataire = fields.Many2one('hr.employee',string="Signataire")
-    fctsign = fields.Char('Fonction de signataire')
-    @api.one
-    @api.onchange('signataire')
-    def init_fct(self):
-        if self.signataire:
-            self.fctsign =  self.signataire.job_id.name
-#-------------------------------------------------------------------------------
-# les stagiaires
-#-------------------------------------------------------------------------------
-class stagiaires(models.Model):
-    _name="hr.stagiaires"
-    _description="liste des stagiaires"
-    _rec_name="nom"
-    image = fields.Binary('Image')
-    nom=fields.Char("Nom du stagiaire")
-    adresse_pro = fields.Char("Adresse Professionelle")
-    tel_pro = fields.Char('Tél. portable professionel')
-    user_id = fields.Many2one('res.users',string="Utilisateur lié")
-    departement = fields.Many2one('hr.department',string="Département")
-    job = fields.Many2one('hr.job',string="Titre de poste")
-    responsa = fields.Many2one('hr.employee',string="Responsable")
-    date_entre = fields.Date('Date debut')
-    date_fin = fields.Date('Date fin de stage')
-    nationalite = fields.Many2one('res.country',string="Nationalité")
-    cin = fields.Integer('CIN')
-    deliv = fields.Date('Date delivrance CIN')
-    naiss = fields.Date('Date naissance')
-    naisslieux = fields.Many2one('res.country.state' , string = "Lieux de naissance")
-    pers_addr  = fields.Char('Adresse personnelle')
-    gender = fields.Selection(selection=[('Masculin','Masculin'),('Feminin','Feminin')],string="Genre")
-    etciv = fields.Selection(selection=[('Divorcé','Divorcé'),('Marié','Marié'),('Celibataire','Celibataire'),('Voeuf','Voeuf')], string="etat Civil")
-    actif = fields.Boolean('Active')
-    theme = fields.Char('Théme de stage')
+
 #-------------------------------------------------------------------------------
 # attestation de stage(normal)
 #-------------------------------------------------------------------------------
@@ -56,6 +18,7 @@ class wizard_att_stage(models.TransientModel):
 
     
     emp1 = fields.Many2one('hr.stagiaires', string='Stagiaire', required=True)
+    ref = fields.Char('Réf. : ')
     @api.v7
     def print_report(self, cr, uid, ids, context=None):
             datas = {'ids': context.get('active_ids', [])}
@@ -170,10 +133,6 @@ class att_sage(models.AbstractModel):
     _inherit = 'report.abstract_report'
     _template = 'emp_form.att_stage_report'
     _wrapped_report_class = att
-class deliv(models.Model):
-	_inherit="hr.employee"
-
-	deliv = fields.Date('Date delivrance Cin')
 
 #-------------------------------------------------------------------------------
 # attestation de salaire
@@ -183,7 +142,7 @@ class deliv(models.Model):
 class wizard_att_salaire(models.TransientModel):
     _name = 'att.salaire'
     emp = fields.Many2one('hr.employee', string='Employé', required=True)
-
+    ref = fields.Char('Réf. : ')
 
     @api.v7
     def print_report(self, cr, uid, ids, context=None):
@@ -361,7 +320,7 @@ class att_salaire(models.AbstractModel):
 class wizard_att_travail(models.TransientModel):
     _name = 'att.travail'
     emp = fields.Many2one('hr.employee', string='Employé', required=True)
-
+    ref = fields.Char('Réf. : ')
 
     @api.v7
     def print_report(self, cr, uid, ids, context=None):
@@ -457,7 +416,8 @@ class atttra(report_sxw.rml_parse):
     	obj = self.pool.get('hr.employee')
     	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
     	for x in obj.browse(self.cr, self.uid, ids):
-    		z = x.deliv
+            print x.deliv
+            z = x.deliv
     	return datetime.datetime.strptime(z, '%Y-%m-%d').strftime('%d-%m-%Y')
 
     def get_emp_work(self, a):
@@ -465,18 +425,24 @@ class atttra(report_sxw.rml_parse):
     	obj = self.pool.get('hr.employee')
     	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
     	for x in obj.browse(self.cr, self.uid, ids):
-    		z = x.job_id.name
+            z = x.job_id.name
+            print  '---------------------------------------------------------------------------------------------------------'
+            print ' '
+            print ' '
+            print 'the job is ',z
+            print ' the employee  is',x.name_related
+            print ' aaaaaaaaaaaaaand ids is', ids
+            print ' '
+            print ' '
+            print '-----------------------------------------------------------------------------------------------------------'
         return z
 
     def get_emp_contract_start(self, a):
-        z = ''
-        start = ''
-        obj = self.pool.get('hr.contract')
-        recs = obj.search(self.cr, self.uid, [('employee_id', '=', a[0])])
-        for x in obj.browse(self.cr, self.uid, recs):
-            start = x.date_start
-            if datetime.datetime.strptime(start, '%Y-%M-%d') < datetime.datetime.now():
-                z = x.date_start
+        z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+            z = x.date_entree
         return datetime.datetime.strptime(z, '%Y-%m-%d').strftime('%d-%m-%Y')
     def get_emp_contract_type(self,a):
         z = ''
@@ -501,7 +467,7 @@ class att_travail(models.AbstractModel):
 class wizard_att_sivp(models.TransientModel):
     _name = 'att.sivp'
     emp = fields.Many2one('hr.employee', string='Employé', required=True)
-
+    ref = fields.Char('Réf. : ')
     @api.one
     @api.onchange('emp')
     def control_emp(self):
@@ -643,9 +609,164 @@ class att_sivp(models.AbstractModel):
 
 
 #-------------------------------------------------------------------------------
-# ajout champ brut a hr_contract
+# Certificat de travail
 #-------------------------------------------------------------------------------
-class contract_inh(models.Model):
-     _inherit = 'hr.contract'
+class wizard_cert_travail(models.TransientModel):
+    _name = 'cert.travail'
+    emp = fields.Many2one('hr.employee', string='Employé', required=True)
+    ref = fields.Char('Réf. : ')
 
-     salaire_b = fields.Float('Salaire Brut',digits=(10,3),required=True)
+    @api.v7
+    def print_report(self, cr, uid, ids, context=None):
+        datas = {'ids': context.get('active_ids', [])}
+        datas['model'] = False
+        datas['form'] = self.read(cr, uid, ids, context=context)[0]
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'emp_form.cert_travail_report',
+            'datas': datas,
+            'name': u'Certificat de travail',
+            'context': context
+        }
+
+
+class certtra(report_sxw.rml_parse):
+
+    def __init__(self, cr, uid, name, context):
+            super(certtra, self).__init__(cr, uid, name, context=context)
+            self.localcontext.update({
+                'time': time,
+                'get_boss_gender': self.get_boss_gender,
+                'get_boss_name': self.get_boss_name,
+                'get_gender': self.get_gender,
+                'get_name': self.get_name,
+                'get_work': self.get_work,
+                'get_cin': self.get_cin,
+                'get_deliv': self.get_deliv,
+                'get_user_work': self.get_user_work,
+                'get_emp_work': self.get_emp_work,
+                'get_emp_contract_start': self.get_emp_contract_start,
+                'get_emp_contract_end': self.get_emp_contract_end,
+                'get_emp_contract_type': self.get_emp_contract_type,
+                'get_e': self.get_e
+            })
+
+    def get_e(self, a):
+        z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.gender
+    	if z == 'female':
+            return 'e'
+        else:
+            pass
+
+    def get_user_work(self, a):
+        z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('user_id', '=', a)])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.job_id.name
+    	return z
+
+    def get_gender(self, a):
+    	z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.gender
+    		z1 = x.marital
+    	if z == "male":
+    		return "Mr"
+    	elif z == "female" and z1 == "m":
+    		return "Mme"
+    	else:
+    		return "Mlle"
+
+    def get_boss_gender(self, a):
+    	return 'Monsieur'
+
+    def get_boss_name(self, a):
+    	return 'Zied'
+
+    def get_name(self, a):
+    	z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.name
+    	return z
+
+    def get_work(self, a):
+    	return "Gérant"
+
+    def get_cin(self, a):
+    	z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.cin
+    	return z
+
+    def get_deliv(self, a):
+    	z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+            z = x.deliv
+            print  '---------------------------------------------------------------------------------------------------------'
+            print ' '
+            print ' '
+            print 'the deliv  is ',z
+            print ' the employee  is',x.name_related
+            print ' aaaaaaaaaaaaaand ids is' , ids
+            print ' '
+            print ' '
+            print '-----------------------------------------------------------------------------------------------------------'
+    	return datetime.datetime.strptime(z, '%Y-%m-%d').strftime('%d-%m-%Y')
+
+    def get_emp_work(self, a):
+        z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.job_id.name
+        return z
+
+    def get_emp_contract_start(self, a):
+        z = ""
+    	obj = self.pool.get('hr.employee')
+    	ids = obj.search(self.cr, self.uid, [('id', '=', a[0])])
+    	for x in obj.browse(self.cr, self.uid, ids):
+    		z = x.date_entree
+        return z
+        return datetime.datetime.strptime(z, '%Y-%m-%d').strftime('%d-%m-%Y')
+
+    def get_emp_contract_end(self, a):
+        z = ''
+        start = ''
+        obj = self.pool.get('hr.contract')
+        recs = obj.search(self.cr, self.uid, [('employee_id', '=', a[0])])
+        for x in obj.browse(self.cr, self.uid, recs):
+            end = x.date_end
+            
+            z = end
+        return datetime.datetime.strptime(z, '%Y-%m-%d').strftime('%d-%m-%Y')
+    def get_emp_contract_type(self, a):
+        z = ''
+        start = ''
+        obj = self.pool.get('hr.contract')
+        recs = obj.search(self.cr, self.uid, [('employee_id', '=', a[0])])
+        for x in obj.browse(self.cr, self.uid, recs):
+            start = x.date_start
+            if datetime.datetime.strptime(start, '%Y-%M-%d') < datetime.datetime.now():
+                z = x.type_id.name
+        return z
+
+
+class cert_travail(models.AbstractModel):
+    _name = 'report.emp_form.cert_travail_report'
+    _inherit = 'report.abstract_report'
+    _template = 'emp_form.cert_travail_report'
+    _wrapped_report_class = certtra

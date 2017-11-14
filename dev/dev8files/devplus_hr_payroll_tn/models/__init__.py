@@ -12,6 +12,7 @@ import hr_avance
 import hr_payroll_inverse
 import hr_convertion
 import res_company
+import deliv
 #import tools
 
 #import hr_payroll_account

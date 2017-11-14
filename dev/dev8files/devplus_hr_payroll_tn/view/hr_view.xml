@@ -54,6 +54,152 @@
 
 			</field>
 		</record>
+		         <record model="ir.ui.view" id="emp_inherit_delv">
+            <field name="name">emp.delv</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string='Citizenship &amp; Other Info']" position="inside">
+                    
+                        
+                        
+                            <field name="deliv"/>
+                            
+                       
+                  
+                </xpath>
+            </field>
+        </record>
+		<!--   ajout des signataire    -->
+<record model="ir.ui.view" id="base_view_company_form_inherit_payroll_sign">
+	<field name="name">res.company.sign.inherit</field>
+	<field name="model">res.company</field>
+	<field name="inherit_id" ref="base.view_company_form" />
+	<field name="type">form</field>
+	<field name="arch" type="xml">
+		<xpath expr="//page/group/group/field[@name='website']" position="after">
+			<field name="signataire" />
+			<field name="fctsign" />
+		</xpath>
+	</field>
+</record>
+<!--   interface stagiaires    -->
+<record model="ir.ui.view" id="stag_formul">
+	<field name="name">stag.form</field>
+	<field name="model">hr.stagiaires</field>
+	<field name="type">form</field>
+	<field name="arch" type="xml">
+		<form >
+			<sheet>
+				<field name="image" widget="image" class="oe_left oe_avatar"/>
+				<div class="oe_title">
+					<label for="nom" class="oe_edit_only"/>
+					<h1>
+						<field name="nom" />
+					</h1>
+					<label for="user_id" class="oe_edit_only"/>
+					<field name="user_id" />
+					<label for="actif" class="oe_edit_only"/>
+					<field name="actif" />
+				</div>
+				<div class="oe_right oe_button_box" name="button_box">
+					<!-- Put here related buttons -->
+				</div>
+				<notebook>
+					<page string="Information publique">
+						<group>
+							<group string="Contact Information">
+								<field name="adresse_pro" />
+								<field name="tel_pro" />
+							</group>
+							<group string="Poste">
+								<field name="departement" />
+								<field name="job" />
+								<field name="responsa" />
+							</group>
+							<group string="Stage">
+								<field name="date_entre" />
+								<field name="date_fin" />
+								<field name="theme" />
+							</group>
+						</group>
+					</page>
+					<page string="Information Personnelle" groups="base.group_hr_user">
+						<group string="Information Personnelle">
+							<field name="nationalite" />
+							<field name="cin" />
+							<field name="deliv" />
+							<field name="naiss" />
+							<field name="naisslieux" />
+							<field name="pers_addr" />
+							<field name="gender" />
+							<field name="etciv" />
+						</group>
+					</page>
+				</notebook>
+			</sheet>
+		</form>
+	</field>
+</record>
+<record model="ir.ui.view" id="stag_formul_kanban">
+	<field name="name">stag.kanban</field>
+	<field name="model">hr.stagiaires</field>
+	<field name="type">kanban</field>
+	<field name="domain">[('activ','=',True)]</field>
+	<field name="arch" type="xml">
+		<kanban>
+			<templates>
+				<t t-name="kanban-box">
+					<div class="oe_employee_vignette">
+						<div class="oe_employee_image">
+							<a type="open">
+								<img t-att-src="kanban_image('hr.stagiaires', 'image', record.id.value)" class="oe_employee_picture"/>
+							</a>
+						</div>
+						<div class="oe_employee_details">
+							<h4>
+								<a type="open">
+									<field name="nom"/>
+								</a>
+							</h4>
+							<ul>
+								<li t-if="record.theme.raw_value">
+									<field name="theme"/>
+								</li>
+								<li t-if="record.job.raw_value">
+									<field name="job"/>
+								</li>
+								<li t-if="record.adresse_pro.raw_value">
+									<field name="adresse_pro"/>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</t>
+			</templates>
+		</kanban>
+	</field>
+</record>
+<!--   heritage hr_contract    -->
+<record model="ir.ui.view" id="hr_contr_ing">
+	<field name="name">hr.cont.inherit</field>
+	<field name="model">hr.contract</field>
+	<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+	<field name="type">form</field>
+	<field name="arch" type="xml">
+		<xpath expr="//page/group/group/field[@name='wage']" position="after">
+			<field name="salaire_b" />
+		</xpath>
+	</field>
+</record>
+<record id="stag_actw" model="ir.actions.act_window">
+	<field name="name">Stagiaires</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">hr.stagiaires</field>
+	<field name="view_type">tree</field>
+	<field name="view_mode">kanban,tree,form</field>
+</record>
 		<record model="ir.ui.view" id="base_view_emplloyee_form_inherit_payroll_devplus">
 			<field name="name">hr.employee.categ.inherit</field>
 			<field name="model">hr.employee</field>
@@ -62,7 +208,7 @@
 			<field name="arch" type="xml">
 				<field name="work_location" position="after">
 					<field name="categ_professionnelle" />
-					<field name="charge_patronale" />
+					
 				</field>
 			</field>
 		</record>
@@ -81,7 +227,7 @@
 				</field>
 			</field>
 		</record>
-
+<menuitem id="menu_stag" sequence="3" name="Stagiaires" parent="hr.menu_hr_main" action="stag_actw" />              
 		<!-- holidays -->
 
 		<record model="ir.ui.view" id="view_holiday_tree2">

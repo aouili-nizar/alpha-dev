@@ -39,8 +39,7 @@
 			<field name="type">form</field>			
 			<field name="arch" type="xml">
 				<field name="work_location" position="after">
-					<field name="categ_professionnelle" />
-					<field name="charge_patronale" />
+					
 				</field>
 			</field>
 		</record>

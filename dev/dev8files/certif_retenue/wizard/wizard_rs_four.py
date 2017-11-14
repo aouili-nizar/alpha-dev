@@ -76,34 +76,37 @@ class wizard_res_four(models.Model):
     def res_move_line_get(self, cr, uid, voucher_id, move_id, company_currency, current_currency, context=None):
         voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
         debit = credit = 0.0
-        if voucher.type in ('purchase', 'payment'):
-            credit = voucher.ret_val
-        elif voucher.type in ('sale', 'receipt'):
-            debit = voucher.ret_val
-        if debit < 0:
-            credit = -debit
-            debit = 0.0
-        if credit < 0:
-            debit = -credit
-            credit = 0.0
-        sign = debit - credit < 0 and -1 or 1
-        move_line = {
-            'name': '/retenue a la source',
-            'debit': debit,
-            'credit': credit,
-            'account_id': voucher.taux.account.id,
-            'move_id': move_id,
-            'journal_id': voucher.journal_id.id,
-            'period_id': voucher.period_id.id,
-            'partner_id': voucher.partner_id.id,
-            'currency_id': company_currency <> current_currency and current_currency or False,
-            'amount_currency': (sign * abs(voucher.amount)  # amount < 0 for refunds
-                                    if company_currency != current_currency else 0.0),
-            'date': voucher.date,
-            'date_maturity': voucher.date_due
-        }
-        print move_line
-        return move_line
+        if voucher.taux.account.id:
+            if voucher.type in ('purchase', 'payment'):
+                credit = voucher.ret_val
+            elif voucher.type in ('sale', 'receipt'):
+                debit = voucher.ret_val
+            if debit < 0:
+                credit = -debit
+                debit = 0.0
+            if credit < 0:
+                debit = -credit
+                credit = 0.0
+            sign = debit - credit < 0 and -1 or 1
+            move_line = {
+                'name': '/retenue a la source',
+                'debit': debit,
+                'credit': credit,
+                'account_id': voucher.taux.account.id,
+                'move_id': move_id,
+                'journal_id': voucher.journal_id.id,
+                'period_id': voucher.period_id.id,
+                'partner_id': voucher.partner_id.id,
+                'currency_id': company_currency <> current_currency and current_currency or False,
+                'amount_currency': (sign * abs(voucher.amount)  # amount < 0 for refunds
+                                        if company_currency != current_currency else 0.0),
+                'date': voucher.date,
+                'date_maturity': voucher.date_due
+            }
+            print move_line
+            return move_line
+        else :
+            return False
     #overrriding the original move line first 
     @api.v7
     def first_move_line_get(self, cr, uid, voucher_id, move_id, company_currency, current_currency, context=None):
@@ -354,12 +357,16 @@ class wizard_res_four(models.Model):
             # Create the first line of the voucher
             move_line_id = move_line_pool.create(cr, uid, self.first_move_line_get(
                 cr, uid, voucher.id, move_id, company_currency, current_currency, local_context), local_context)
-            move_line_res_id = move_line_pool.create(cr,uid,self.res_move_line_get(cr,uid,voucher.id,move_id,company_currency,current_currency,local_context),local_context)
-            move_line_res_brw = move_line_pool.browse(
-                cr, uid, move_line_res_id, context=context)
+            move_line_res_brw = None
+            if self.res_move_line_get(cr, uid, voucher.id, move_id, company_currency, current_currency, local_context):
+                move_line_res_id = move_line_pool.create(cr,uid,self.res_move_line_get(cr,uid,voucher.id,move_id,company_currency,current_currency,local_context),local_context)
+                move_line_res_brw = move_line_pool.browse(cr, uid, move_line_res_id, context=context)
             move_line_brw = move_line_pool.browse(
                 cr, uid, move_line_id, context=context)
-            line_total = (move_line_brw.debit - move_line_brw.credit) + (move_line_res_brw.debit - move_line_res_brw.credit)
+            if move_line_res_brw:
+                line_total = (move_line_brw.debit - move_line_brw.credit) + (move_line_res_brw.debit - move_line_res_brw.credit)
+            else:
+                line_total = move_line_brw.debit - move_line_brw.credit
             rec_list_ids = []
             if voucher.type == 'sale':
                 line_total = line_total - \

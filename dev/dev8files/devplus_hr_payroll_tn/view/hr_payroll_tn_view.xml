@@ -26,9 +26,9 @@
 				  </header> -->
 				  	<header>
 						<button name="draft_cb" string="Mettre en brouillon" type="object" class="oe_edit_only" states="confirmed" />
-						<button name="draft_pb" string="Remettre en confirmer" type="object" class="oe_edit_only" states="paid" />
-						<button name="draft_db" string="Remettre en payer" type="object" class="oe_edit_only" states="declared" />
-						<button name="draft_vb" string="Remettre en declarer" type="object" class="oe_edit_only" states="versed" />
+						<button name="draft_pb" string="Remettre en brouillon" type="object" class="oe_edit_only" states="paid" />
+						<button name="draft_db" string="Remettre en brouillon 1" type="object" class="oe_edit_only" states="declared" />
+						<button name="draft_vb" string="Remettre en brouillon 2" type="object" class="oe_edit_only" states="versed" />
 						
 						<button name="confirm_cb" string="Confirmer" type="object" states="draft" />
 						<button name="cancel_cb" string="Payer" type="object" states="confirmed" />
